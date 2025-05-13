@@ -1,536 +1,855 @@
 {
-  "info": {
-    "name": "Vendas BFF - Full API",
-    "_postman_id": "vendas-bff-full-api",
-    "description": "Todos os endpoints do backend agrupados por dom\u00ednio",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Auth API",
-      "item": [
-        {
-          "name": "Register",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/auth/register",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "auth",
-                "register"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"senha123\"\n}"
-            }
-          }
-        },
-        {
-          "name": "Login",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/auth/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"senha123\"\n}"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Clients API",
-      "item": [
-        {
-          "name": "Get Clients",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/clients",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "clients"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Client",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/clients",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "clients"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\"\n}"
-            }
-          }
-        },
-        {
-          "name": "Update Client",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/clients/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "clients",
-                ":id"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "Delete Client",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/clients/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "clients",
-                ":id"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Products API",
-      "item": [
-        {
-          "name": "Get Products",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/products",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "products"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Product",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/products",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "products"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Produto\",\n  \"unitPrice\": 50\n}"
-            }
-          }
-        },
-        {
-          "name": "Update Product",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/products/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "products",
-                ":id"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "Delete Product",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/products/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "products",
-                ":id"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Affiliations API",
-      "item": [
-        {
-          "name": "Get Affiliations",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/affiliations",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "affiliations"
-              ]
-            }
-          }
-        },
-        {
-          "name": "Create Affiliation",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/affiliations",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "affiliations"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Inst\",\n  \"address\": \"Rua\",\n  \"phone\": \"999\"\n}"
-            }
-          }
-        },
-        {
-          "name": "Update Affiliation",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/affiliations/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "affiliations",
-                ":id"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "Delete Affiliation",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/affiliations/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "affiliations",
-                ":id"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Sales API",
-      "item": [
-        {
-          "name": "Create Sale",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/sales",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "sales"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"client\": \"client_id\",\n  \"products\": [\n    {\n      \"product\": \"prod_id\",\n      \"quantity\": 1,\n      \"unitPrice\": 10\n    }\n  ],\n  \"total\": 10\n}"
-            }
-          }
-        },
-        {
-          "name": "Get Sales by Client",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/sales/by-client/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "sales",
-                "by-client",
-                ":id"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Payments API",
-      "item": [
-        {
-          "name": "Create Payment",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/payments",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "payments"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"client\": \"client_id\",\n  \"amount\": 100\n}"
-            }
-          }
-        },
-        {
-          "name": "Get Payments by Client",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/payments/by-client/:id",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "payments",
-                "by-client",
-                ":id"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Dashboard API",
-      "item": [
-        {
-          "name": "Get Dashboard",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/dashboard",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "dashboard"
-              ]
-            }
-          }
-        }
-      ]
-    }
-  ]
+	"info": {
+		"_postman_id": "111cade8-96b6-4be0-9a2a-5f432f6d4903",
+		"name": "Vendas BFF - Full API",
+		"description": "Todos os endpoints do backend agrupados por domínio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4680126"
+	},
+	"item": [
+		{
+			"name": "Auth API",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"438a3963c2a7234d85d86fd9b034a010378d1ac0cb5561ccd4ea4afd6d6e30ccbc3f929256c08ffb105e79b\n79c7cdbbdaa393251117a60ad9cabfced517c8df3\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\n//   \"email\": \"user@example.com\",\n//   \"password\": \"senha123\"\n// }\n{\n  \"email\": \"{{user}}\",\n  \"password\": \"{{password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clients API",
+			"item": [
+				{
+					"name": "Get Clients",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Client",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/clients/{{id_client}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{id_client}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Client",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/clients/{{id_client}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"{{id_client}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"// Configurações de login (ajuste conforme necessário)\r",
+							"const loginBody = {\r",
+							"  email: pm.environment.get(\"user\"),\r",
+							"  password: pm.environment.get(\"password\")\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+							"  method: \"POST\",\r",
+							"  header: { \"Content-Type\": \"application/json\" },\r",
+							"  body: {\r",
+							"    mode: \"raw\",\r",
+							"    raw: JSON.stringify(loginBody)\r",
+							"  }\r",
+							"}, function (err, res) {\r",
+							"  if (err) {\r",
+							"    console.log(\"Erro na autenticação:\", err);\r",
+							"  } else {\r",
+							"    const json = res.json();\r",
+							"    if (json.token) {\r",
+							"      pm.environment.set(\"token\", json.token);\r",
+							"      console.log(\"✅ Token atualizado no environment.\");\r",
+							"    } else {\r",
+							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
+							"    }\r",
+							"  }\r",
+							"});\r",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Products API",
+			"item": [
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Produto\",\n  \"unitPrice\": 50\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/products/{{id_product}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{{id_product}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products/{{id_product}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{{id_product}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"// Configurações de login (ajuste conforme necessário)\r",
+							"const loginBody = {\r",
+							"  email: pm.environment.get(\"user\"),\r",
+							"  password: pm.environment.get(\"password\")\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+							"  method: \"POST\",\r",
+							"  header: { \"Content-Type\": \"application/json\" },\r",
+							"  body: {\r",
+							"    mode: \"raw\",\r",
+							"    raw: JSON.stringify(loginBody)\r",
+							"  }\r",
+							"}, function (err, res) {\r",
+							"  if (err) {\r",
+							"    console.log(\"Erro na autenticação:\", err);\r",
+							"  } else {\r",
+							"    const json = res.json();\r",
+							"    if (json.token) {\r",
+							"      pm.environment.set(\"token\", json.token);\r",
+							"      console.log(\"✅ Token atualizado no environment.\");\r",
+							"    } else {\r",
+							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
+							"    }\r",
+							"  }\r",
+							"});\r",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Affiliations API",
+			"item": [
+				{
+					"name": "Get Affiliations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/affiliations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"affiliations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Affiliation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Inst\",\n  \"address\": \"Rua\",\n  \"phone\": \"999\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/affiliations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"affiliations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Affiliation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/affiliations/{{id_affiliation}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"affiliations",
+								"{{id_affiliation}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Affiliation",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/affiliations/{{id_affiliation}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"affiliations",
+								"{{id_affiliation}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"// Configurações de login (ajuste conforme necessário)\r",
+							"const loginBody = {\r",
+							"  email: pm.environment.get(\"user\"),\r",
+							"  password: pm.environment.get(\"password\")\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+							"  method: \"POST\",\r",
+							"  header: { \"Content-Type\": \"application/json\" },\r",
+							"  body: {\r",
+							"    mode: \"raw\",\r",
+							"    raw: JSON.stringify(loginBody)\r",
+							"  }\r",
+							"}, function (err, res) {\r",
+							"  if (err) {\r",
+							"    console.log(\"Erro na autenticação:\", err);\r",
+							"  } else {\r",
+							"    const json = res.json();\r",
+							"    if (json.token) {\r",
+							"      pm.environment.set(\"token\", json.token);\r",
+							"      console.log(\"✅ Token atualizado no environment.\");\r",
+							"    } else {\r",
+							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
+							"    }\r",
+							"  }\r",
+							"});\r",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Sales API",
+			"item": [
+				{
+					"name": "Create Sale",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"client\": \"{{id_client}}\",\n  \"products\": [\n    {\n      \"product\": \"6823d1dea1b1af918df8f312\",\n      \"quantity\": 2,\n      \"unitPrice\": 10\n    }\n  ],\n  \"total\": 20\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sales",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sales by Client",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/sales/by-client/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sales",
+								"by-client",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"// Configurações de login (ajuste conforme necessário)\r",
+							"const loginBody = {\r",
+							"  email: pm.environment.get(\"user\"),\r",
+							"  password: pm.environment.get(\"password\")\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+							"  method: \"POST\",\r",
+							"  header: { \"Content-Type\": \"application/json\" },\r",
+							"  body: {\r",
+							"    mode: \"raw\",\r",
+							"    raw: JSON.stringify(loginBody)\r",
+							"  }\r",
+							"}, function (err, res) {\r",
+							"  if (err) {\r",
+							"    console.log(\"Erro na autenticação:\", err);\r",
+							"  } else {\r",
+							"    const json = res.json();\r",
+							"    if (json.token) {\r",
+							"      pm.environment.set(\"token\", json.token);\r",
+							"      console.log(\"✅ Token atualizado no environment.\");\r",
+							"    } else {\r",
+							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
+							"    }\r",
+							"  }\r",
+							"});\r",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Payments API",
+			"item": [
+				{
+					"name": "Create Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"client\": \"{{id_client}}\",\n  \"amount\": 100\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/payments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payments by Client",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/payments/by-client/{{id_client}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"payments",
+								"by-client",
+								"{{id_client}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"// Configurações de login (ajuste conforme necessário)\r",
+							"const loginBody = {\r",
+							"  email: pm.environment.get(\"user\"),\r",
+							"  password: pm.environment.get(\"password\")\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+							"  method: \"POST\",\r",
+							"  header: { \"Content-Type\": \"application/json\" },\r",
+							"  body: {\r",
+							"    mode: \"raw\",\r",
+							"    raw: JSON.stringify(loginBody)\r",
+							"  }\r",
+							"}, function (err, res) {\r",
+							"  if (err) {\r",
+							"    console.log(\"Erro na autenticação:\", err);\r",
+							"  } else {\r",
+							"    const json = res.json();\r",
+							"    if (json.token) {\r",
+							"      pm.environment.set(\"token\", json.token);\r",
+							"      console.log(\"✅ Token atualizado no environment.\");\r",
+							"    } else {\r",
+							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
+							"    }\r",
+							"  }\r",
+							"});\r",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Dashboard API",
+			"item": [
+				{
+					"name": "Get Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/dashboard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"// Configurações de login (ajuste conforme necessário)\r",
+							"const loginBody = {\r",
+							"  email: pm.environment.get(\"user\"),\r",
+							"  password: pm.environment.get(\"password\")\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+							"  method: \"POST\",\r",
+							"  header: { \"Content-Type\": \"application/json\" },\r",
+							"  body: {\r",
+							"    mode: \"raw\",\r",
+							"    raw: JSON.stringify(loginBody)\r",
+							"  }\r",
+							"}, function (err, res) {\r",
+							"  if (err) {\r",
+							"    console.log(\"Erro na autenticação:\", err);\r",
+							"  } else {\r",
+							"    const json = res.json();\r",
+							"    if (json.token) {\r",
+							"      pm.environment.set(\"token\", json.token);\r",
+							"      console.log(\"✅ Token atualizado no environment.\");\r",
+							"    } else {\r",
+							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
+							"    }\r",
+							"  }\r",
+							"});\r",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
 }
