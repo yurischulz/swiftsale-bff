@@ -3,6 +3,9 @@ node_modules/
 dist/
 .env
 
+# Npm
+pnpm-lock.yaml
+
 # Logs
 logs/
 *.log
