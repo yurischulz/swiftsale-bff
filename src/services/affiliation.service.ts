@@ -1,4 +1,4 @@
-import { Client } from '../models/Client';
+import { Client } from '../models/Customer';
 import { Affiliation } from '../models/Affiliation';
 
 export async function getAllAffiliations(): Promise<any[]> {

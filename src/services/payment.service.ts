@@ -1,4 +1,4 @@
-import { Client } from '../models/Client';
+import { Client } from '../models/Customer';
 import { Payment } from '../models/Payment';
 
 export async function createPayment(data: any) {
