@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { connectDatabase } from '../config/database';
 import { Product } from '../models/Product';
-import { Client } from '../models/Client';
+import { Client } from '../models/Customer';
 import { Affiliation } from '../models/Affiliation';
 
 (async () => {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { Client } from '~/models/Client';
+import { Client } from '~/models/Customer';
 import { Sale } from '~/models/Sale';
 
 export async function createSale(data: any) {

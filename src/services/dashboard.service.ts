@@ -1,6 +1,6 @@
 import { Payment } from '../models/Payment';
 import { Sale } from '../models/Sale';
-import { Client } from '../models/Client';
+import { Client } from '../models/Customer';
 import { Affiliation } from '../models/Affiliation';
 
 export async function getDashboardSummary() {

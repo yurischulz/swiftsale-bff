@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
-import * as clientService from '../services/client.service';
+import * as clientService from '../services/customer.service';
 
 export const getAllClients = asyncHandler(
   async (req: Request, res: Response) => {
