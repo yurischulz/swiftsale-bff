@@ -12,6 +12,9 @@ build/
 .env.test
 .env.production
 
+# Npm
+pnpm-lock.yaml
+
 # Logs
 logs/
 *.log
