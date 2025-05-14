@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { connectDatabase } from '../config/database';
 import { Product } from '../models/Product';
-import { customer } from '../models/Customer';
+import { Customer } from '../models/Customer';
 import { Affiliation } from '../models/Affiliation';
 
 (async () => {
@@ -14,7 +14,7 @@ import { Affiliation } from '../models/Affiliation';
     phone: '999999999',
   });
 
-  const customer = await customer.create({
+  await Customer.create({
     name: 'customer Exemplo',
     phone: '888888888',
     address: 'Rua 1',
