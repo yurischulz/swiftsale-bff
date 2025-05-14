@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 const paymentSchema = new mongoose.Schema(
   {
-    client: {
+    customer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Client',
+      ref: 'customer',
       required: true,
     },
     amount: { type: Number, required: true },

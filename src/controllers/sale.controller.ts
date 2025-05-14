@@ -9,9 +9,9 @@ export const createSale = asyncHandler(async (req: Request, res: Response) => {
 });
 
 // Obtém todas as vendas
-export const getSalesByClient = asyncHandler(
+export const getSalesByCustomer = asyncHandler(
   async (req: Request, res: Response) => {
-    const sales = await saleService.getSalesByClient(req, res);
+    const sales = await saleService.getSalesByCustomer(req, res);
     res.status(200).json(sales);
   }
 );

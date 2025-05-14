@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 const saleSchema = new mongoose.Schema(
   {
-    client: {
+    customer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Client',
+      ref: 'customer',
       required: true,
     },
     products: [

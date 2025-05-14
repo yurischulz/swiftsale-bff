@@ -1,39 +1,39 @@
 import { Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
-import * as clientService from '../services/customer.service';
+import * as customerService from '../services/customer.service';
 
-export const getAllClients = asyncHandler(
+export const getAllCustomers = asyncHandler(
   async (req: Request, res: Response) => {
-    const clients = await clientService.getAllClients();
-    res.status(200).json(clients);
+    const customers = await customerService.getAllCustomers();
+    res.status(200).json(customers);
   }
 );
 
-export const createClient = asyncHandler(
+export const createCustomer = asyncHandler(
   async (req: Request, res: Response) => {
-    const client = await clientService.createClient(req.body);
-    res.status(201).json(client);
+    const customer = await customerService.createCustomer(req.body);
+    res.status(201).json(customer);
   }
 );
 
-export const updateClient = asyncHandler(
+export const updateCustomer = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const updatedClient = await clientService.updateClient(id, req.body);
-    if (!updatedClient) {
-      return res.status(404).json({ message: 'Cliente não encontrado' });
+    const updatedCustomer = await customerService.updateCustomer(id, req.body);
+    if (!updatedCustomer) {
+      return res.status(404).json({ message: 'customer não encontrado' });
     }
-    res.status(200).json(updatedClient);
+    res.status(200).json(updatedCustomer);
   }
 );
 
-export const deleteClient = asyncHandler(
+export const deleteCustomer = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const deletedClient = await clientService.deleteClient(id);
-    if (!deletedClient) {
-      return res.status(404).json({ message: 'Cliente não encontrado' });
+    const deletedCustomer = await customerService.deleteCustomer(id);
+    if (!deletedCustomer) {
+      return res.status(404).json({ message: 'customer não encontrado' });
     }
-    res.status(200).json({ message: 'Cliente excluído com sucesso' });
+    res.status(200).json({ message: 'customer excluído com sucesso' });
   }
 );
