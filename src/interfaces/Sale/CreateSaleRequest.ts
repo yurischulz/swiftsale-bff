@@ -1,5 +1,5 @@
 export interface CreateSaleRequest {
-  client: string;
+  customer: string;
   products: {
     product: string;
     quantity: number;

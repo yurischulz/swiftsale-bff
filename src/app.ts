@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import timeout from 'connect-timeout';
 import authRoutes from './routes/auth.routes';
-import clientRoutes from './routes/customers.routes';
+import customerRoutes from './routes/customers.routes';
 import productRoutes from './routes/products.routes';
 import affiliationRoutes from './routes/affiliations.routes';
 import saleRoutes from './routes/sales.routes';
@@ -31,7 +31,7 @@ connectDatabase().catch((err) => {
 });
 
 app.use('/auth', authRoutes);
-app.use('/clients', clientRoutes);
+app.use('/customers', customerRoutes);
 app.use('/products', productRoutes);
 app.use('/affiliations', affiliationRoutes);
 app.use('/sales', saleRoutes);

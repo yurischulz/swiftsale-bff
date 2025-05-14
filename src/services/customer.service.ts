@@ -1,18 +1,19 @@
-import { Client } from '../models/Customer';
+import { createCustomerRequest } from '~/interfaces/customer';
+import { Customer } from '../models/Customer';
 
-export async function getAllClients() {
-  return await Client.find();
+export async function getAllCustomers() {
+  return await Customer.find();
 }
 
-export async function createClient(data: any) {
-  const client = new Client(data);
-  return await client.save();
+export async function createCustomer(data: createCustomerRequest) {
+  const customer = new Customer(data);
+  return await customer.save();
 }
 
-export async function updateClient(id: string, data: any) {
-  return await Client.findByIdAndUpdate(id, data, { new: true });
+export async function updateCustomer(id: string, data: createCustomerRequest) {
+  return await Customer.findByIdAndUpdate(id, data, { new: true });
 }
 
-export async function deleteClient(id: string) {
-  return await Client.findByIdAndDelete(id);
+export async function deleteCustomer(id: string) {
+  return await Customer.findByIdAndDelete(id);
 }

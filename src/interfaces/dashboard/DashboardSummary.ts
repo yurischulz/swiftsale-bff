@@ -1,10 +1,10 @@
 import { Affiliation } from '../Affiliation';
-import { Client } from '../customer';
+import { customer } from '../customer';
 
 export interface DashboardSummary {
-  topClients: Client[]; // Lista dos principais clientes
+  topcustomers: customer[]; // Lista dos principais customers
   topAffiliations: Affiliation[]; // Lista das principais afiliações
-  totalClients: number; // Total de clientes
+  totalcustomers: number; // Total de customers
   totalPayments: number; // Total de pagamentos
   totalSales: number; // Total de vendas
 }

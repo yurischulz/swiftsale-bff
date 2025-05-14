@@ -1,19 +1,20 @@
 import { Request, Response } from 'express';
+import { CreateSaleRequest } from '~/interfaces/Sale';
 
-import { Client } from '~/models/Customer';
+import { Customer } from '~/models/Customer';
 import { Sale } from '~/models/Sale';
 
-export async function createSale(data: any) {
-  const { client, products, total } = data;
-  const sale = new Sale({ client, products, total });
+export async function createSale(data: CreateSaleRequest) {
+  const { customer, products, total } = data;
+  const sale = new Sale({ customer, products, total });
   await sale.save();
-  return await Client.findByIdAndUpdate(client, {
+  return await Customer.findByIdAndUpdate(customer, {
     $inc: { debt: total },
   });
 }
 
-export async function getSalesByClient(req: Request, res: Response) {
-  return await Sale.find({ client: req.params.id }).populate(
+export async function getSalesByCustomer(req: Request, res: Response) {
+  return await Sale.find({ customer: req.params.id }).populate(
     'products.product'
   );
 }

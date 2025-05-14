@@ -1,16 +1,20 @@
-import { Client } from '../models/Customer';
+import { CreatePaymentRequest } from '~/interfaces/Payment';
 import { Payment } from '../models/Payment';
+import { Customer } from '../models/Customer'; // Certifique-se de importar o modelo correto
 
-export async function createPayment(data: any) {
-  const { client, amount } = data;
-  const payment = new Payment({ client, amount });
+export async function createPayment(data: CreatePaymentRequest) {
+  const { customer, amount } = data;
+
+  // Cria o pagamento
+  const payment = new Payment({ customer, amount });
   await payment.save();
 
-  return await Client.findByIdAndUpdate(client, {
+  // Atualiza o cliente no banco de dados
+  return await Customer.findByIdAndUpdate(customer, {
     $inc: { debt: -amount, credit: amount },
   });
 }
 
-export async function getPaymentsByClient(id: string) {
-  return await Payment.find({ client: id });
+export async function getPaymentsByCustomer(id: string) {
+  return await Payment.find({ customer: id });
 }

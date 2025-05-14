@@ -1,6 +1,6 @@
 export interface Sale {
   _id?: string; // Opcional para novas vendas
-  client: string; // ID do cliente
+  customer: string; // ID do customer
   products: {
     product: string; // ID do produto
     quantity: number;

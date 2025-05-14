@@ -1,14 +1,16 @@
 import { Payment } from '../models/Payment';
 import { Sale } from '../models/Sale';
-import { Client } from '../models/Customer';
+import { Customer } from '../models/Customer';
 import { Affiliation } from '../models/Affiliation';
 
 export async function getDashboardSummary() {
-  const clients = await Client.find().populate('affiliation');
-  const topClients = [...clients].sort((a, b) => b.debt - a.debt).slice(0, 5);
+  const customers = await Customer.find().populate('affiliation');
+  const topCustomers = [...customers]
+    .sort((a, b) => b.debt - a.debt)
+    .slice(0, 5);
 
   const affiliationMap = new Map<string, number>();
-  clients.forEach((c) => {
+  customers.forEach((c) => {
     const id = c.affiliation?._id?.toString();
     if (id) {
       affiliationMap.set(id, (affiliationMap.get(id) || 0) + c.debt);
@@ -25,9 +27,9 @@ export async function getDashboardSummary() {
     .slice(0, 5);
 
   return {
-    topClients,
+    topCustomers,
     topAffiliations,
-    totalClients: await Client.countDocuments(),
+    totalCustomers: await Customer.countDocuments(),
     totalPayments: await Payment.countDocuments(),
     totalSales: await Sale.countDocuments(),
   };

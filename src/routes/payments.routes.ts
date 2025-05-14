@@ -2,13 +2,13 @@ import { Router } from 'express';
 import { authenticateToken } from '../middlewares/auth';
 import {
   createPayment,
-  getPaymentsByClient,
+  getPaymentsByCustomer,
 } from '../controllers/payment.controller';
 
 const router = Router();
 
 router.use(authenticateToken);
 router.post('/', createPayment);
-router.get('/by-client/:id', getPaymentsByClient);
+router.get('/by-customer/:id', getPaymentsByCustomer);
 
 export default router;
