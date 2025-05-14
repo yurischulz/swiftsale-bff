@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/server.ts",
     "test": "jest",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "seed": "ts-node src/seed.ts"
   },
   "dependencies": {
     "@types/connect-timeout": "^1.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
     "bcryptjs": "^2.4.3",
     "connect-timeout": "^1.9.0",
     "cors": "^2.8.5",
@@ -30,6 +33,7 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.0.0",
     "@types/supertest": "^2.0.12",
+    "@typescript-eslint/parser": "^8.32.1",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",

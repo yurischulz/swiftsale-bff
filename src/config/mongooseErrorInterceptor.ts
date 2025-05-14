@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { CallbackError, Document } from 'mongoose';
 import { AppError } from '../utils/AppError';
 
 mongoose.plugin((schema) => {
@@ -10,7 +10,11 @@ mongoose.plugin((schema) => {
   schema.post('deleteOne', errorHandlerPlugin);
 });
 
-function errorHandlerPlugin(error: any, doc: any, next: Function) {
+function errorHandlerPlugin(
+  error: CallbackError,
+  doc: Document,
+  next: (err?: CallbackError) => void
+) {
   if (error instanceof mongoose.Error.CastError) {
     next(new AppError(`ID inválido para campo '${error.path}'`, 400));
   } else {
