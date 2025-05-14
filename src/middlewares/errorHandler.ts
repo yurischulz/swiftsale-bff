@@ -14,8 +14,8 @@ export function errorHandler(
     err instanceof AppError
       ? err.statusCode
       : err instanceof mongoose.Error.CastError
-      ? 400
-      : err.statusCode || 500;
+        ? 400
+        : err.statusCode || 500;
 
   console.error(`[🔥 ${traceId}]`, {
     name: err.name,

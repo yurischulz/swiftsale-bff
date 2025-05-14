@@ -1,30 +1,28 @@
 import { Request, Response, NextFunction } from 'express';
-
-declare global {
-  namespace Express {
-    interface Request {
-      user?: any;
-    }
-  }
-}
 import jwt from 'jsonwebtoken';
 
-export const authenticateToken = (
+export async function authenticateToken(
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+): Promise<void> {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      res.status(401).json({ message: 'Token não fornecido' });
+      return;
+    }
 
-  if (!token) return res.sendStatus(401);
-
-  jwt.verify(token, process.env.JWT_SECRET || '', (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
+    jwt.verify(token, process.env.JWT_SECRET || '', (err, user) => {
+      if (err) return res.sendStatus(403);
+      req.user = user;
+      next();
+    });
     next();
-  });
-};
+  } catch (error) {
+    res.status(403).json({ message: 'Acesso negado' });
+  }
+}
 
 export const adminOnly = (req: Request, res: Response, next: NextFunction) => {
   if (req.user?.role !== 'admin') return res.sendStatus(403);
