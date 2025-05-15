@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "src", // Define "src" como base
+    "baseUrl": "src",
     "paths": {
-      "~/*": ["*"] // Mapeia "~/" para "src/"
+      "~/*": ["*"]
     },
     "outDir": "dist",
     "rootDir": "src",
@@ -14,5 +14,6 @@
     "typeRoots": ["./src/types", "./node_modules/@types"],
     "types": ["jest", "node"]
   },
-  "include": ["src/**/*.ts", "src/**/*.test.ts"]
+  "include": ["src/**/*.ts", "src/**/*.test.ts", "src/**/*.spec.ts"],
+  "ignorePatterns": ["jest.config.ts"]
 }
