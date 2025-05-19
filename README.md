@@ -38,15 +38,17 @@ cp .env.example .env
 
 ### Exemplo de .env
 
-````bash
+```bash
 PORT=4000
 MONGO_URI=mongodb://localhost:27017/swiftsale
 JWT_SECRET=sua_chave_secreta
+```
+
+### Rode o servidor em modo desenvolvimento
 
 ```bash
-# Rode o servidor em modo desenvolvimento
 pnpm dev
-````
+```
 
 ## ✅ Endpoints
 
