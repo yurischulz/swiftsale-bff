@@ -73,3 +73,10 @@ pnpm test
 ## 📄 Licença
 
 Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mais detalhes.
+
+---
+
+# @TODO
+
+- Testes com coverage 100%
+- Revisar análise da Wiki
