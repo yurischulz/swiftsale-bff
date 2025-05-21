@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import { authenticateToken } from '../middlewares/auth';
+
+import { firebaseAuthMiddleware } from '~/middlewares/firebaseAuth';
+
 import {
   getAllCustomers,
   createCustomer,
@@ -9,7 +11,8 @@ import {
 
 const router = Router();
 
-router.use(authenticateToken);
+router.use(firebaseAuthMiddleware);
+
 router.get('/', getAllCustomers);
 router.post('/', createCustomer);
 router.put('/:id', updateCustomer);

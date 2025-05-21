@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import timeout from 'connect-timeout';
+
 import authRoutes from './routes/auth.routes';
 import customerRoutes from './routes/customers.routes';
 import productRoutes from './routes/products.routes';
@@ -11,8 +12,10 @@ import affiliationRoutes from './routes/affiliations.routes';
 import saleRoutes from './routes/sales.routes';
 import paymentRoutes from './routes/payments.routes';
 import dashboardRoutes from './routes/dashboard.routes';
+
 import { connectDatabase } from './config/database';
 import { errorHandler } from './middlewares/errorHandler';
+import { firebaseAuthMiddleware } from './middlewares/firebaseAuth';
 
 dotenv.config();
 const env = process.env.NODE_ENV || 'development';
@@ -29,6 +32,8 @@ connectDatabase().catch((err) => {
   console.error('❌ Erro ao conectar com o MongoDB:', err);
   process.exit(1);
 });
+
+app.use(firebaseAuthMiddleware);
 
 app.use('/auth', authRoutes);
 app.use('/customers', customerRoutes);

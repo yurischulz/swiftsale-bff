@@ -17,16 +17,13 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"438a3963c2a7234d85d86fd9b034a010378d1ac0cb5561ccd4ea4afd6d6e30ccbc3f929256c08ffb105e79b\n79c7cdbbdaa393251117a60ad9cabfced517c8df3\"\n}"
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"securePassword123\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/auth/register",
@@ -48,16 +45,13 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\n//   \"email\": \"user@example.com\",\n//   \"password\": \"senha123\"\n// }\n{\n  \"email\": \"{{user}}\",\n  \"password\": \"{{password}}\"\n}"
+							"raw": "{\n  \"email\": \"{{user}}\",\n  \"password\": \"{{password}}\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/auth/login",
@@ -71,14 +65,97 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Set Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"uid\": \"{{uid}}\",\n  \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/set-role",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"set-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/user/{{uid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"user",
+								"{{uid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/user/{{uid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"user",
+								"{{uid}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
-			"name": "Clients API",
+			"name": "Customers API",
 			"item": [
 				{
-					"name": "Get Clients",
+					"name": "Get Customer",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -88,19 +165,19 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/clients",
+							"raw": "{{base_url}}/customers",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"clients"
+								"customers"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create Client",
+					"name": "Create Customer",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -118,19 +195,19 @@
 							"raw": "{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/clients",
+							"raw": "{{base_url}}/customers",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"clients"
+								"customers"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update Client",
+					"name": "Update Customer",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -161,7 +238,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete Client",
+					"name": "Delete Customer",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -588,7 +665,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Sales by Client",
+					"name": "Get Sales by Customer",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -598,18 +675,19 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/sales/by-client/:id",
+							"raw": "{{base_url}}/sales/by-customer/:id",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"sales",
-								"by-client",
+								"by-customer",
 								":id"
 							],
 							"variable": [
 								{
-									"key": "id"
+									"key": "id",
+									"value": ""
 								}
 							]
 						}
