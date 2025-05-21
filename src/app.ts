@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import morgan from 'morgan';
 import timeout from 'connect-timeout';
 
@@ -17,7 +16,6 @@ import { connectDatabase } from './config/database';
 import { errorHandler } from './middlewares/errorHandler';
 import { firebaseAuthMiddleware } from './middlewares/firebaseAuth';
 
-dotenv.config();
 const env = process.env.NODE_ENV || 'development';
 const app = express();
 
@@ -33,9 +31,10 @@ connectDatabase().catch((err) => {
   process.exit(1);
 });
 
+app.use('/auth', authRoutes);
+
 app.use(firebaseAuthMiddleware);
 
-app.use('/auth', authRoutes);
 app.use('/customers', customerRoutes);
 app.use('/products', productRoutes);
 app.use('/affiliations', affiliationRoutes);
