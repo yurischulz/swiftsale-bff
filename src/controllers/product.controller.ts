@@ -38,6 +38,6 @@ export const deleteProduct = asyncHandler(
     if (!deletedProduct) {
       return res.status(404).json({ message: 'Produto não encontrado' });
     }
-    res.status(200).json({ message: 'Produto excluído com sucesso' });
+    res.status(204).send();
   }
 );
