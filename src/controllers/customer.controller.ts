@@ -4,8 +4,10 @@ import * as customerService from '../services/customer.service';
 
 export const getAllCustomers = asyncHandler(
   async (req: Request, res: Response) => {
+    console.log('getAllCustomers called');
     const customers = await customerService.getAllCustomers();
-    res.status(200).json(customers);
+    console.log('Customers encontrados:', customers);
+    return res.status(200).send(customers);
   }
 );
 
@@ -34,6 +36,6 @@ export const deleteCustomer = asyncHandler(
     if (!deletedCustomer) {
       return res.status(404).json({ message: 'customer não encontrado' });
     }
-    res.status(200).json({ message: 'customer excluído com sucesso' });
+    res.status(204).send();
   }
 );
