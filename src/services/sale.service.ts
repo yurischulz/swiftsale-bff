@@ -7,10 +7,11 @@ import { Sale } from '~/models/Sale';
 export async function createSale(data: CreateSaleRequest) {
   const { customer, products, total } = data;
   const sale = new Sale({ customer, products, total });
-  await sale.save();
-  return await Customer.findByIdAndUpdate(customer, {
+  const saleResponse = await sale.save();
+  await Customer.findByIdAndUpdate(customer, {
     $inc: { debt: total },
   });
+  return saleResponse;
 }
 
 export async function getSalesByCustomer(req: Request, res: Response) {
