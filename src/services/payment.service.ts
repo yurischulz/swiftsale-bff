@@ -7,12 +7,14 @@ export async function createPayment(data: CreatePaymentRequest) {
 
   // Cria o pagamento
   const payment = new Payment({ customer, amount });
-  await payment.save();
+  const paymentResponse = await payment.save();
 
   // Atualiza o cliente no banco de dados
-  return await Customer.findByIdAndUpdate(customer, {
+  await Customer.findByIdAndUpdate(customer, {
     $inc: { debt: -amount, credit: amount },
   });
+
+  return paymentResponse;
 }
 
 export async function getPaymentsByCustomer(id: string) {
