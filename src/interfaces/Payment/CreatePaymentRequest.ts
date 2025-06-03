@@ -1,6 +1,4 @@
-import { customer } from '../customer';
-
 export interface CreatePaymentRequest {
-  customer: customer;
+  customer: string;
   amount: number;
 }
