@@ -4,6 +4,12 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import timeout from 'connect-timeout';
+import swaggerUi from 'swagger-ui-express';
+
+import { connectDatabase } from './config/database';
+import { swaggerDocs } from './config/swagger';
+import { errorHandler } from './middlewares/errorHandler';
+
 import authRoutes from './routes/auth.routes';
 import customerRoutes from './routes/customers.routes';
 import productRoutes from './routes/products.routes';
@@ -11,8 +17,6 @@ import affiliationRoutes from './routes/affiliations.routes';
 import saleRoutes from './routes/sales.routes';
 import paymentRoutes from './routes/payments.routes';
 import dashboardRoutes from './routes/dashboard.routes';
-import { connectDatabase } from './config/database';
-import { errorHandler } from './middlewares/errorHandler';
 
 dotenv.config();
 const env = process.env.NODE_ENV || 'development';
@@ -39,5 +43,7 @@ app.use('/payments', paymentRoutes);
 app.use('/dashboard', dashboardRoutes);
 
 app.use(errorHandler);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 export default app;
