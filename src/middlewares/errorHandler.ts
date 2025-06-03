@@ -9,6 +9,9 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
+  if (res.headersSent) {
+    return next(err);
+  }
   const traceId = uuidv4();
   const status =
     err instanceof AppError
