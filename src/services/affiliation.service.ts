@@ -13,6 +13,10 @@ export async function getAllAffiliations(): Promise<any[]> {
   );
 }
 
+export async function getAffiliationById(id: string) {
+  return await Affiliation.findById(id);
+}
+
 export async function createAffiliation(data: CreateAffiliationRequest) {
   const affiliation = new Affiliation(data);
   return await affiliation.save();

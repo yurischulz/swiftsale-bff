@@ -18,11 +18,9 @@ export const createAffiliation = asyncHandler(
 
 export const updateAffiliation = asyncHandler(
   async (req: Request, res: Response) => {
-    const result = await affiliationService.updateAffiliation(
-      req.params.id,
-      req.body
-    );
-    res.json(result);
+    await affiliationService.updateAffiliation(req.params.id, req.body);
+    const result = await affiliationService.getAffiliationById(req.params.id);
+    res.status(200).json(result);
   }
 );
 
