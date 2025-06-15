@@ -141,6 +141,62 @@ describe('Affiliations API - Integração (mongodb-memory-server)', () => {
       expect(res.body[0].totalDebt).toBe(300);
       expect(res.body[1].totalDebt).toBe(50);
     });
+
+    it('deve retornar [] se Affiliation.find() retornar undefined', async () => {
+      // Mock temporário para simular Affiliation.find() retornando undefined
+      const originalFind = Affiliation.find;
+      Affiliation.find = () => undefined as any;
+
+      const res = await request(app)
+        .get('/affiliations')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual([]);
+
+      // Restaura o método original
+      Affiliation.find = originalFind;
+    });
+
+    it('deve retornar totalDebt 0 se Customer.find() retornar undefined', async () => {
+      const [aff] = await Affiliation.create([mockAffiliations[0]]);
+      // Mock temporário para simular Customer.find() retornando undefined
+      const originalFind = Customer.find;
+      Customer.find = () => undefined as any;
+
+      const res = await request(app)
+        .get('/affiliations')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body[0]).toMatchObject({
+        name: aff.name,
+        address: aff.address,
+        phone: aff.phone,
+        totalDebt: 0,
+      });
+
+      // Restaura o método original
+      Customer.find = originalFind;
+    });
+
+    it('deve retornar totalDebt 0 se algum cliente não tiver campo debt', async () => {
+      const [aff] = await Affiliation.create([mockAffiliations[0]]);
+      await Customer.create([
+        {
+          name: 'SemDebt',
+          phone: '000',
+          address: 'Rua X',
+          affiliation: aff._id,
+        },
+      ]);
+      const res = await request(app)
+        .get('/affiliations')
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body[0].totalDebt).toBe(0);
+    });
   });
 
   describe('POST /affiliations', () => {
@@ -207,6 +263,18 @@ describe('Affiliations API - Integração (mongodb-memory-server)', () => {
         .send({ name: 'Qualquer', address: 'Rua', phone: '000' });
 
       expect(res.status).toBe(400);
+      expect(res.body.message).toBe("Formato de ID inválido para campo 'id'");
+    });
+
+    it('deve retornar 404 se a afiliação não existir', async () => {
+      const fakeId = new mongoose.Types.ObjectId();
+      const res = await request(app)
+        .put(`/affiliations/${fakeId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({ name: 'Qualquer', address: 'Rua', phone: '000' });
+
+      expect(res.status).toBe(404);
+      expect(res.body.message).toBe('Afiliação não encontrada');
     });
   });
 
