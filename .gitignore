@@ -44,3 +44,4 @@ Thumbs.db
 # Optional: ignore IDE settings
 .idea/
 *.swp
+*.zip
