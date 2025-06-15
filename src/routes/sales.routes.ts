@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { authenticateToken } from '~/middlewares/auth';
+import { firebaseAuthMiddleware } from '~/middlewares/firebaseAuth';
 import { createSale, getSalesByCustomer } from '~/controllers/sale.controller';
 
 const router = Router();
 
-router.use(authenticateToken);
+router.use(firebaseAuthMiddleware);
 
 /**
  * @swagger

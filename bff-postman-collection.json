@@ -1,863 +1,763 @@
 {
-	"info": {
-		"_postman_id": "111cade8-96b6-4be0-9a2a-5f432f6d4903",
-		"name": "Vendas BFF - Full API",
-		"description": "Todos os endpoints do backend agrupados por domínio",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "4680126"
-	},
-	"item": [
-		{
-			"name": "Affiliations API",
-			"item": [
-				{
-					"name": "Get Affiliations",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/affiliations",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"affiliations"
-							]
-						},
-						"description": "# Affiliations API Endpoint\n\nThis endpoint retrieves a list of affiliations from the server.\n\n## Request\n\n- **Method**: `GET`\n    \n- **Endpoint**: `{{base_url}}/affiliations`\n    \n\n### Parameters\n\nThis request does not require any additional parameters.\n\n## Response\n\n### Status Code\n\n- **200 OK**: The request was successful and the server returned the requested data.\n    \n\n### Response Format\n\nThe response will be in JSON format and includes an array of affiliation objects. Each object contains the following fields:\n\n- **_id**: A unique identifier for the affiliation.\n    \n- **name**: The name of the affiliation.\n    \n- **address**: The physical address of the affiliation.\n    \n- **phone**: The contact phone number for the affiliation.\n    \n- **createdAt**: The timestamp when the affiliation was created.\n    \n- **updatedAt**: The timestamp when the affiliation was last updated.\n    \n- **__v**: The version key for the affiliation document.\n    \n- **totalDebt**: The total debt associated with the affiliation.\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"_id\": \"\",\n        \"name\": \"\",\n        \"address\": \"\",\n        \"phone\": \"\",\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\",\n        \"__v\": 0,\n        \"totalDebt\": 0\n    }\n]\n\n ```\n\n## Additional Notes\n\n- Ensure that your request is properly authenticated if required by the API.\n    \n- The response will return an array, which may be empty if no affiliations are found."
-					},
-					"response": []
-				},
-				{
-					"name": "Create Affiliation",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Inst\",\n  \"address\": \"Rua\",\n  \"phone\": \"999\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/affiliations",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"affiliations"
-							]
-						},
-						"description": "## Add Affiliations\n\nThis endpoint allows users to create a new affiliation by submitting the necessary details.\n\n### Request\n\n- **Method**: POST\n    \n- **Endpoint**: `{{base_url}}/affiliations`\n    \n\n#### Request Body\n\nThe request body must be in JSON format and should include the following parameters:\n\n- `name` (string): The name of the affiliation.\n    \n- `address` (string): The address associated with the affiliation.\n    \n- `phone` (string): The contact phone number for the affiliation.\n    \n\n**Example Request Body**:\n\n``` json\n{\n  \"name\": \"Inst\",\n  \"address\": \"Rua\",\n  \"phone\": \"999\"\n}\n\n ```\n\n### Response\n\nUpon successful creation of an affiliation, the server will respond with a status code of **201 Created** and a JSON object containing the following fields:\n\n- `name` (string): The name of the affiliation (returned as an empty string if not set).\n    \n- `address` (string): The address of the affiliation (returned as an empty string if not set).\n    \n- `phone` (string): The contact phone number (returned as an empty string if not set).\n    \n- `_id` (string): The unique identifier of the created affiliation.\n    \n- `createdAt` (string): The timestamp when the affiliation was created.\n    \n- `updatedAt` (string): The timestamp when the affiliation was last updated.\n    \n- `__v` (integer): The version key for the document.\n    \n\n**Example Response**:\n\n``` json\n{\n  \"name\": \"\",\n  \"address\": \"\",\n  \"phone\": \"\",\n  \"_id\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```"
-					},
-					"response": []
-				},
-				{
-					"name": "Update Affiliation",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Inst\",\r\n  \"address\": \"Rua\",\r\n  \"phone\": \"999\",\r\n  \"totalDebit\": 1000\r\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/affiliations/{{id_affiliation}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"affiliations",
-								"{{id_affiliation}}"
-							]
-						},
-						"description": "## Update Affiliation\n\nThis endpoint allows you to update an existing affiliation's details. You can modify the affiliation's name, address, phone number, and total debit amount by sending a PUT request to the specified URL.\n\n### Request\n\n- **Method**: PUT\n    \n- **URL**: `{{base_url}}/affiliations/{{id_affiliation}}`\n    \n\n#### Request Body\n\nThe request body must be in JSON format and include the following parameters:\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `name` | string | The name of the affiliation. |\n| `address` | string | The address of the affiliation. |\n| `phone` | string | The contact phone number. |\n| `totalDebit` | number | The total debit amount. |\n\n**Example Request Body:**\n\n``` json\n{\n  \"name\": \"Inst\",\n  \"address\": \"Rua\",\n  \"phone\": \"999\",\n  \"totalDebit\": 1000\n}\n\n ```\n\n### Response\n\nUpon a successful update, the server will respond with a status code of `200` and a JSON object containing the updated affiliation details. The structure of the response is as follows:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `_id` | string | The unique identifier of the affiliation. |\n| `name` | string | The updated name of the affiliation. |\n| `address` | string | The updated address of the affiliation. |\n| `phone` | string | The updated contact phone number. |\n| `createdAt` | string | The timestamp when the affiliation was created. |\n| `updatedAt` | string | The timestamp when the affiliation was last updated. |\n| `__v` | number | The version key for the document. |\n\n**Example Response:**\n\n``` json\n{\n  \"_id\": \"\",\n  \"name\": \"\",\n  \"address\": \"\",\n  \"phone\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```\n\nMake sure to replace `{{id_affiliation}}` with the actual ID of the affiliation you wish to update."
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Affiliation",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/affiliations/{{id_affiliation}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"affiliations",
-								"{{id_affiliation}}"
-							]
-						},
-						"description": "## Delete Affiliation\n\nThis endpoint allows you to delete an affiliation identified by its unique ID.\n\n### Request\n\n- **Method**: DELETE\n    \n- **Endpoint**: `{{base_url}}/affiliations/{{id_affiliation}}`\n    \n- **Path Parameter**:\n    \n    - `id_affiliation`: The unique identifier of the affiliation that you wish to delete. This parameter is required.\n        \n\n### Response\n\n- **Status Code**: 204 No Content\n    \n- **Content-Type**: text/xml\n    \n\nA successful deletion will return a `204 No Content` status, indicating that the request was processed successfully and there is no additional content to return in the response body."
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"// Configurações de login (ajuste conforme necessário)\r",
-							"const loginBody = {\r",
-							"  email: pm.environment.get(\"user\"),\r",
-							"  password: pm.environment.get(\"password\")\r",
-							"};\r",
-							"\r",
-							"pm.sendRequest({\r",
-							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
-							"  method: \"POST\",\r",
-							"  header: { \"Content-Type\": \"application/json\" },\r",
-							"  body: {\r",
-							"    mode: \"raw\",\r",
-							"    raw: JSON.stringify(loginBody)\r",
-							"  }\r",
-							"}, function (err, res) {\r",
-							"  if (err) {\r",
-							"    console.log(\"Erro na autenticação:\", err);\r",
-							"  } else {\r",
-							"    const json = res.json();\r",
-							"    if (json.token) {\r",
-							"      pm.environment.set(\"token\", json.token);\r",
-							"      console.log(\"✅ Token atualizado no environment.\");\r",
-							"    } else {\r",
-							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
-							"    }\r",
-							"  }\r",
-							"});\r",
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Auth API",
-			"item": [
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"securePassword123\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/auth/register",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"auth",
-								"register"
-							]
-						},
-						"description": "## Register User\n\nThis endpoint allows new users to register by providing their email and password.\n\n### HTTP Method\n\n`POST`\n\n### Endpoint\n\n`{{base_url}}/auth/register`\n\n### Request Parameters\n\nThe request body must be a JSON object containing the following parameters:\n\n- **email** (string): The email address of the user. This will be used for account verification and login.\n    \n- **password** (string): The password chosen by the user for their account. It should be kept secure.\n    \n\n### Request Example\n\n``` json\n{\n  \"email\": \"test@example.com\",\n  \"password\": \"securePassword123\"\n}\n\n ```\n\n### Expected Response\n\nOn successful registration, the server will respond with:\n\n- **Status Code**: `201 Created`\n    \n- **Content-Type**: `application/json`\n    \n- **Response Body**: A JSON object containing a message.\n    \n\n``` json\n{\n  \"message\": \"\"\n}\n\n ```\n\nThis indicates that the registration was successful, and further instructions or information may be provided in the message field."
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"{{user}}\",\n  \"password\": \"{{password}}\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/auth/login",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"auth",
-								"login"
-							]
-						},
-						"description": "## Login Endpoint\n\nThis endpoint allows users to authenticate and obtain a token for subsequent API requests.\n\n### Request\n\n- **Method**: `POST`\n    \n- **Endpoint**: `{{base_url}}/auth/login`\n    \n- **Request Body**: The request must include a JSON payload with the following parameters:\n    \n    - `email` (string): The email address of the user attempting to log in.\n        \n    - `password` (string): The password associated with the user's account.\n        \n\n### Example Request Body\n\n``` json\n{\n  \"email\": \"{{user}}\",\n  \"password\": \"{{password}}\"\n}\n\n ```\n\n### Response\n\n- **Status Code**: `200 OK`\n    \n- **Content-Type**: `application/json`\n    \n- **Response Body**: On successful authentication, the response will contain a JSON object with the following parameter:\n    \n    - `token` (string): A token that can be used for authorization in subsequent requests.\n        \n\n### Example Response\n\n``` json\n{\n  \"token\": \"\"\n}\n\n ```\n\nEnsure that the email and password provided are valid to receive the authentication token."
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Customers API",
-			"item": [
-				{
-					"name": "Get Customer",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/customers",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"customers"
-							]
-						},
-						"description": "# Customers API Endpoint\n\nThis endpoint retrieves a list of customers from the server.\n\n## Request\n\n- **Method:** GET\n    \n- **Endpoint:** `{{base_url}}/customers`\n    \n\n## Parameters\n\nThis request does not require any additional parameters.\n\n## Response\n\n### Status Code\n\n- **200 OK:** The request was successful and the server returned the requested data.\n    \n\n### Response Format\n\nThe response will be in JSON format and includes an array of customer objects. Each object contains the following fields:\n\n- **_id:** A unique identifier for the customer.\n    \n- **name:** The name of the customer.\n    \n- **phone:** The contact phone number for the customer.\n    \n- **address:** The physical address of the customer.\n    \n- **credit:** The total credit amount associated with the customer.\n    \n- **debt:** The total debt amount associated with the customer.\n    \n- **createdAt:** The timestamp when the customer was created.\n    \n- **updatedAt:** The timestamp when the customer was last updated.\n    \n- **__v:** The version key for the customer document.\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"_id\": \"\",\n        \"name\": \"\",\n        \"phone\": \"\",\n        \"address\": \"\",\n        \"credit\": 0,\n        \"debt\": 0,\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\",\n        \"__v\": 0\n    }\n]\n\n ```\n\n## Additional Notes\n\nEnsure that your request is properly authenticated if required by the API. The response will return an array, which may be empty if no customers are found.\n\nThis endpoint retrieves a list of customers from the system.\n\n### Request\n\n- **Method:** `GET`\n    \n- **Endpoint:** `{{base_url}}/customers`\n    \n\n### Response\n\nUpon a successful request, the API will return a `200 OK` status with a JSON array containing customer objects. Each customer object includes the following fields:\n\n- **_id**: Unique identifier for the customer (string)\n    \n- **name**: Name of the customer (string)\n    \n- **phone**: Phone number of the customer (string)\n    \n- **address**: Address of the customer (string)\n    \n- **credit**: Credit balance of the customer (number)\n    \n- **debt**: Debt balance of the customer (number)\n    \n- **createdAt**: Timestamp of when the customer was created (string)\n    \n- **updatedAt**: Timestamp of when the customer was last updated (string)\n    \n- **__v**: Version key for the customer record (number)\n    \n\n### Error Codes\n\nThe following error codes may be returned:\n\n- **400 Bad Request**: The request was invalid or cannot be served.\n    \n- **404 Not Found**: The requested resource could not be found.\n    \n- **500 Internal Server Error**: An unexpected error occurred on the server.\n    \n\nEnsure to handle these error codes appropriately in your application."
-					},
-					"response": []
-				},
-				{
-					"name": "Create Customer",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/customers",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"customers"
-							]
-						},
-						"description": "## Add Customer\n\nThis endpoint allows you to create a new customer in the system.\n\n### Request\n\n- **Method**: POST\n    \n- **Endpoint**: `{{base_url}}/customers`\n    \n- **Content-Type**: application/json\n    \n\n### Request Body Parameters\n\nThe request body must be in JSON format and include the following parameters:\n\n- **name** (string): The name of the customer.\n    \n- **phone** (string): The phone number of the customer.\n    \n- **address** (string): The address of the customer.\n    \n\n#### Example Request Body\n\n``` json\n{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\"\n}\n\n ```\n\n### Response\n\nOn a successful request, the API will respond with:\n\n- **Status**: 201 Created\n    \n- **Content-Type**: application/json\n    \n\n#### Response Body\n\nThe response body will contain the following fields:\n\n- **name** (string): The name of the customer (echoed back).\n    \n- **phone** (string): The phone number of the customer (echoed back).\n    \n- **address** (string): The address of the customer (echoed back).\n    \n- **credit** (number): The initial credit balance for the customer, defaulting to 0.\n    \n- **debt** (number): The initial debt balance for the customer, defaulting to 0.\n    \n- **_id** (string): The unique identifier for the customer.\n    \n- **createdAt** (string): The timestamp when the customer was created.\n    \n- **updatedAt** (string): The timestamp when the customer was last updated.\n    \n- **__v** (number): The version key for the document.\n    \n\n#### Example Response Body\n\n``` json\n{\n  \"name\": \"\",\n  \"phone\": \"\",\n  \"address\": \"\",\n  \"credit\": 0,\n  \"debt\": 0,\n  \"_id\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```"
-					},
-					"response": []
-				},
-				{
-					"name": "Update Customer",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Cliente\",\r\n    \"phone\": \"999999999\",\r\n    \"address\": \"Rua X\",\r\n    \"credit\": 0,\r\n    \"debt\": 0\r\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/customers/{{id_client}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"customers",
-								"{{id_client}}"
-							]
-						},
-						"description": "## Update Customer Information\n\nThis endpoint allows you to update the information of a specific customer identified by their unique client ID.\n\n### Endpoint\n\n`PUT {{base_url}}/customers/{{id_client}}`\n\n### Request Parameters\n\n- **id_client** (path parameter): The unique identifier of the customer you want to update.\n    \n\n### Request Body\n\nThe request body should be in JSON format and include the following fields:\n\n| Key | Type | Description |\n| --- | --- | --- |\n| name | string | The name of the customer. |\n| phone | string | The phone number of the customer. |\n| address | string | The address of the customer. |\n| credit | number | The current credit balance of the customer. |\n| debt | number | The current debt balance of the customer. |\n\n**Example Request Body:**\n\n``` json\n{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\",\n  \"credit\": 0,\n  \"debt\": 0\n}\n\n ```\n\n### Response\n\nOn a successful update, the server will respond with a status code of `200` and a JSON object containing the updated customer information.\n\n#### Response Structure\n\n| Key | Type | Description |\n| --- | --- | --- |\n| _id | string | The unique identifier of the customer. |\n| name | string | The updated name of the customer. |\n| phone | string | The updated phone number of the customer. |\n| address | string | The updated address of the customer. |\n| credit | number | The updated credit balance of the customer. |\n| debt | number | The updated debt balance of the customer. |\n| createdAt | string | The timestamp when the customer was created. |\n| updatedAt | string | The timestamp when the customer was last updated. |\n| __v | number | The version key for the customer document. |\n\n**Example Response:**\n\n``` json\n{\n  \"_id\": \"\",\n  \"name\": \"\",\n  \"phone\": \"\",\n  \"address\": \"\",\n  \"credit\": 0,\n  \"debt\": 0,\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Customer",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/customers/{{id_client}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"customers",
-								"{{id_client}}"
-							]
-						},
-						"description": "# Delete Customer\n\nThis endpoint allows you to delete a customer from the system using their unique identifier.\n\n## Endpoint\n\n`DELETE {{base_url}}/customers/{{id_client}}`\n\n## Method\n\n`DELETE`\n\n## Request Parameters\n\n- `id_client` (path parameter): The unique identifier of the customer you wish to delete.\n    \n\n## Response Schema\n\n- **Status Code**: `204 No Content` - Indicates that the request was successful and the customer has been deleted. No content is returned in the response body.\n    \n\n## Additional Notes\n\n- Ensure that the `id_client` provided corresponds to an existing customer in the system. If the customer does not exist, the server may respond with an error.\n    \n- This operation is irreversible; once a customer is deleted, their data cannot be recovered.\n    \n\n## Example\n\nTo delete a customer with ID `12345`, the request would look like:\n\n```\nDELETE {{base_url}}/customers/12345\n\n ```"
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"// Configurações de login (ajuste conforme necessário)\r",
-							"const loginBody = {\r",
-							"  email: pm.environment.get(\"user\"),\r",
-							"  password: pm.environment.get(\"password\")\r",
-							"};\r",
-							"\r",
-							"pm.sendRequest({\r",
-							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
-							"  method: \"POST\",\r",
-							"  header: { \"Content-Type\": \"application/json\" },\r",
-							"  body: {\r",
-							"    mode: \"raw\",\r",
-							"    raw: JSON.stringify(loginBody)\r",
-							"  }\r",
-							"}, function (err, res) {\r",
-							"  if (err) {\r",
-							"    console.log(\"Erro na autenticação:\", err);\r",
-							"  } else {\r",
-							"    const json = res.json();\r",
-							"    if (json.token) {\r",
-							"      pm.environment.set(\"token\", json.token);\r",
-							"      console.log(\"✅ Token atualizado no environment.\");\r",
-							"    } else {\r",
-							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
-							"    }\r",
-							"  }\r",
-							"});\r",
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Dashboard API",
-			"item": [
-				{
-					"name": "Get Dashboard",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/dashboard",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"dashboard"
-							]
-						},
-						"description": "## Dashboard Endpoint\n\nThis endpoint retrieves an overview of the dashboard, providing key metrics and insights related to customers, payments, and sales.\n\n### Request\n\n- **Method**: GET\n    \n- **URL**: `{{base_url}}/dashboard`\n    \n\n### Response\n\nOn a successful request, the server returns a JSON object with the following structure:\n\n- **topCustomers**: An array containing the top customers. This array may be empty if there are no customers.\n    \n- **topAffiliations**: An array of objects representing the top affiliations. Each object contains:\n    \n    - **_id**: The unique identifier for the affiliation.\n        \n    - **name**: The name of the affiliation.\n        \n    - **address**: The address of the affiliation.\n        \n    - **phone**: The contact phone number for the affiliation.\n        \n    - **createdAt**: The timestamp when the affiliation was created.\n        \n    - **updatedAt**: The timestamp when the affiliation was last updated.\n        \n    - **__v**: The version key for the affiliation document.\n        \n    - **totalDebt**: The total debt associated with the affiliation.\n        \n- **totalCustomers**: The total number of customers, represented as an integer.\n    \n- **totalPayments**: The total number of payments processed, represented as an integer.\n    \n- **totalSales**: The total sales amount, represented as an integer.\n    \n\n### Example Response\n\n``` json\n{\n  \"topCustomers\": [],\n  \"topAffiliations\": [\n    {\n      \"_id\": \"\",\n      \"name\": \"\",\n      \"address\": \"\",\n      \"phone\": \"\",\n      \"createdAt\": \"\",\n      \"updatedAt\": \"\",\n      \"__v\": 0,\n      \"totalDebt\": 0\n    }\n  ],\n  \"totalCustomers\": 0,\n  \"totalPayments\": 0,\n  \"totalSales\": 0\n}\n\n ```\n\nThis endpoint is useful for obtaining a quick summary of the business's performance metrics related to customers and sales."
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"// Configurações de login (ajuste conforme necessário)\r",
-							"const loginBody = {\r",
-							"  email: pm.environment.get(\"user\"),\r",
-							"  password: pm.environment.get(\"password\")\r",
-							"};\r",
-							"\r",
-							"pm.sendRequest({\r",
-							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
-							"  method: \"POST\",\r",
-							"  header: { \"Content-Type\": \"application/json\" },\r",
-							"  body: {\r",
-							"    mode: \"raw\",\r",
-							"    raw: JSON.stringify(loginBody)\r",
-							"  }\r",
-							"}, function (err, res) {\r",
-							"  if (err) {\r",
-							"    console.log(\"Erro na autenticação:\", err);\r",
-							"  } else {\r",
-							"    const json = res.json();\r",
-							"    if (json.token) {\r",
-							"      pm.environment.set(\"token\", json.token);\r",
-							"      console.log(\"✅ Token atualizado no environment.\");\r",
-							"    } else {\r",
-							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
-							"    }\r",
-							"  }\r",
-							"});\r",
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Payments API",
-			"item": [
-				{
-					"name": "Create Payment",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"customer\": \"{{id_client}}\",\n  \"amount\": 100000\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/payments",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"payments"
-							]
-						},
-						"description": "### Create Payment\n\nThis endpoint allows you to create a new payment record for a specified customer. It is used to process payments and track financial transactions associated with customers.\n\n#### Request\n\n- **Method**: POST\n    \n- **URL**: `{{base_url}}/payments`\n    \n- **Body**: The request body must be in JSON format and should contain the following parameters:\n    \n    - `customerId` (string): The unique identifier of the customer making the payment.\n        \n    - `amount` (integer): The amount of money to be processed for the payment, expressed in the smallest currency unit (e.g., cents for USD).\n        \n\n**Example Request Body**:\n\n``` json\n{\n  \"customerId\": \"{{id_client}}\",\n  \"amount\": 100000\n}\n\n ```\n\n#### Response\n\n- **Status Code**: 201 Created\n    \n- **Content-Type**: application/json\n    \n\nThe response body will contain the following fields:\n\n- `customer` (string): The unique identifier of the customer associated with the payment.\n    \n- `amount` (integer): The amount processed for the payment.\n    \n- `_id` (string): The unique identifier of the payment record created.\n    \n- `date` (string): The date when the payment was processed.\n    \n- `createdAt` (string): The timestamp when the payment record was created.\n    \n- `updatedAt` (string): The timestamp when the payment record was last updated.\n    \n- `__v` (integer): The version key for the payment record.\n    \n\n**Example Response Body**:\n\n``` json\n{\n  \"customer\": \"\",\n  \"amount\": 0,\n  \"_id\": \"\",\n  \"date\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```\n\n#### Notes\n\n- Ensure that the `customerId` corresponds to an existing customer in the system.\n    \n- The `amount` must be a positive integer representing the payment value.\n    \n- A successful response indicates that the payment has been recorded, and the client can expect further details or confirmation through subsequent requests."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Payments by Client",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/payments/customer/{{id_client}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"payments",
-								"customer",
-								"{{id_client}}"
-							]
-						},
-						"description": "# Get Customer Payments\n\nThis endpoint retrieves the payment records associated with a specific customer identified by their unique client ID.\n\n## Request\n\n### HTTP Method\n\n`GET`\n\n### URL\n\n`{{base_url}}/payments/customer/{{id_client}}`\n\n### Path Parameters\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `id_client` | string | The unique identifier of the customer whose payment records are being requested. |\n\n## Response\n\n### Status Code\n\n`200 OK`\n\n### Content-Type\n\n`application/json`\n\n### Response Structure\n\nThe response is an array of payment objects, each containing the following fields:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `_id` | string | The unique identifier for the payment record. |\n| `customer` | string | The identifier for the customer associated with the payment. |\n| `amount` | number | The amount of the payment. |\n| `date` | string | The date when the payment was made. |\n| `createdAt` | string | The timestamp when the payment record was created. |\n| `updatedAt` | string | The timestamp when the payment record was last updated. |\n| `__v` | number | The version key for the payment record. |\n\n### Example Response\n\n``` json\n[\n    {\n        \"_id\": \"payment_id_123\",\n        \"customer\": \"customer_id_456\",\n        \"amount\": 100,\n        \"date\": \"2023-10-01\",\n        \"createdAt\": \"2023-10-01T12:00:00Z\",\n        \"updatedAt\": \"2023-10-01T12:00:00Z\",\n        \"__v\": 0\n    }\n]\n\n ```\n\n## Additional Notes\n\n- Ensure that the `id_client` parameter is valid to retrieve the correct payment records.\n    \n- The response may contain multiple payment records for the specified customer."
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"// Configurações de login (ajuste conforme necessário)\r",
-							"const loginBody = {\r",
-							"  email: pm.environment.get(\"user\"),\r",
-							"  password: pm.environment.get(\"password\")\r",
-							"};\r",
-							"\r",
-							"pm.sendRequest({\r",
-							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
-							"  method: \"POST\",\r",
-							"  header: { \"Content-Type\": \"application/json\" },\r",
-							"  body: {\r",
-							"    mode: \"raw\",\r",
-							"    raw: JSON.stringify(loginBody)\r",
-							"  }\r",
-							"}, function (err, res) {\r",
-							"  if (err) {\r",
-							"    console.log(\"Erro na autenticação:\", err);\r",
-							"  } else {\r",
-							"    const json = res.json();\r",
-							"    if (json.token) {\r",
-							"      pm.environment.set(\"token\", json.token);\r",
-							"      console.log(\"✅ Token atualizado no environment.\");\r",
-							"    } else {\r",
-							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
-							"    }\r",
-							"  }\r",
-							"});\r",
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Products API",
-			"item": [
-				{
-					"name": "Get Products",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/products",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"products"
-							]
-						},
-						"description": "## Get Products\n\nThis endpoint retrieves a list of products available in the system.\n\n### Request\n\n- **Method**: `GET`\n    \n- **URL**: `{{base_url}}/products`\n    \n\n### Response\n\n- **Status Code**: `200 OK`\n    \n- **Content-Type**: `application/json`\n    \n\n### Response Body\n\nThe response will return an array of product objects, each containing the following fields:\n\n- **_id**: Unique identifier for the product (string)\n    \n- **name**: Name of the product (string)\n    \n- **unitPrice**: Price of the product (number)\n    \n- **createdAt**: Timestamp when the product was created (string)\n    \n- **updatedAt**: Timestamp when the product was last updated (string)\n    \n- **__v**: Version key (number)\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"_id\": \"\",\n        \"name\": \"\",\n        \"unitPrice\": 0,\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\",\n        \"__v\": 0\n    }\n]\n\n ```\n\n### Notes\n\n- Ensure to handle the response appropriately, as it will be an array containing multiple product objects."
-					},
-					"response": []
-				},
-				{
-					"name": "Create Product",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Produto\",\n  \"unitPrice\": 50\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/products",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"products"
-							]
-						},
-						"description": "## Create Product\n\nThis endpoint allows you to create a new product in the system. Upon successful creation, the server will respond with the details of the newly created product.\n\n### Request\n\n- **Method**: POST\n    \n- **URL**: `{{base_url}}/products`\n    \n- **Content-Type**: application/json\n    \n\n#### Request Body\n\nThe request body must be in JSON format and should include the following parameters:\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `name` | string | The name of the product. |\n| `unitPrice` | number | The price per unit of the product. |\n\n**Example Request Body:**\n\n``` json\n{\n  \"name\": \"Produto\",\n  \"unitPrice\": 50\n}\n\n ```\n\n### Response\n\nOn a successful request, the server will respond with a `201 Created` status and a JSON object containing the following fields:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `name` | string | The name of the created product. |\n| `unitPrice` | number | The price per unit of the created product. |\n| `_id` | string | The unique identifier for the product. |\n| `createdAt` | string | Timestamp of when the product was created. |\n| `updatedAt` | string | Timestamp of the last update to the product. |\n| `__v` | number | Version key for the product document. |\n\n**Example Response:**\n\n``` json\n{\n  \"name\": \"\",\n  \"unitPrice\": 0,\n  \"_id\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```\n\n### Additional Notes\n\n- Ensure that the `name` and `unitPrice` fields are provided in the request body, as they are required for creating a product.\n    \n- The response will return the product details, including the generated `_id`, which can be used for further operations on the product.\n    \n\nThis endpoint allows users to create a new product by sending a POST request to the `/products` endpoint.\n\n### Request Parameters\n\nThe request body must be in JSON format and should include the following parameters:\n\n- **name** (string): The name of the product. This is a required field.\n    \n- **unitPrice** (number): The price of the product per unit. This is a required field.\n    \n\n#### Example Request Body\n\n``` json\n{\n  \"name\": \"Produto\",\n  \"unitPrice\": 50\n}\n\n ```\n\n### Expected Response\n\nUpon a successful request, the API will return a response with the following characteristics:\n\n- **Status Code**: `201 Created`\n    \n- **Content-Type**: `application/json`\n    \n- {\"name\": \"\",\"unitPrice\": 0,\"_id\": \"\",\"createdAt\": \"\",\"updatedAt\": \"\",\"__v\": 0}\n    \n\n### Notes\n\n- The response will include the created product's details, but the fields will be empty or default values as they are placeholders. The actual values will be populated in a real implementation.\n    \n- Ensure that the `name` and `unitPrice` fields are provided in the request to avoid validation errors."
-					},
-					"response": []
-				},
-				{
-					"name": "Update Product",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Produto\",\r\n    \"unitPrice\": 50\r\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/products/{{id_product}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"products",
-								"{{id_product}}"
-							]
-						},
-						"description": "## Update Product\n\nThis endpoint allows you to update the details of a specific product identified by its unique ID.\n\n### Request\n\n- **URL:** `{{base_url}}/products/{{id_product}}`\n    \n- **Method:** PUT\n    \n- **Body Type:** Raw\n    \n\n#### Request Body\n\nThe request body should be formatted as JSON and must include the following fields to update the product:\n\n- **name** (string): The name of the product (required).\n    \n- **unitPrice** (number): The price per unit of the product (required).\n    \n\nYou may also include the following optional fields:\n\n- **_id** (string): The unique identifier for the product (optional).\n    \n- **createdAt** (string): The date and time when the product was created (optional).\n    \n- **updatedAt** (string): The date and time when the product was last updated (optional).\n    \n- **__v** (number): The version key (optional).\n    \n\nEnsure that the product ID is correctly specified in the URL to successfully update the desired product.\n\n### Response\n\n- **Status Code:** 200\n    \n- **Content-Type:** application/json\n    \n\nUpon a successful update, the server responds with a JSON object containing the updated product details, including:\n\n- **_id** (string): The unique identifier of the product.\n    \n- **name** (string): The name of the product.\n    \n- **unitPrice** (number): The updated price of the product.\n    \n- **createdAt** (string): The date and time when the product was created.\n    \n- **updatedAt** (string): The date and time when the product was last updated.\n    \n- **__v** (number): The version key of the product.\n    \n\n### Example Response\n\n``` json\n{\n  \"_id\": \"\",\n  \"name\": \"\",\n  \"unitPrice\": 0,\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```\n\nMake sure to include the necessary fields in the request body to successfully update the product information."
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Product",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/products/{{id_product}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"products",
-								"{{id_product}}"
-							]
-						},
-						"description": "## Delete Product\n\nThis endpoint allows you to delete a specific product from the inventory.\n\n### Request\n\n- **Method**: `DELETE`\n    \n- **Endpoint**: `{{base_url}}/products/{{id_product}}`\n    \n\n### Parameters\n\n- **id_product** (path parameter): The unique identifier of the product you wish to delete. This should be replaced with the actual product ID when making the request.\n    \n\n### Response\n\n- **Status Code**: `204 No Content`\n    \n    - Indicates that the product was successfully deleted and there is no content to return.\n        \n- **Content-Type**: `text/xml`\n    \n    - The response will be in XML format, although no content will be present in the body.\n        \n\n### Notes\n\n- Ensure that the product ID provided is valid and corresponds to an existing product in the system. If the product does not exist, the server may return an error response."
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"// Configurações de login (ajuste conforme necessário)\r",
-							"const loginBody = {\r",
-							"  email: pm.environment.get(\"user\"),\r",
-							"  password: pm.environment.get(\"password\")\r",
-							"};\r",
-							"\r",
-							"pm.sendRequest({\r",
-							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
-							"  method: \"POST\",\r",
-							"  header: { \"Content-Type\": \"application/json\" },\r",
-							"  body: {\r",
-							"    mode: \"raw\",\r",
-							"    raw: JSON.stringify(loginBody)\r",
-							"  }\r",
-							"}, function (err, res) {\r",
-							"  if (err) {\r",
-							"    console.log(\"Erro na autenticação:\", err);\r",
-							"  } else {\r",
-							"    const json = res.json();\r",
-							"    if (json.token) {\r",
-							"      pm.environment.set(\"token\", json.token);\r",
-							"      console.log(\"✅ Token atualizado no environment.\");\r",
-							"    } else {\r",
-							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
-							"    }\r",
-							"  }\r",
-							"});\r",
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Sales API",
-			"item": [
-				{
-					"name": "Create Sale",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"customer\": \"{{id_client}}\",\n  \"products\": [\n    {\n      \"product\": \"6823d1dea1b1af918df8f312\",\n      \"quantity\": 2,\n      \"unitPrice\": 10\n    }\n  ],\n  \"total\": 20\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/sales",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sales"
-							]
-						},
-						"description": "### Add Sale\n\nThis endpoint allows you to create a new sale record in the system. By sending a POST request to `/sales`, you can register a sale associated with a specific customer and the products involved in the transaction. This is essential for tracking sales data and managing inventory effectively.\n\n#### Request Body Format\n\nThe request body must be in JSON format and should include the following parameters:\n\n- **customer** (string): The unique identifier of the customer making the purchase.\n    \n- **products** (array): An array of product objects, each containing:\n    \n    - **product** (string): The unique identifier of the product being sold.\n        \n    - **quantity** (integer): The number of units being sold.\n        \n    - **unitPrice** (number): The price per unit of the product.\n        \n- **total** (number): The total amount for the sale, which should be the sum of the products' quantities multiplied by their respective unit prices.\n    \n\n**Example Request Body:**\n\n``` json\n{\n  \"customer\": \"{{id_client}}\",\n  \"products\": [\n    {\n      \"product\": \"6823d1dea1b1af918df8f312\",\n      \"quantity\": 2,\n      \"unitPrice\": 10\n    }\n  ],\n  \"total\": 20\n}\n\n ```\n\n#### Response Structure\n\nUpon a successful request, the API will return a response with the following characteristics:\n\n- **Status**: 201 Created\n    \n- **Content-Type**: application/json\n    \n\nThe response body will contain the following fields:\n\n- **customer** (string): The unique identifier of the customer associated with the sale.\n    \n- **products** (array): An array of product objects that were part of the sale, each containing:\n    \n    - **product** (string): The unique identifier of the product sold.\n        \n    - **quantity** (integer): The number of units sold.\n        \n    - **unitPrice** (number): The price per unit of the product.\n        \n    - **_id** (string): The unique identifier of the product object in the sale.\n        \n- **total** (number): The total amount for the sale.\n    \n- **_id** (string): The unique identifier of the sale record.\n    \n- **date** (string): The date when the sale was created.\n    \n- **createdAt** (string): The timestamp when the sale record was created.\n    \n- **updatedAt** (string): The timestamp when the sale record was last updated.\n    \n- **__v** (integer): The version key for the sale record.\n    \n\nEnsure that the request body adheres to the specified format to avoid errors and facilitate the successful creation of a sale record."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Sales by Customer",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/sales/customer/{{id_client}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"sales",
-								"customer",
-								"{{id_client}}"
-							]
-						},
-						"description": "## Get Customer Sales\n\nThis endpoint retrieves the sales information associated with a specific customer identified by their unique client ID.\n\n### Request\n\n- **Method:** GET\n    \n- **URL:** `{{base_url}}/sales/customer/{{id_client}}`\n    \n\n#### Path Parameters\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `id_client` | string | The unique identifier for the customer. |\n\n### Response\n\n- **Status Code:** 200\n    \n- **Content-Type:** application/json\n    \n\n#### Response Body\n\nThe response will return a JSON array containing sales records for the specified customer. Each record includes the following fields:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `_id` | string | Unique identifier for the sales record. |\n| `customer` | string | Name or identifier of the customer. |\n| `products` | array | List of products associated with the sale. |\n| `total` | number | Total amount of the sale. |\n| `date` | string | Date of the sale transaction. |\n| `createdAt` | string | Timestamp of when the record was created. |\n| `updatedAt` | string | Timestamp of when the record was last updated. |\n| `__v` | number | Version key for the record. |\n\n### Notes\n\n- Ensure that the `id_client` parameter is correctly specified to retrieve the appropriate sales data.\n    \n- The response will be an array, even if there is only one sales record.\n    \n\nThis endpoint retrieves sales information for a specific customer identified by their unique client ID. It returns details about the customer's purchases, including the products bought, their quantities, unit prices, and the total amount spent.\n\n## Request\n\n### HTTP Method\n\n`GET`\n\n### Endpoint\n\n`{{base_url}}/sales/customer/{{id_client}}`\n\n### Path Parameters\n\n- `id_client` (string): The unique identifier for the customer whose sales information is being requested.\n    \n\n## Response\n\n### Status Code\n\n- `200 OK`: Indicates that the request was successful.\n    \n\n### Content-Type\n\n- `application/json`\n    \n\n### Response Body\n\nThe response will be a JSON array containing the following fields:\n\n- `_id` (string): The unique identifier for the sales record.\n    \n- `customer` (string): The name or identifier of the customer.\n    \n- `products` (array): A list of products purchased, where each product has:\n    \n    - `product` (string|null): The identifier or name of the product.\n        \n    - `quantity` (integer): The quantity of the product purchased.\n        \n    - `unitPrice` (number): The price per unit of the product.\n        \n    - `_id` (string): The unique identifier for the product entry.\n        \n- `total` (number): The total amount spent by the customer on this sale.\n    \n- `date` (string): The date of the sale.\n    \n- `createdAt` (string): Timestamp when the sales record was created.\n    \n- `updatedAt` (string): Timestamp when the sales record was last updated.\n    \n- `__v` (integer): Version key for the record.\n    \n\n## Additional Notes\n\n- Ensure that the `id_client` parameter is valid and corresponds to an existing customer in the system.\n    \n- The response will include an array, which may contain multiple sales records for the specified customer.\n    \n- If no sales records are found for the given `id_client`, an empty array will be returned."
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"// Configurações de login (ajuste conforme necessário)\r",
-							"const loginBody = {\r",
-							"  email: pm.environment.get(\"user\"),\r",
-							"  password: pm.environment.get(\"password\")\r",
-							"};\r",
-							"\r",
-							"pm.sendRequest({\r",
-							"  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
-							"  method: \"POST\",\r",
-							"  header: { \"Content-Type\": \"application/json\" },\r",
-							"  body: {\r",
-							"    mode: \"raw\",\r",
-							"    raw: JSON.stringify(loginBody)\r",
-							"  }\r",
-							"}, function (err, res) {\r",
-							"  if (err) {\r",
-							"    console.log(\"Erro na autenticação:\", err);\r",
-							"  } else {\r",
-							"    const json = res.json();\r",
-							"    if (json.token) {\r",
-							"      pm.environment.set(\"token\", json.token);\r",
-							"      console.log(\"✅ Token atualizado no environment.\");\r",
-							"    } else {\r",
-							"      console.log(\"⚠️ Token ausente na resposta.\");\r",
-							"    }\r",
-							"  }\r",
-							"});\r",
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "111cade8-96b6-4be0-9a2a-5f432f6d4903",
+    "name": "Vendas BFF - Full API",
+    "description": "Todos os endpoints do backend agrupados por domínio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "4680126"
+  },
+  "item": [
+    {
+      "name": "Affiliations API",
+      "item": [
+        {
+          "name": "Get Affiliations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/affiliations",
+              "host": ["{{base_url}}"],
+              "path": ["affiliations"]
+            },
+            "description": "# Affiliations API Endpoint\n\nThis endpoint retrieves a list of affiliations from the server.\n\n## Request\n\n- **Method**: `GET`\n    \n- **Endpoint**: `{{base_url}}/affiliations`\n    \n\n### Parameters\n\nThis request does not require any additional parameters.\n\n## Response\n\n### Status Code\n\n- **200 OK**: The request was successful and the server returned the requested data.\n    \n\n### Response Format\n\nThe response will be in JSON format and includes an array of affiliation objects. Each object contains the following fields:\n\n- **_id**: A unique identifier for the affiliation.\n    \n- **name**: The name of the affiliation.\n    \n- **address**: The physical address of the affiliation.\n    \n- **phone**: The contact phone number for the affiliation.\n    \n- **createdAt**: The timestamp when the affiliation was created.\n    \n- **updatedAt**: The timestamp when the affiliation was last updated.\n    \n- **__v**: The version key for the affiliation document.\n    \n- **totalDebt**: The total debt associated with the affiliation.\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"_id\": \"\",\n        \"name\": \"\",\n        \"address\": \"\",\n        \"phone\": \"\",\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\",\n        \"__v\": 0,\n        \"totalDebt\": 0\n    }\n]\n\n ```\n\n## Additional Notes\n\n- Ensure that your request is properly authenticated if required by the API.\n    \n- The response will return an array, which may be empty if no affiliations are found."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Affiliation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Inst\",\n  \"address\": \"Rua\",\n  \"phone\": \"999\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/affiliations",
+              "host": ["{{base_url}}"],
+              "path": ["affiliations"]
+            },
+            "description": "## Add Affiliations\n\nThis endpoint allows users to create a new affiliation by submitting the necessary details.\n\n### Request\n\n- **Method**: POST\n    \n- **Endpoint**: `{{base_url}}/affiliations`\n    \n\n#### Request Body\n\nThe request body must be in JSON format and should include the following parameters:\n\n- `name` (string): The name of the affiliation.\n    \n- `address` (string): The address associated with the affiliation.\n    \n- `phone` (string): The contact phone number for the affiliation.\n    \n\n**Example Request Body**:\n\n``` json\n{\n  \"name\": \"Inst\",\n  \"address\": \"Rua\",\n  \"phone\": \"999\"\n}\n\n ```\n\n### Response\n\nUpon successful creation of an affiliation, the server will respond with a status code of **201 Created** and a JSON object containing the following fields:\n\n- `name` (string): The name of the affiliation (returned as an empty string if not set).\n    \n- `address` (string): The address of the affiliation (returned as an empty string if not set).\n    \n- `phone` (string): The contact phone number (returned as an empty string if not set).\n    \n- `_id` (string): The unique identifier of the created affiliation.\n    \n- `createdAt` (string): The timestamp when the affiliation was created.\n    \n- `updatedAt` (string): The timestamp when the affiliation was last updated.\n    \n- `__v` (integer): The version key for the document.\n    \n\n**Example Response**:\n\n``` json\n{\n  \"name\": \"\",\n  \"address\": \"\",\n  \"phone\": \"\",\n  \"_id\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Affiliation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Inst\",\r\n  \"address\": \"Rua\",\r\n  \"phone\": \"999\",\r\n  \"totalDebit\": 1000\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/affiliations/{{id_affiliation}}",
+              "host": ["{{base_url}}"],
+              "path": ["affiliations", "{{id_affiliation}}"]
+            },
+            "description": "## Update Affiliation\n\nThis endpoint allows you to update an existing affiliation's details. You can modify the affiliation's name, address, phone number, and total debit amount by sending a PUT request to the specified URL.\n\n### Request\n\n- **Method**: PUT\n    \n- **URL**: `{{base_url}}/affiliations/{{id_affiliation}}`\n    \n\n#### Request Body\n\nThe request body must be in JSON format and include the following parameters:\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `name` | string | The name of the affiliation. |\n| `address` | string | The address of the affiliation. |\n| `phone` | string | The contact phone number. |\n| `totalDebit` | number | The total debit amount. |\n\n**Example Request Body:**\n\n``` json\n{\n  \"name\": \"Inst\",\n  \"address\": \"Rua\",\n  \"phone\": \"999\",\n  \"totalDebit\": 1000\n}\n\n ```\n\n### Response\n\nUpon a successful update, the server will respond with a status code of `200` and a JSON object containing the updated affiliation details. The structure of the response is as follows:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `_id` | string | The unique identifier of the affiliation. |\n| `name` | string | The updated name of the affiliation. |\n| `address` | string | The updated address of the affiliation. |\n| `phone` | string | The updated contact phone number. |\n| `createdAt` | string | The timestamp when the affiliation was created. |\n| `updatedAt` | string | The timestamp when the affiliation was last updated. |\n| `__v` | number | The version key for the document. |\n\n**Example Response:**\n\n``` json\n{\n  \"_id\": \"\",\n  \"name\": \"\",\n  \"address\": \"\",\n  \"phone\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```\n\nMake sure to replace `{{id_affiliation}}` with the actual ID of the affiliation you wish to update."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Affiliation",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/affiliations/{{id_affiliation}}",
+              "host": ["{{base_url}}"],
+              "path": ["affiliations", "{{id_affiliation}}"]
+            },
+            "description": "## Delete Affiliation\n\nThis endpoint allows you to delete an affiliation identified by its unique ID.\n\n### Request\n\n- **Method**: DELETE\n    \n- **Endpoint**: `{{base_url}}/affiliations/{{id_affiliation}}`\n    \n- **Path Parameter**:\n    \n    - `id_affiliation`: The unique identifier of the affiliation that you wish to delete. This parameter is required.\n        \n\n### Response\n\n- **Status Code**: 204 No Content\n    \n- **Content-Type**: text/xml\n    \n\nA successful deletion will return a `204 No Content` status, indicating that the request was processed successfully and there is no additional content to return in the response body."
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              "// Configurações de login (ajuste conforme necessário)\r",
+              "const loginBody = {\r",
+              "  email: pm.environment.get(\"user\"),\r",
+              "  password: pm.environment.get(\"password\")\r",
+              "};\r",
+              "\r",
+              "pm.sendRequest({\r",
+              "  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+              "  method: \"POST\",\r",
+              "  header: { \"Content-Type\": \"application/json\" },\r",
+              "  body: {\r",
+              "    mode: \"raw\",\r",
+              "    raw: JSON.stringify(loginBody)\r",
+              "  }\r",
+              "}, function (err, res) {\r",
+              "  if (err) {\r",
+              "    console.log(\"Erro na autenticação:\", err);\r",
+              "  } else {\r",
+              "    const json = res.json();\r",
+              "    if (json.token) {\r",
+              "      pm.environment.set(\"token\", json.token);\r",
+              "      console.log(\"✅ Token atualizado no environment.\");\r",
+              "    } else {\r",
+              "      console.log(\"⚠️ Token ausente na resposta.\");\r",
+              "    }\r",
+              "  }\r",
+              "});\r",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [""]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth API",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"securePassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "## Register User\n\nThis endpoint allows new users to register by providing their email and password.\n\n### HTTP Method\n\n`POST`\n\n### Endpoint\n\n`{{base_url}}/auth/register`\n\n### Request Parameters\n\nThe request body must be a JSON object containing the following parameters:\n\n- **email** (string): The email address of the user. This will be used for account verification and login.\n    \n- **password** (string): The password chosen by the user for their account. It should be kept secure.\n    \n\n### Request Example\n\n``` json\n{\n  \"email\": \"test@example.com\",\n  \"password\": \"securePassword123\"\n}\n\n ```\n\n### Expected Response\n\nOn successful registration, the server will respond with:\n\n- **Status Code**: `201 Created`\n    \n- **Content-Type**: `application/json`\n    \n- **Response Body**: A JSON object containing a message.\n    \n\n``` json\n{\n  \"message\": \"\"\n}\n\n ```\n\nThis indicates that the registration was successful, and further instructions or information may be provided in the message field."
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{user}}\",\n  \"password\": \"{{password}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "## Login Endpoint\n\nThis endpoint allows users to authenticate and obtain a token for subsequent API requests.\n\n### Request\n\n- **Method**: `POST`\n    \n- **Endpoint**: `{{base_url}}/auth/login`\n    \n- **Request Body**: The request must include a JSON payload with the following parameters:\n    \n    - `email` (string): The email address of the user attempting to log in.\n        \n    - `password` (string): The password associated with the user's account.\n        \n\n### Example Request Body\n\n``` json\n{\n  \"email\": \"{{user}}\",\n  \"password\": \"{{password}}\"\n}\n\n ```\n\n### Response\n\n- **Status Code**: `200 OK`\n    \n- **Content-Type**: `application/json`\n    \n- **Response Body**: On successful authentication, the response will contain a JSON object with the following parameter:\n    \n    - `token` (string): A token that can be used for authorization in subsequent requests.\n        \n\n### Example Response\n\n``` json\n{\n  \"token\": \"\"\n}\n\n ```\n\nEnsure that the email and password provided are valid to receive the authentication token."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customers API",
+      "item": [
+        {
+          "name": "Get Customer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/customers",
+              "host": ["{{base_url}}"],
+              "path": ["customers"]
+            },
+            "description": "# Customers API Endpoint\n\nThis endpoint retrieves a list of customers from the server.\n\n## Request\n\n- **Method:** GET\n    \n- **Endpoint:** `{{base_url}}/customers`\n    \n\n## Parameters\n\nThis request does not require any additional parameters.\n\n## Response\n\n### Status Code\n\n- **200 OK:** The request was successful and the server returned the requested data.\n    \n\n### Response Format\n\nThe response will be in JSON format and includes an array of customer objects. Each object contains the following fields:\n\n- **_id:** A unique identifier for the customer.\n    \n- **name:** The name of the customer.\n    \n- **phone:** The contact phone number for the customer.\n    \n- **address:** The physical address of the customer.\n    \n- **credit:** The total credit amount associated with the customer.\n    \n- **debt:** The total debt amount associated with the customer.\n    \n- **createdAt:** The timestamp when the customer was created.\n    \n- **updatedAt:** The timestamp when the customer was last updated.\n    \n- **__v:** The version key for the customer document.\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"_id\": \"\",\n        \"name\": \"\",\n        \"phone\": \"\",\n        \"address\": \"\",\n        \"credit\": 0,\n        \"debt\": 0,\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\",\n        \"__v\": 0\n    }\n]\n\n ```\n\n## Additional Notes\n\nEnsure that your request is properly authenticated if required by the API. The response will return an array, which may be empty if no customers are found.\n\nThis endpoint retrieves a list of customers from the system.\n\n### Request\n\n- **Method:** `GET`\n    \n- **Endpoint:** `{{base_url}}/customers`\n    \n\n### Response\n\nUpon a successful request, the API will return a `200 OK` status with a JSON array containing customer objects. Each customer object includes the following fields:\n\n- **_id**: Unique identifier for the customer (string)\n    \n- **name**: Name of the customer (string)\n    \n- **phone**: Phone number of the customer (string)\n    \n- **address**: Address of the customer (string)\n    \n- **credit**: Credit balance of the customer (number)\n    \n- **debt**: Debt balance of the customer (number)\n    \n- **createdAt**: Timestamp of when the customer was created (string)\n    \n- **updatedAt**: Timestamp of when the customer was last updated (string)\n    \n- **__v**: Version key for the customer record (number)\n    \n\n### Error Codes\n\nThe following error codes may be returned:\n\n- **400 Bad Request**: The request was invalid or cannot be served.\n    \n- **404 Not Found**: The requested resource could not be found.\n    \n- **500 Internal Server Error**: An unexpected error occurred on the server.\n    \n\nEnsure to handle these error codes appropriately in your application."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/customers",
+              "host": ["{{base_url}}"],
+              "path": ["customers"]
+            },
+            "description": "## Add Customer\n\nThis endpoint allows you to create a new customer in the system.\n\n### Request\n\n- **Method**: POST\n    \n- **Endpoint**: `{{base_url}}/customers`\n    \n- **Content-Type**: application/json\n    \n\n### Request Body Parameters\n\nThe request body must be in JSON format and include the following parameters:\n\n- **name** (string): The name of the customer.\n    \n- **phone** (string): The phone number of the customer.\n    \n- **address** (string): The address of the customer.\n    \n\n#### Example Request Body\n\n``` json\n{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\"\n}\n\n ```\n\n### Response\n\nOn a successful request, the API will respond with:\n\n- **Status**: 201 Created\n    \n- **Content-Type**: application/json\n    \n\n#### Response Body\n\nThe response body will contain the following fields:\n\n- **name** (string): The name of the customer (echoed back).\n    \n- **phone** (string): The phone number of the customer (echoed back).\n    \n- **address** (string): The address of the customer (echoed back).\n    \n- **credit** (number): The initial credit balance for the customer, defaulting to 0.\n    \n- **debt** (number): The initial debt balance for the customer, defaulting to 0.\n    \n- **_id** (string): The unique identifier for the customer.\n    \n- **createdAt** (string): The timestamp when the customer was created.\n    \n- **updatedAt** (string): The timestamp when the customer was last updated.\n    \n- **__v** (number): The version key for the document.\n    \n\n#### Example Response Body\n\n``` json\n{\n  \"name\": \"\",\n  \"phone\": \"\",\n  \"address\": \"\",\n  \"credit\": 0,\n  \"debt\": 0,\n  \"_id\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Cliente\",\r\n    \"phone\": \"999999999\",\r\n    \"address\": \"Rua X\",\r\n    \"credit\": 0,\r\n    \"debt\": 0\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/customers/{{id_client}}",
+              "host": ["{{base_url}}"],
+              "path": ["customers", "{{id_client}}"]
+            },
+            "description": "## Update Customer Information\n\nThis endpoint allows you to update the information of a specific customer identified by their unique client ID.\n\n### Endpoint\n\n`PUT {{base_url}}/customers/{{id_client}}`\n\n### Request Parameters\n\n- **id_client** (path parameter): The unique identifier of the customer you want to update.\n    \n\n### Request Body\n\nThe request body should be in JSON format and include the following fields:\n\n| Key | Type | Description |\n| --- | --- | --- |\n| name | string | The name of the customer. |\n| phone | string | The phone number of the customer. |\n| address | string | The address of the customer. |\n| credit | number | The current credit balance of the customer. |\n| debt | number | The current debt balance of the customer. |\n\n**Example Request Body:**\n\n``` json\n{\n  \"name\": \"Cliente\",\n  \"phone\": \"999999999\",\n  \"address\": \"Rua X\",\n  \"credit\": 0,\n  \"debt\": 0\n}\n\n ```\n\n### Response\n\nOn a successful update, the server will respond with a status code of `200` and a JSON object containing the updated customer information.\n\n#### Response Structure\n\n| Key | Type | Description |\n| --- | --- | --- |\n| _id | string | The unique identifier of the customer. |\n| name | string | The updated name of the customer. |\n| phone | string | The updated phone number of the customer. |\n| address | string | The updated address of the customer. |\n| credit | number | The updated credit balance of the customer. |\n| debt | number | The updated debt balance of the customer. |\n| createdAt | string | The timestamp when the customer was created. |\n| updatedAt | string | The timestamp when the customer was last updated. |\n| __v | number | The version key for the customer document. |\n\n**Example Response:**\n\n``` json\n{\n  \"_id\": \"\",\n  \"name\": \"\",\n  \"phone\": \"\",\n  \"address\": \"\",\n  \"credit\": 0,\n  \"debt\": 0,\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/customers/{{id_client}}",
+              "host": ["{{base_url}}"],
+              "path": ["customers", "{{id_client}}"]
+            },
+            "description": "# Delete Customer\n\nThis endpoint allows you to delete a customer from the system using their unique identifier.\n\n## Endpoint\n\n`DELETE {{base_url}}/customers/{{id_client}}`\n\n## Method\n\n`DELETE`\n\n## Request Parameters\n\n- `id_client` (path parameter): The unique identifier of the customer you wish to delete.\n    \n\n## Response Schema\n\n- **Status Code**: `204 No Content` - Indicates that the request was successful and the customer has been deleted. No content is returned in the response body.\n    \n\n## Additional Notes\n\n- Ensure that the `id_client` provided corresponds to an existing customer in the system. If the customer does not exist, the server may respond with an error.\n    \n- This operation is irreversible; once a customer is deleted, their data cannot be recovered.\n    \n\n## Example\n\nTo delete a customer with ID `12345`, the request would look like:\n\n```\nDELETE {{base_url}}/customers/12345\n\n ```"
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              "// Configurações de login (ajuste conforme necessário)\r",
+              "const loginBody = {\r",
+              "  email: pm.environment.get(\"user\"),\r",
+              "  password: pm.environment.get(\"password\")\r",
+              "};\r",
+              "\r",
+              "pm.sendRequest({\r",
+              "  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+              "  method: \"POST\",\r",
+              "  header: { \"Content-Type\": \"application/json\" },\r",
+              "  body: {\r",
+              "    mode: \"raw\",\r",
+              "    raw: JSON.stringify(loginBody)\r",
+              "  }\r",
+              "}, function (err, res) {\r",
+              "  if (err) {\r",
+              "    console.log(\"Erro na autenticação:\", err);\r",
+              "  } else {\r",
+              "    const json = res.json();\r",
+              "    if (json.token) {\r",
+              "      pm.environment.set(\"token\", json.token);\r",
+              "      console.log(\"✅ Token atualizado no environment.\");\r",
+              "    } else {\r",
+              "      console.log(\"⚠️ Token ausente na resposta.\");\r",
+              "    }\r",
+              "  }\r",
+              "});\r",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [""]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard API",
+      "item": [
+        {
+          "name": "Get Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["dashboard"]
+            },
+            "description": "## Dashboard Endpoint\n\nThis endpoint retrieves an overview of the dashboard, providing key metrics and insights related to customers, payments, and sales.\n\n### Request\n\n- **Method**: GET\n    \n- **URL**: `{{base_url}}/dashboard`\n    \n\n### Response\n\nOn a successful request, the server returns a JSON object with the following structure:\n\n- **topCustomers**: An array containing the top customers. This array may be empty if there are no customers.\n    \n- **topAffiliations**: An array of objects representing the top affiliations. Each object contains:\n    \n    - **_id**: The unique identifier for the affiliation.\n        \n    - **name**: The name of the affiliation.\n        \n    - **address**: The address of the affiliation.\n        \n    - **phone**: The contact phone number for the affiliation.\n        \n    - **createdAt**: The timestamp when the affiliation was created.\n        \n    - **updatedAt**: The timestamp when the affiliation was last updated.\n        \n    - **__v**: The version key for the affiliation document.\n        \n    - **totalDebt**: The total debt associated with the affiliation.\n        \n- **totalCustomers**: The total number of customers, represented as an integer.\n    \n- **totalPayments**: The total number of payments processed, represented as an integer.\n    \n- **totalSales**: The total sales amount, represented as an integer.\n    \n\n### Example Response\n\n``` json\n{\n  \"topCustomers\": [],\n  \"topAffiliations\": [\n    {\n      \"_id\": \"\",\n      \"name\": \"\",\n      \"address\": \"\",\n      \"phone\": \"\",\n      \"createdAt\": \"\",\n      \"updatedAt\": \"\",\n      \"__v\": 0,\n      \"totalDebt\": 0\n    }\n  ],\n  \"totalCustomers\": 0,\n  \"totalPayments\": 0,\n  \"totalSales\": 0\n}\n\n ```\n\nThis endpoint is useful for obtaining a quick summary of the business's performance metrics related to customers and sales."
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              "// Configurações de login (ajuste conforme necessário)\r",
+              "const loginBody = {\r",
+              "  email: pm.environment.get(\"user\"),\r",
+              "  password: pm.environment.get(\"password\")\r",
+              "};\r",
+              "\r",
+              "pm.sendRequest({\r",
+              "  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+              "  method: \"POST\",\r",
+              "  header: { \"Content-Type\": \"application/json\" },\r",
+              "  body: {\r",
+              "    mode: \"raw\",\r",
+              "    raw: JSON.stringify(loginBody)\r",
+              "  }\r",
+              "}, function (err, res) {\r",
+              "  if (err) {\r",
+              "    console.log(\"Erro na autenticação:\", err);\r",
+              "  } else {\r",
+              "    const json = res.json();\r",
+              "    if (json.token) {\r",
+              "      pm.environment.set(\"token\", json.token);\r",
+              "      console.log(\"✅ Token atualizado no environment.\");\r",
+              "    } else {\r",
+              "      console.log(\"⚠️ Token ausente na resposta.\");\r",
+              "    }\r",
+              "  }\r",
+              "});\r",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [""]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments API",
+      "item": [
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": \"{{id_client}}\",\n  \"amount\": 100000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/payments",
+              "host": ["{{base_url}}"],
+              "path": ["payments"]
+            },
+            "description": "### Create Payment\n\nThis endpoint allows you to create a new payment record for a specified customer. It is used to process payments and track financial transactions associated with customers.\n\n#### Request\n\n- **Method**: POST\n    \n- **URL**: `{{base_url}}/payments`\n    \n- **Body**: The request body must be in JSON format and should contain the following parameters:\n    \n    - `customerId` (string): The unique identifier of the customer making the payment.\n        \n    - `amount` (integer): The amount of money to be processed for the payment, expressed in the smallest currency unit (e.g., cents for USD).\n        \n\n**Example Request Body**:\n\n``` json\n{\n  \"customerId\": \"{{id_client}}\",\n  \"amount\": 100000\n}\n\n ```\n\n#### Response\n\n- **Status Code**: 201 Created\n    \n- **Content-Type**: application/json\n    \n\nThe response body will contain the following fields:\n\n- `customer` (string): The unique identifier of the customer associated with the payment.\n    \n- `amount` (integer): The amount processed for the payment.\n    \n- `_id` (string): The unique identifier of the payment record created.\n    \n- `date` (string): The date when the payment was processed.\n    \n- `createdAt` (string): The timestamp when the payment record was created.\n    \n- `updatedAt` (string): The timestamp when the payment record was last updated.\n    \n- `__v` (integer): The version key for the payment record.\n    \n\n**Example Response Body**:\n\n``` json\n{\n  \"customer\": \"\",\n  \"amount\": 0,\n  \"_id\": \"\",\n  \"date\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```\n\n#### Notes\n\n- Ensure that the `customerId` corresponds to an existing customer in the system.\n    \n- The `amount` must be a positive integer representing the payment value.\n    \n- A successful response indicates that the payment has been recorded, and the client can expect further details or confirmation through subsequent requests."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payments by Client",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/customer/{{id_client}}",
+              "host": ["{{base_url}}"],
+              "path": ["payments", "customer", "{{id_client}}"]
+            },
+            "description": "# Get Customer Payments\n\nThis endpoint retrieves the payment records associated with a specific customer identified by their unique client ID.\n\n## Request\n\n### HTTP Method\n\n`GET`\n\n### URL\n\n`{{base_url}}/payments/customer/{{id_client}}`\n\n### Path Parameters\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `id_client` | string | The unique identifier of the customer whose payment records are being requested. |\n\n## Response\n\n### Status Code\n\n`200 OK`\n\n### Content-Type\n\n`application/json`\n\n### Response Structure\n\nThe response is an array of payment objects, each containing the following fields:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `_id` | string | The unique identifier for the payment record. |\n| `customer` | string | The identifier for the customer associated with the payment. |\n| `amount` | number | The amount of the payment. |\n| `date` | string | The date when the payment was made. |\n| `createdAt` | string | The timestamp when the payment record was created. |\n| `updatedAt` | string | The timestamp when the payment record was last updated. |\n| `__v` | number | The version key for the payment record. |\n\n### Example Response\n\n``` json\n[\n    {\n        \"_id\": \"payment_id_123\",\n        \"customer\": \"customer_id_456\",\n        \"amount\": 100,\n        \"date\": \"2023-10-01\",\n        \"createdAt\": \"2023-10-01T12:00:00Z\",\n        \"updatedAt\": \"2023-10-01T12:00:00Z\",\n        \"__v\": 0\n    }\n]\n\n ```\n\n## Additional Notes\n\n- Ensure that the `id_client` parameter is valid to retrieve the correct payment records.\n    \n- The response may contain multiple payment records for the specified customer."
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              "// Configurações de login (ajuste conforme necessário)\r",
+              "const loginBody = {\r",
+              "  email: pm.environment.get(\"user\"),\r",
+              "  password: pm.environment.get(\"password\")\r",
+              "};\r",
+              "\r",
+              "pm.sendRequest({\r",
+              "  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+              "  method: \"POST\",\r",
+              "  header: { \"Content-Type\": \"application/json\" },\r",
+              "  body: {\r",
+              "    mode: \"raw\",\r",
+              "    raw: JSON.stringify(loginBody)\r",
+              "  }\r",
+              "}, function (err, res) {\r",
+              "  if (err) {\r",
+              "    console.log(\"Erro na autenticação:\", err);\r",
+              "  } else {\r",
+              "    const json = res.json();\r",
+              "    if (json.token) {\r",
+              "      pm.environment.set(\"token\", json.token);\r",
+              "      console.log(\"✅ Token atualizado no environment.\");\r",
+              "    } else {\r",
+              "      console.log(\"⚠️ Token ausente na resposta.\");\r",
+              "    }\r",
+              "  }\r",
+              "});\r",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [""]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products API",
+      "item": [
+        {
+          "name": "Get Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": ["{{base_url}}"],
+              "path": ["products"]
+            },
+            "description": "## Get Products\n\nThis endpoint retrieves a list of products available in the system.\n\n### Request\n\n- **Method**: `GET`\n    \n- **URL**: `{{base_url}}/products`\n    \n\n### Response\n\n- **Status Code**: `200 OK`\n    \n- **Content-Type**: `application/json`\n    \n\n### Response Body\n\nThe response will return an array of product objects, each containing the following fields:\n\n- **_id**: Unique identifier for the product (string)\n    \n- **name**: Name of the product (string)\n    \n- **unitPrice**: Price of the product (number)\n    \n- **createdAt**: Timestamp when the product was created (string)\n    \n- **updatedAt**: Timestamp when the product was last updated (string)\n    \n- **__v**: Version key (number)\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"_id\": \"\",\n        \"name\": \"\",\n        \"unitPrice\": 0,\n        \"createdAt\": \"\",\n        \"updatedAt\": \"\",\n        \"__v\": 0\n    }\n]\n\n ```\n\n### Notes\n\n- Ensure to handle the response appropriately, as it will be an array containing multiple product objects."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Produto\",\n  \"unitPrice\": 50\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": ["{{base_url}}"],
+              "path": ["products"]
+            },
+            "description": "## Create Product\n\nThis endpoint allows you to create a new product in the system. Upon successful creation, the server will respond with the details of the newly created product.\n\n### Request\n\n- **Method**: POST\n    \n- **URL**: `{{base_url}}/products`\n    \n- **Content-Type**: application/json\n    \n\n#### Request Body\n\nThe request body must be in JSON format and should include the following parameters:\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `name` | string | The name of the product. |\n| `unitPrice` | number | The price per unit of the product. |\n\n**Example Request Body:**\n\n``` json\n{\n  \"name\": \"Produto\",\n  \"unitPrice\": 50\n}\n\n ```\n\n### Response\n\nOn a successful request, the server will respond with a `201 Created` status and a JSON object containing the following fields:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `name` | string | The name of the created product. |\n| `unitPrice` | number | The price per unit of the created product. |\n| `_id` | string | The unique identifier for the product. |\n| `createdAt` | string | Timestamp of when the product was created. |\n| `updatedAt` | string | Timestamp of the last update to the product. |\n| `__v` | number | Version key for the product document. |\n\n**Example Response:**\n\n``` json\n{\n  \"name\": \"\",\n  \"unitPrice\": 0,\n  \"_id\": \"\",\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```\n\n### Additional Notes\n\n- Ensure that the `name` and `unitPrice` fields are provided in the request body, as they are required for creating a product.\n    \n- The response will return the product details, including the generated `_id`, which can be used for further operations on the product.\n    \n\nThis endpoint allows users to create a new product by sending a POST request to the `/products` endpoint.\n\n### Request Parameters\n\nThe request body must be in JSON format and should include the following parameters:\n\n- **name** (string): The name of the product. This is a required field.\n    \n- **unitPrice** (number): The price of the product per unit. This is a required field.\n    \n\n#### Example Request Body\n\n``` json\n{\n  \"name\": \"Produto\",\n  \"unitPrice\": 50\n}\n\n ```\n\n### Expected Response\n\nUpon a successful request, the API will return a response with the following characteristics:\n\n- **Status Code**: `201 Created`\n    \n- **Content-Type**: `application/json`\n    \n- {\"name\": \"\",\"unitPrice\": 0,\"_id\": \"\",\"createdAt\": \"\",\"updatedAt\": \"\",\"__v\": 0}\n    \n\n### Notes\n\n- The response will include the created product's details, but the fields will be empty or default values as they are placeholders. The actual values will be populated in a real implementation.\n    \n- Ensure that the `name` and `unitPrice` fields are provided in the request to avoid validation errors."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Produto\",\r\n    \"unitPrice\": 50\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products/{{id_product}}",
+              "host": ["{{base_url}}"],
+              "path": ["products", "{{id_product}}"]
+            },
+            "description": "## Update Product\n\nThis endpoint allows you to update the details of a specific product identified by its unique ID.\n\n### Request\n\n- **URL:** `{{base_url}}/products/{{id_product}}`\n    \n- **Method:** PUT\n    \n- **Body Type:** Raw\n    \n\n#### Request Body\n\nThe request body should be formatted as JSON and must include the following fields to update the product:\n\n- **name** (string): The name of the product (required).\n    \n- **unitPrice** (number): The price per unit of the product (required).\n    \n\nYou may also include the following optional fields:\n\n- **_id** (string): The unique identifier for the product (optional).\n    \n- **createdAt** (string): The date and time when the product was created (optional).\n    \n- **updatedAt** (string): The date and time when the product was last updated (optional).\n    \n- **__v** (number): The version key (optional).\n    \n\nEnsure that the product ID is correctly specified in the URL to successfully update the desired product.\n\n### Response\n\n- **Status Code:** 200\n    \n- **Content-Type:** application/json\n    \n\nUpon a successful update, the server responds with a JSON object containing the updated product details, including:\n\n- **_id** (string): The unique identifier of the product.\n    \n- **name** (string): The name of the product.\n    \n- **unitPrice** (number): The updated price of the product.\n    \n- **createdAt** (string): The date and time when the product was created.\n    \n- **updatedAt** (string): The date and time when the product was last updated.\n    \n- **__v** (number): The version key of the product.\n    \n\n### Example Response\n\n``` json\n{\n  \"_id\": \"\",\n  \"name\": \"\",\n  \"unitPrice\": 0,\n  \"createdAt\": \"\",\n  \"updatedAt\": \"\",\n  \"__v\": 0\n}\n\n ```\n\nMake sure to include the necessary fields in the request body to successfully update the product information."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products/{{id_product}}",
+              "host": ["{{base_url}}"],
+              "path": ["products", "{{id_product}}"]
+            },
+            "description": "## Delete Product\n\nThis endpoint allows you to delete a specific product from the inventory.\n\n### Request\n\n- **Method**: `DELETE`\n    \n- **Endpoint**: `{{base_url}}/products/{{id_product}}`\n    \n\n### Parameters\n\n- **id_product** (path parameter): The unique identifier of the product you wish to delete. This should be replaced with the actual product ID when making the request.\n    \n\n### Response\n\n- **Status Code**: `204 No Content`\n    \n    - Indicates that the product was successfully deleted and there is no content to return.\n        \n- **Content-Type**: `text/xml`\n    \n    - The response will be in XML format, although no content will be present in the body.\n        \n\n### Notes\n\n- Ensure that the product ID provided is valid and corresponds to an existing product in the system. If the product does not exist, the server may return an error response."
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              "// Configurações de login (ajuste conforme necessário)\r",
+              "const loginBody = {\r",
+              "  email: pm.environment.get(\"user\"),\r",
+              "  password: pm.environment.get(\"password\")\r",
+              "};\r",
+              "\r",
+              "pm.sendRequest({\r",
+              "  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+              "  method: \"POST\",\r",
+              "  header: { \"Content-Type\": \"application/json\" },\r",
+              "  body: {\r",
+              "    mode: \"raw\",\r",
+              "    raw: JSON.stringify(loginBody)\r",
+              "  }\r",
+              "}, function (err, res) {\r",
+              "  if (err) {\r",
+              "    console.log(\"Erro na autenticação:\", err);\r",
+              "  } else {\r",
+              "    const json = res.json();\r",
+              "    if (json.token) {\r",
+              "      pm.environment.set(\"token\", json.token);\r",
+              "      console.log(\"✅ Token atualizado no environment.\");\r",
+              "    } else {\r",
+              "      console.log(\"⚠️ Token ausente na resposta.\");\r",
+              "    }\r",
+              "  }\r",
+              "});\r",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [""]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sales API",
+      "item": [
+        {
+          "name": "Create Sale",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer\": \"{{id_client}}\",\n  \"products\": [\n    {\n      \"product\": \"6823d1dea1b1af918df8f312\",\n      \"quantity\": 2,\n      \"unitPrice\": 10\n    }\n  ],\n  \"total\": 20\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sales",
+              "host": ["{{base_url}}"],
+              "path": ["sales"]
+            },
+            "description": "### Add Sale\n\nThis endpoint allows you to create a new sale record in the system. By sending a POST request to `/sales`, you can register a sale associated with a specific customer and the products involved in the transaction. This is essential for tracking sales data and managing inventory effectively.\n\n#### Request Body Format\n\nThe request body must be in JSON format and should include the following parameters:\n\n- **customer** (string): The unique identifier of the customer making the purchase.\n    \n- **products** (array): An array of product objects, each containing:\n    \n    - **product** (string): The unique identifier of the product being sold.\n        \n    - **quantity** (integer): The number of units being sold.\n        \n    - **unitPrice** (number): The price per unit of the product.\n        \n- **total** (number): The total amount for the sale, which should be the sum of the products' quantities multiplied by their respective unit prices.\n    \n\n**Example Request Body:**\n\n``` json\n{\n  \"customer\": \"{{id_client}}\",\n  \"products\": [\n    {\n      \"product\": \"6823d1dea1b1af918df8f312\",\n      \"quantity\": 2,\n      \"unitPrice\": 10\n    }\n  ],\n  \"total\": 20\n}\n\n ```\n\n#### Response Structure\n\nUpon a successful request, the API will return a response with the following characteristics:\n\n- **Status**: 201 Created\n    \n- **Content-Type**: application/json\n    \n\nThe response body will contain the following fields:\n\n- **customer** (string): The unique identifier of the customer associated with the sale.\n    \n- **products** (array): An array of product objects that were part of the sale, each containing:\n    \n    - **product** (string): The unique identifier of the product sold.\n        \n    - **quantity** (integer): The number of units sold.\n        \n    - **unitPrice** (number): The price per unit of the product.\n        \n    - **_id** (string): The unique identifier of the product object in the sale.\n        \n- **total** (number): The total amount for the sale.\n    \n- **_id** (string): The unique identifier of the sale record.\n    \n- **date** (string): The date when the sale was created.\n    \n- **createdAt** (string): The timestamp when the sale record was created.\n    \n- **updatedAt** (string): The timestamp when the sale record was last updated.\n    \n- **__v** (integer): The version key for the sale record.\n    \n\nEnsure that the request body adheres to the specified format to avoid errors and facilitate the successful creation of a sale record."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Sales by Customer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/sales/customer/{{id_client}}",
+              "host": ["{{base_url}}"],
+              "path": ["sales", "customer", "{{id_client}}"]
+            },
+            "description": "## Get Customer Sales\n\nThis endpoint retrieves the sales information associated with a specific customer identified by their unique client ID.\n\n### Request\n\n- **Method:** GET\n    \n- **URL:** `{{base_url}}/sales/customer/{{id_client}}`\n    \n\n#### Path Parameters\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `id_client` | string | The unique identifier for the customer. |\n\n### Response\n\n- **Status Code:** 200\n    \n- **Content-Type:** application/json\n    \n\n#### Response Body\n\nThe response will return a JSON array containing sales records for the specified customer. Each record includes the following fields:\n\n| Field | Type | Description |\n| --- | --- | --- |\n| `_id` | string | Unique identifier for the sales record. |\n| `customer` | string | Name or identifier of the customer. |\n| `products` | array | List of products associated with the sale. |\n| `total` | number | Total amount of the sale. |\n| `date` | string | Date of the sale transaction. |\n| `createdAt` | string | Timestamp of when the record was created. |\n| `updatedAt` | string | Timestamp of when the record was last updated. |\n| `__v` | number | Version key for the record. |\n\n### Notes\n\n- Ensure that the `id_client` parameter is correctly specified to retrieve the appropriate sales data.\n    \n- The response will be an array, even if there is only one sales record.\n    \n\nThis endpoint retrieves sales information for a specific customer identified by their unique client ID. It returns details about the customer's purchases, including the products bought, their quantities, unit prices, and the total amount spent.\n\n## Request\n\n### HTTP Method\n\n`GET`\n\n### Endpoint\n\n`{{base_url}}/sales/customer/{{id_client}}`\n\n### Path Parameters\n\n- `id_client` (string): The unique identifier for the customer whose sales information is being requested.\n    \n\n## Response\n\n### Status Code\n\n- `200 OK`: Indicates that the request was successful.\n    \n\n### Content-Type\n\n- `application/json`\n    \n\n### Response Body\n\nThe response will be a JSON array containing the following fields:\n\n- `_id` (string): The unique identifier for the sales record.\n    \n- `customer` (string): The name or identifier of the customer.\n    \n- `products` (array): A list of products purchased, where each product has:\n    \n    - `product` (string|null): The identifier or name of the product.\n        \n    - `quantity` (integer): The quantity of the product purchased.\n        \n    - `unitPrice` (number): The price per unit of the product.\n        \n    - `_id` (string): The unique identifier for the product entry.\n        \n- `total` (number): The total amount spent by the customer on this sale.\n    \n- `date` (string): The date of the sale.\n    \n- `createdAt` (string): Timestamp when the sales record was created.\n    \n- `updatedAt` (string): Timestamp when the sales record was last updated.\n    \n- `__v` (integer): Version key for the record.\n    \n\n## Additional Notes\n\n- Ensure that the `id_client` parameter is valid and corresponds to an existing customer in the system.\n    \n- The response will include an array, which may contain multiple sales records for the specified customer.\n    \n- If no sales records are found for the given `id_client`, an empty array will be returned."
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [
+              "// Configurações de login (ajuste conforme necessário)\r",
+              "const loginBody = {\r",
+              "  email: pm.environment.get(\"user\"),\r",
+              "  password: pm.environment.get(\"password\")\r",
+              "};\r",
+              "\r",
+              "pm.sendRequest({\r",
+              "  url: pm.environment.get(\"base_url\") + \"/auth/login\",\r",
+              "  method: \"POST\",\r",
+              "  header: { \"Content-Type\": \"application/json\" },\r",
+              "  body: {\r",
+              "    mode: \"raw\",\r",
+              "    raw: JSON.stringify(loginBody)\r",
+              "  }\r",
+              "}, function (err, res) {\r",
+              "  if (err) {\r",
+              "    console.log(\"Erro na autenticação:\", err);\r",
+              "  } else {\r",
+              "    const json = res.json();\r",
+              "    if (json.token) {\r",
+              "      pm.environment.set(\"token\", json.token);\r",
+              "      console.log(\"✅ Token atualizado no environment.\");\r",
+              "    } else {\r",
+              "      console.log(\"⚠️ Token ausente na resposta.\");\r",
+              "    }\r",
+              "  }\r",
+              "});\r",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "exec": [""]
+          }
+        }
+      ]
+    }
+  ]
 }

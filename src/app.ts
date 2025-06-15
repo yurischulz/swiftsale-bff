@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import morgan from 'morgan';
 import timeout from 'connect-timeout';
 import swaggerUi from 'swagger-ui-express';
@@ -9,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 import { connectDatabase } from './config/database';
 import { swaggerDocs } from './config/swagger';
 import { errorHandler } from './middlewares/errorHandler';
+import { firebaseAuthMiddleware } from './middlewares/firebaseAuth';
 
 import authRoutes from './routes/auth.routes';
 import customerRoutes from './routes/customers.routes';
@@ -18,7 +18,6 @@ import saleRoutes from './routes/sales.routes';
 import paymentRoutes from './routes/payments.routes';
 import dashboardRoutes from './routes/dashboard.routes';
 
-dotenv.config();
 const env = process.env.NODE_ENV || 'development';
 const app = express();
 
@@ -37,6 +36,9 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use('/auth', authRoutes);
+
+app.use(firebaseAuthMiddleware);
+
 app.use('/customers', customerRoutes);
 app.use('/products', productRoutes);
 app.use('/affiliations', affiliationRoutes);
