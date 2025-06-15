@@ -65,7 +65,7 @@ const mockCustomers = [
   { name: 'Cliente 3', debt: 300, phone: '789', address: 'Rua C' },
 ];
 
-describe('Affiliations API - Integrated', () => {
+describe('Affiliations Routes', () => {
   describe('GET /affiliations', () => {
     it('deve retornar lista vazia se não houver afiliações', async () => {
       const res = await request(app)
