@@ -9,7 +9,8 @@ export const createSale = asyncHandler(async (req: Request, res: Response) => {
 
 export const getSalesByCustomer = asyncHandler(
   async (req: Request, res: Response) => {
-    const sales = await saleService.getSalesByCustomer(req, res);
+    const { id } = req.params;
+    const sales = await saleService.getSalesByCustomer(id);
     res.status(200).json(sales);
   }
 );

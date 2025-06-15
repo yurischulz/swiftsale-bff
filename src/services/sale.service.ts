@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { CreateSaleRequest } from '~/interfaces/Sale';
 
 import { Customer } from '~/models/Customer';
@@ -14,8 +13,6 @@ export async function createSale(data: CreateSaleRequest) {
   return saleResponse;
 }
 
-export async function getSalesByCustomer(req: Request, res: Response) {
-  return await Sale.find({ customer: req.params.id }).populate(
-    'products.product'
-  );
+export async function getSalesByCustomer(id: string) {
+  return await Sale.find({ customer: id }).populate('products.product');
 }
