@@ -1,6 +1,13 @@
 import { Router } from 'express';
 import { firebaseAuthMiddleware } from '~/middlewares/firebaseAuth';
-import { createSale, getSalesByCustomer } from '~/controllers/sale.controller';
+import {
+  createPayment,
+  getPaymentsByCustomer,
+} from '~/controllers/payment.controller';
+import {
+  validatePaymentBody,
+  validatePaymentCustomerIdParam,
+} from './validators/payment.validator';
 
 const router = Router();
 
@@ -8,10 +15,10 @@ router.use(firebaseAuthMiddleware);
 
 /**
  * @swagger
- * /sales:
+ * /payments:
  *   post:
- *     summary: Cria uma nova venda
- *     tags: [Sales]
+ *     summary: Cria um novo pagamento
+ *     tags: [Payments]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -23,26 +30,14 @@ router.use(firebaseAuthMiddleware);
  *             properties:
  *               customer:
  *                 type: string
- *               products:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     product:
- *                       type: string
- *                     quantity:
- *                       type: number
- *                     unitPrice:
- *                       type: number
- *               total:
+ *               amount:
  *                 type: number
  *             required:
  *               - customer
- *               - products
- *               - total
+ *               - amount
  *     responses:
  *       201:
- *         description: Venda criada com sucesso
+ *         description: Pagamento criado com sucesso
  *         content:
  *           application/json:
  *             schema:
@@ -50,26 +45,10 @@ router.use(firebaseAuthMiddleware);
  *               properties:
  *                 _id:
  *                   type: string
- *                 customer:
+ *                 customerId:
  *                   type: string
- *                 products:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       product:
- *                         type: string
- *                       quantity:
- *                         type: number
- *                       unitPrice:
- *                         type: number
- *                       _id:
- *                         type: string
- *                 total:
+ *                 value:
  *                   type: number
- *                 date:
- *                   type: string
- *                   format: date-time
  *                 createdAt:
  *                   type: string
  *                   format: date-time
@@ -79,14 +58,14 @@ router.use(firebaseAuthMiddleware);
  *                 __v:
  *                   type: number
  */
-router.post('/', createSale);
+router.post('/', validatePaymentBody, createPayment);
 
 /**
  * @swagger
- * /sales/customer/{id}:
+ * /payments/customer/{id}:
  *   get:
- *     summary: Lista as vendas de um cliente
- *     tags: [Sales]
+ *     summary: Lista os pagamentos de um cliente
+ *     tags: [Payments]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -98,7 +77,7 @@ router.post('/', createSale);
  *         description: ID do cliente
  *     responses:
  *       200:
- *         description: Lista de vendas retornada com sucesso
+ *         description: Lista de pagamentos retornada com sucesso
  *         content:
  *           application/json:
  *             schema:
@@ -110,20 +89,7 @@ router.post('/', createSale);
  *                     type: string
  *                   customer:
  *                     type: string
- *                   products:
- *                     type: array
- *                     items:
- *                       type: object
- *                       properties:
- *                         product:
- *                           type: string
- *                         quantity:
- *                           type: number
- *                         unitPrice:
- *                           type: number
- *                         _id:
- *                           type: string
- *                   total:
+ *                   amount:
  *                     type: number
  *                   date:
  *                     type: string
@@ -137,6 +103,10 @@ router.post('/', createSale);
  *                   __v:
  *                     type: number
  */
-router.get('/customer/:id', getSalesByCustomer);
+router.get(
+  '/customer/:id',
+  validatePaymentCustomerIdParam,
+  getPaymentsByCustomer
+);
 
 export default router;

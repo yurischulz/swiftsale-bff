@@ -65,7 +65,7 @@ const mockCustomers = [
   { name: 'Cliente 3', debt: 300, phone: '789', address: 'Rua C' },
 ];
 
-describe('Affiliations API - Integração (mongodb-memory-server)', () => {
+describe('Affiliations API - Integrated', () => {
   describe('GET /affiliations', () => {
     it('deve retornar lista vazia se não houver afiliações', async () => {
       const res = await request(app)
@@ -207,9 +207,7 @@ describe('Affiliations API - Integração (mongodb-memory-server)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({ name: 'Faltando' });
 
-      expect(res.body.message).toBe(
-        'Dados obrigatórios ausentes para criar afiliação'
-      );
+      expect(res.body.message).toBe('"address" is required');
     });
   });
 
@@ -252,7 +250,7 @@ describe('Affiliations API - Integração (mongodb-memory-server)', () => {
         .send({ name: 'Qualquer', address: 'Rua', phone: '000' });
 
       expect(res.status).toBe(400);
-      expect(res.body.message).toBe("Formato de ID inválido para campo 'id'");
+      expect(res.body.message).toBe('Formato de ID inválido');
     });
 
     it('deve retornar 404 se a afiliação não existir', async () => {

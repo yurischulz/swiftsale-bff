@@ -1,11 +1,6 @@
 import { Router } from 'express';
-import {
-  loginUser,
-  registerUser,
-  setRole,
-  getUserInfo,
-  deleteUser,
-} from '~/controllers/auth.controller';
+import { loginUser, registerUser } from '~/controllers/auth.controller';
+import { validateAuthBody } from './validators/auth.validator';
 
 const router = Router();
 
@@ -43,7 +38,7 @@ const router = Router();
  *       400:
  *         description: Dados inválidos
  */
-router.post('/register', registerUser);
+router.post('/register', validateAuthBody, registerUser);
 
 /**
  * @swagger
@@ -79,10 +74,6 @@ router.post('/register', registerUser);
  *       401:
  *         description: Usuário não encontrado ou senha inválida
  */
-router.post('/login', loginUser);
-
-router.post('/set-role', setRole);
-router.get('/user/:uid', getUserInfo);
-router.delete('/user/:uid', deleteUser);
+router.post('/login', validateAuthBody, loginUser);
 
 export default router;

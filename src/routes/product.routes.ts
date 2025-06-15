@@ -1,13 +1,16 @@
 import { Router } from 'express';
-
-import { firebaseAuthMiddleware } from '~/middlewares/firebaseAuth';
-
+import { firebaseAuthMiddleware } from '../middlewares/firebaseAuth';
 import {
-  getAllCustomers,
-  createCustomer,
-  updateCustomer,
-  deleteCustomer,
-} from '~/controllers/customer.controller';
+  getAllProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from '~/controllers/product.controller';
+import {
+  validateProductBody,
+  validateProductUpdateBody,
+  validateProductIdParam,
+} from './validators/product.validator';
 
 const router = Router();
 
@@ -15,15 +18,15 @@ router.use(firebaseAuthMiddleware);
 
 /**
  * @swagger
- * /customers:
+ * /products:
  *   get:
- *     summary: Lista todos os clientes
- *     tags: [Customers]
+ *     summary: Lista todos os produtos
+ *     tags: [Products]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Lista de clientes retornada com sucesso
+ *         description: Lista de produtos retornada com sucesso
  *         content:
  *           application/json:
  *             schema:
@@ -35,13 +38,7 @@ router.use(firebaseAuthMiddleware);
  *                     type: string
  *                   name:
  *                     type: string
- *                   address:
- *                     type: string
- *                   phone:
- *                     type: string
- *                   credit:
- *                     type: number
- *                   debt:
+ *                   unitPrice:
  *                     type: number
  *                   createdAt:
  *                     type: string
@@ -52,14 +49,14 @@ router.use(firebaseAuthMiddleware);
  *                   __v:
  *                     type: number
  */
-router.get('/', getAllCustomers);
+router.get('/', getAllProducts);
 
 /**
  * @swagger
- * /customers:
+ * /products:
  *   post:
- *     summary: Cria um novo cliente
- *     tags: [Customers]
+ *     summary: Cria um novo produto
+ *     tags: [Products]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -71,17 +68,14 @@ router.get('/', getAllCustomers);
  *             properties:
  *               name:
  *                 type: string
- *               address:
- *                 type: string
- *               phone:
- *                 type: string
+ *               unitPrice:
+ *                 type: number
  *             required:
  *               - name
- *               - address
- *               - phone
+ *               - price
  *     responses:
  *       201:
- *         description: Cliente criado com sucesso
+ *         description: Produto criado com sucesso
  *         content:
  *           application/json:
  *             schema:
@@ -91,10 +85,8 @@ router.get('/', getAllCustomers);
  *                   type: string
  *                 name:
  *                   type: string
- *                 address:
- *                   type: string
- *                 phone:
- *                   type: string
+ *                 unitPrice:
+ *                   type: number
  *                 createdAt:
  *                   type: string
  *                   format: date-time
@@ -104,14 +96,14 @@ router.get('/', getAllCustomers);
  *                 __v:
  *                   type: number
  */
-router.post('/', createCustomer);
+router.post('/', validateProductBody, createProduct);
 
 /**
  * @swagger
- * /customers/{id}:
+ * /products/{id}:
  *   put:
- *     summary: Atualiza um cliente existente
- *     tags: [Customers]
+ *     summary: Atualiza um produto existente
+ *     tags: [Products]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -120,7 +112,7 @@ router.post('/', createCustomer);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID do cliente
+ *         description: ID do produto
  *     requestBody:
  *       required: true
  *       content:
@@ -130,17 +122,11 @@ router.post('/', createCustomer);
  *             properties:
  *               name:
  *                 type: string
- *               address:
- *                 type: string
- *               phone:
- *                 type: string
- *               credit:
- *                 type: number
- *               debt:
+ *               unitPrice:
  *                 type: number
  *     responses:
  *       200:
- *         description: Cliente atualizado com sucesso
+ *         description: Produto atualizado com sucesso
  *         content:
  *           application/json:
  *             schema:
@@ -150,14 +136,8 @@ router.post('/', createCustomer);
  *                   type: string
  *                 name:
  *                   type: string
- *                 address:
- *                   type: string
- *                 phone:
- *                   type: string
- *                   credit:
- *                     type: number
- *                   debt:
- *                     type: number
+ *                 unitPrice:
+ *                   type: number
  *                 createdAt:
  *                   type: string
  *                   format: date-time
@@ -167,14 +147,14 @@ router.post('/', createCustomer);
  *                 __v:
  *                   type: number
  */
-router.put('/:id', updateCustomer);
+router.put('/:id', validateProductUpdateBody, updateProduct);
 
 /**
  * @swagger
- * /customers/{id}:
+ * /products/{id}:
  *   delete:
- *     summary: Remove um cliente
- *     tags: [Customers]
+ *     summary: Remove um produto
+ *     tags: [Products]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -183,13 +163,13 @@ router.put('/:id', updateCustomer);
  *         required: true
  *         schema:
  *           type: string
- *         description: ID do cliente
+ *         description: ID do produto
  *     responses:
  *       204:
- *         description: Cliente removido com sucesso
+ *         description: Produto removido com sucesso
  *       404:
- *         description: Cliente não encontrado
+ *         description: Produto não encontrado
  */
-router.delete('/:id', deleteCustomer);
+router.delete('/:id', validateProductIdParam, deleteProduct);
 
 export default router;

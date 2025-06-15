@@ -6,6 +6,11 @@ import {
   updateAffiliation,
   deleteAffiliation,
 } from '~/controllers/affiliation.controller';
+import {
+  validateAffiliationBody,
+  validateAffiliationUpdateBody,
+  validateIdParam,
+} from './validators/affiliations.validator';
 
 const router = Router();
 
@@ -101,7 +106,7 @@ router.get('/', getAllAffiliations);
  *                 __v:
  *                   type: number
  */
-router.post('/', createAffiliation);
+router.post('/', validateAffiliationBody, createAffiliation);
 
 /**
  * @swagger
@@ -158,7 +163,12 @@ router.post('/', createAffiliation);
  *                 __v:
  *                   type: number
  */
-router.put('/:id', updateAffiliation);
+router.put(
+  '/:id',
+  validateIdParam,
+  validateAffiliationUpdateBody,
+  updateAffiliation
+);
 
 /**
  * @swagger
@@ -180,6 +190,6 @@ router.put('/:id', updateAffiliation);
  *         description: Afiliação removida com sucesso
  */
 
-router.delete('/:id', deleteAffiliation);
+router.delete('/:id', validateIdParam, deleteAffiliation);
 
 export default router;

@@ -20,9 +20,20 @@ export async function createCustomer(data: createCustomerRequest) {
 }
 
 export async function updateCustomer(id: string, data: createCustomerRequest) {
-  return await Customer.findByIdAndUpdate(id, data, { new: true });
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new mongoose.Error.CastError('ObjectId', id, 'id');
+  }
+  const updated = await Customer.findByIdAndUpdate(id, data, { new: true });
+  console.log('Updated customer:', updated);
+  if (!updated) return null;
+  return updated;
 }
 
 export async function deleteCustomer(id: string) {
-  return await Customer.findByIdAndDelete(id);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new mongoose.Error.CastError('ObjectId', id, 'id');
+  }
+  const deleted = await Customer.findByIdAndDelete(id);
+  if (!deleted) return null;
+  return deleted;
 }

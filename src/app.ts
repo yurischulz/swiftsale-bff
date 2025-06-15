@@ -11,11 +11,11 @@ import { errorHandler } from './middlewares/errorHandler';
 import { firebaseAuthMiddleware } from './middlewares/firebaseAuth';
 
 import authRoutes from './routes/auth.routes';
-import customerRoutes from './routes/customers.routes';
-import productRoutes from './routes/products.routes';
+import customerRoutes from './routes/customer.routes';
+import productRoutes from './routes/product.routes';
 import affiliationRoutes from './routes/affiliations.routes';
-import saleRoutes from './routes/sales.routes';
-import paymentRoutes from './routes/payments.routes';
+import saleRoutes from './routes/sale.routes';
+import paymentRoutes from './routes/payment.routes';
 import dashboardRoutes from './routes/dashboard.routes';
 
 const env = process.env.NODE_ENV || 'development';

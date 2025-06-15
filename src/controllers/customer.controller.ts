@@ -19,19 +19,20 @@ export const createCustomer = asyncHandler(
 export const updateCustomer = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const updatedCustomer = await customerService.updateCustomer(id, req.body);
-    if (!updatedCustomer) {
+    const updated = await customerService.updateCustomer(id, req.body);
+    console.log('Updated customer:', updated);
+    if (!updated) {
       return res.status(404).json({ message: 'customer não encontrado' });
     }
-    res.status(200).json(updatedCustomer);
+    res.status(200).json(updated);
   }
 );
 
 export const deleteCustomer = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const deletedCustomer = await customerService.deleteCustomer(id);
-    if (!deletedCustomer) {
+    const deleted = await customerService.deleteCustomer(id);
+    if (!deleted) {
       return res.status(404).json({ message: 'customer não encontrado' });
     }
     res.status(204).send();

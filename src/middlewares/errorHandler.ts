@@ -13,7 +13,7 @@ export function errorHandler(
     return next(err);
   }
   const traceId = uuidv4();
-  const status = err instanceof AppError ? err.statusCode : 500;
+  const status = err.status || err.statusCode || 500;
 
   console.error(`[🔥 ${traceId}]`, {
     name: err.name,
@@ -24,6 +24,8 @@ export function errorHandler(
     params: req.params,
     body: req.body,
   });
+
+  console.log(err);
 
   if (err.name === 'CastError') {
     return res.status(400).json({
