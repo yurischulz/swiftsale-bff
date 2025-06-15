@@ -25,8 +25,6 @@ export function errorHandler(
     body: req.body,
   });
 
-  console.log(err);
-
   if (err.name === 'CastError') {
     return res.status(400).json({
       error: true,
