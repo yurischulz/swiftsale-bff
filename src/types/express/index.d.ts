@@ -1,5 +1,5 @@
 import 'express';
-import { User } from '../models/User';
+import { User } from '~/models/User';
 
 export interface AuthUser {
   id: string;

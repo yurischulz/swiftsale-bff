@@ -1,24 +1,35 @@
-import { Customer } from '../models/Customer';
-import { Affiliation } from '../models/Affiliation';
+import mongoose from 'mongoose';
+
+import { Customer } from '~/models/Customer';
+import { Affiliation } from '~/models/Affiliation';
 import { CreateAffiliationRequest } from '~/interfaces/Affiliation';
 
 export async function getAllAffiliations(): Promise<any[]> {
-  const affiliations = await Affiliation.find();
+  const affiliations = (await Affiliation.find()) || [];
   return await Promise.all(
     affiliations.map(async (aff) => {
-      const customers = await Customer.find({ affiliation: aff._id });
-      const totalDebt = customers.reduce((sum, c) => sum + c.debt, 0);
+      const customers = (await Customer.find({ affiliation: aff._id })) || [];
+      const totalDebt = customers.reduce((sum, c) => sum + (c.debt || 0), 0);
       return { ...aff.toObject(), totalDebt };
     })
   );
 }
 
 export async function getAffiliationById(id: string) {
-  return await Affiliation.findById(id);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new mongoose.Error.CastError('ObjectId', id, 'id');
+  }
+  const affiliation = await Affiliation.findById(id);
+  if (!affiliation) return null;
+  return affiliation;
 }
 
 export async function createAffiliation(data: CreateAffiliationRequest) {
+  if (!data || !data.name || !data.address || !data.phone) {
+    throw new Error('Dados obrigatórios ausentes para criar afiliação');
+  }
   const affiliation = new Affiliation(data);
+  console.log('Creating affiliation:', affiliation);
   return await affiliation.save();
 }
 
@@ -26,9 +37,19 @@ export async function updateAffiliation(
   id: string,
   data: CreateAffiliationRequest
 ) {
-  return await Affiliation.findByIdAndUpdate(id, data, { new: true });
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new mongoose.Error.CastError('ObjectId', id, 'id');
+  }
+  const updated = await Affiliation.findByIdAndUpdate(id, data, { new: true });
+  if (!updated) return null;
+  return updated;
 }
 
 export async function deleteAffiliation(id: string) {
-  return await Affiliation.findByIdAndDelete(id);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new mongoose.Error.CastError('ObjectId', id, 'id');
+  }
+  const deleted = await Affiliation.findByIdAndDelete(id);
+  if (!deleted) return null;
+  return deleted;
 }

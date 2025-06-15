@@ -1,0 +1,247 @@
+import request from 'supertest';
+import mongoose from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+
+import app from '~/app';
+import { Affiliation } from '~/models/Affiliation';
+import { Customer } from '~/models/Customer';
+import { generateTestJWT } from '~/helpers/jwt';
+
+jest.setTimeout(60000); // 60 segundos para garantir
+
+let mongoServer: MongoMemoryServer;
+
+const token = generateTestJWT();
+
+beforeAll(async () => {
+  try {
+    console.log('Iniciando MongoMemoryServer...');
+    mongoServer = await MongoMemoryServer.create({
+      binary: { version: '6.0.6' }, // Use uma versão estável
+      instance: { port: 0 }, // Porta aleatória
+    });
+    console.log('MongoMemoryServer iniciado');
+    const uri = mongoServer.getUri();
+    console.log('Conectando Mongoose...');
+    await mongoose.connect(uri, {
+      // useNewUrlParser: true, // Não é mais necessário no mongoose 6+
+      // useUnifiedTopology: true, // Não é mais necessário no mongoose 6+
+    });
+    console.log('Mongoose conectado');
+  } catch (err) {
+    console.error(
+      'Erro ao iniciar MongoMemoryServer ou conectar Mongoose:',
+      err
+    );
+    throw err;
+  }
+});
+
+afterAll(async () => {
+  await mongoose.disconnect();
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
+});
+
+beforeEach(async () => {
+  // Limpa todas as coleções antes de cada teste
+  if (mongoose.connection) {
+    const collections = await mongoose.connection.db.collections();
+    for (let collection of collections) {
+      await collection.deleteMany({});
+    }
+  }
+});
+
+const mockAffiliations = [
+  {
+    name: 'Afiliação 1',
+    address: 'Rua 1',
+    phone: '111',
+  },
+  {
+    name: 'Afiliação 2',
+    address: 'Rua 2',
+    phone: '222',
+  },
+];
+
+const mockCustomers = [
+  { name: 'Cliente 1', debt: 100, phone: '123', address: 'Rua A' },
+  { name: 'Cliente 2', debt: 200, phone: '456', address: 'Rua B' },
+  { name: 'Cliente 3', debt: 300, phone: '789', address: 'Rua C' },
+];
+
+describe('Affiliations API - Integração (mongodb-memory-server)', () => {
+  describe('GET /affiliations', () => {
+    it('deve retornar lista vazia se não houver afiliações', async () => {
+      const res = await request(app)
+        .get('/affiliations')
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual([]);
+    });
+
+    it('deve retornar lista de afiliações com totalDebt 0 se não houver clientes', async () => {
+      const [aff] = await Affiliation.create([mockAffiliations[0]]);
+      const res = await request(app)
+        .get('/affiliations')
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.status).toBe(200);
+      expect(res.body[0]).toMatchObject({
+        name: aff.name,
+        address: aff.address,
+        phone: aff.phone,
+        totalDebt: 0,
+      });
+    });
+
+    it('deve retornar lista de afiliações com totalDebt somado dos clientes', async () => {
+      const [aff] = await Affiliation.create([mockAffiliations[0]]);
+      await Customer.create([
+        { ...mockCustomers[0], affiliation: aff._id },
+        { ...mockCustomers[1], affiliation: aff._id },
+      ]);
+      const res = await request(app)
+        .get('/affiliations')
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.status).toBe(200);
+      expect(res.body[0]).toMatchObject({
+        name: aff.name,
+        address: aff.address,
+        phone: aff.phone,
+        totalDebt: 300,
+      });
+    });
+
+    it('deve retornar múltiplas afiliações, cada uma com seu totalDebt', async () => {
+      const [aff1, aff2] = await Affiliation.create(mockAffiliations);
+      await Customer.create([
+        {
+          ...mockCustomers[0],
+          debt: 100,
+          affiliation: aff1._id,
+        },
+        {
+          ...mockCustomers[1],
+          debt: 200,
+          affiliation: aff1._id,
+        },
+        {
+          ...mockCustomers[2],
+          debt: 50,
+          affiliation: aff2._id,
+        },
+      ]);
+      const res = await request(app)
+        .get('/affiliations')
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.status).toBe(200);
+      expect(res.body[0].totalDebt).toBe(300);
+      expect(res.body[1].totalDebt).toBe(50);
+    });
+  });
+
+  describe('POST /affiliations', () => {
+    it('deve criar uma nova afiliação com sucesso', async () => {
+      const payload = { name: 'Nova', address: 'Rua Nova', phone: '999' };
+      const res = await request(app)
+        .post('/affiliations')
+        .set('Authorization', `Bearer ${token}`)
+        .send(payload);
+
+      expect(res.status).toBe(201);
+      expect(res.body).toMatchObject(payload);
+      expect(res.body).toHaveProperty('_id');
+    });
+
+    it('deve retornar mensagem de erro se dados obrigatórios estiverem ausentes', async () => {
+      const res = await request(app)
+        .post('/affiliations')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ name: 'Faltando' });
+
+      expect(res.body.message).toBe(
+        'Dados obrigatórios ausentes para criar afiliação'
+      );
+    });
+  });
+
+  describe('PUT /affiliations/:id', () => {
+    it('deve atualizar uma afiliação com sucesso', async () => {
+      const aff = await Affiliation.create({
+        name: 'A',
+        address: 'B',
+        phone: 'C',
+      });
+      const payload = {
+        name: 'Atualizada',
+        address: 'Rua Atualizada',
+        phone: '888',
+      };
+
+      const res = await request(app)
+        .put(`/affiliations/${aff._id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(payload);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toMatchObject(payload);
+    });
+
+    it('deve retornar 404 se a afiliação não existir', async () => {
+      const fakeId = new mongoose.Types.ObjectId();
+      const res = await request(app)
+        .put(`/affiliations/${fakeId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({ name: 'Qualquer', address: 'Rua', phone: '000' });
+
+      expect(res.status).toBe(404);
+    });
+
+    it('deve retornar 400 se o id for inválido', async () => {
+      const res = await request(app)
+        .put('/affiliations/id-invalido')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ name: 'Qualquer', address: 'Rua', phone: '000' });
+
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('DELETE /affiliations/:id', () => {
+    it('deve deletar uma afiliação com sucesso', async () => {
+      const aff = await Affiliation.create({
+        name: 'A',
+        address: 'B',
+        phone: 'C',
+      });
+
+      const res = await request(app)
+        .delete(`/affiliations/${aff._id}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.status).toBe(204);
+    });
+
+    it('deve retornar 404 se a afiliação não existir', async () => {
+      const fakeId = new mongoose.Types.ObjectId();
+      const res = await request(app)
+        .delete(`/affiliations/${fakeId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(res.status).toBe(404);
+    });
+
+    it('deve retornar 400 se o id for inválido', async () => {
+      const res = await request(app)
+        .delete('/affiliations/id-invalido')
+        .set('Authorization', `Bearer ${token}`);
+
+      console.log('Response:', res.body);
+
+      expect(res.status).toBe(400);
+    });
+  });
+});

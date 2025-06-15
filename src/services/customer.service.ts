@@ -1,8 +1,17 @@
+import mongoose from 'mongoose';
+
 import { createCustomerRequest } from '~/interfaces/customer';
-import { Customer } from '../models/Customer';
+import { Customer } from '~/models/Customer';
 
 export async function getAllCustomers() {
   return await Customer.find();
+}
+
+export async function getCustomerById(id: string) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new mongoose.Error.CastError('ObjectId', id, 'id');
+  }
+  return await Customer.findById(id);
 }
 
 export async function createCustomer(data: createCustomerRequest) {

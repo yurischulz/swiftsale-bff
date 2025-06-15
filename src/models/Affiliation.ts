@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const affiliationSchema = new mongoose.Schema(
+const AffiliationSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     address: { type: String, required: true },
@@ -9,4 +9,6 @@ const affiliationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Affiliation = mongoose.model('Affiliation', affiliationSchema);
+export const Affiliation =
+  mongoose.models.Affiliation ||
+  mongoose.model('Affiliation', AffiliationSchema);

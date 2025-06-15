@@ -14,11 +14,15 @@ export async function authenticateToken(
     }
 
     jwt.verify(token, process.env.JWT_SECRET || '', (err, user) => {
-      if (err) return res.sendStatus(403);
+      if (err) {
+        console.error('Token inválido:', err);
+        return res.sendStatus(403);
+      }
       req.user = user;
     });
     next();
   } catch (error) {
+    console.error('Erro ao verificar token:', error);
     res.status(403).json({ message: 'Acesso negado' });
   }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { asyncHandler } from '../utils/asyncHandler';
-import * as affiliationService from '../services/affiliation.service';
+import { asyncHandler } from '~/utils/asyncHandler';
+import * as affiliationService from '~/services/affiliation.service';
 
 export const getAllAffiliations = asyncHandler(
   async (_req: Request, res: Response) => {
@@ -18,7 +18,13 @@ export const createAffiliation = asyncHandler(
 
 export const updateAffiliation = asyncHandler(
   async (req: Request, res: Response) => {
-    await affiliationService.updateAffiliation(req.params.id, req.body);
+    const updated = await affiliationService.updateAffiliation(
+      req.params.id,
+      req.body
+    );
+    if (!updated) {
+      return res.status(404).json({ message: 'Afiliação não encontrada' });
+    }
     const result = await affiliationService.getAffiliationById(req.params.id);
     res.status(200).json(result);
   }
@@ -26,7 +32,10 @@ export const updateAffiliation = asyncHandler(
 
 export const deleteAffiliation = asyncHandler(
   async (req: Request, res: Response) => {
-    await affiliationService.deleteAffiliation(req.params.id);
+    const deleted = await affiliationService.deleteAffiliation(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: 'Afiliação não encontrada' });
+    }
     res.status(204).send();
   }
 );

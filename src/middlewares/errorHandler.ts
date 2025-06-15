@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import mongoose from 'mongoose';
-import { AppError } from '../utils/AppError';
+import { AppError } from '~/utils/AppError';
 import { v4 as uuidv4 } from 'uuid';
 
 export function errorHandler(
@@ -9,16 +8,12 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
+  console.error('Erro capturado pelo middleware de erro:', err);
   if (res.headersSent) {
     return next(err);
   }
   const traceId = uuidv4();
-  const status =
-    err instanceof AppError
-      ? err.statusCode
-      : err instanceof mongoose.Error.CastError
-        ? 400
-        : err.statusCode || 500;
+  const status = err instanceof AppError ? err.statusCode : 500;
 
   console.error(`[🔥 ${traceId}]`, {
     name: err.name,
@@ -34,6 +29,13 @@ export function errorHandler(
     return res.status(400).json({
       error: true,
       message: `Formato de ID inválido para campo '${err.path}'`,
+    });
+  }
+
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({
+      error: true,
+      message: err.message || 'Dados inválidos',
     });
   }
 
