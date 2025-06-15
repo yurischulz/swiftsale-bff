@@ -1,76 +1,113 @@
-# Padrão de Testes Unitários - SwiftSale BFF
+# Padrão de Testes de Integração - SwiftSale BFF
 
-## Estrutura Geral
+## 1. Estrutura Geral
 
-- **Use `jest.mock`** para mockar dependências externas (ex: models do Mongoose).
-- **Cubra cenários de sucesso e erro** para cada função da service.
-- **Limpe os mocks** usando `jest.clearAllMocks()` no `afterEach`.
-- **Estruture os testes** em blocos `describe` por função e `it` por cenário.
-- **Garanta cobertura total**: teste branches de erro, listas vazias, etc.
-- **Verifique chamadas dos mocks** com `expect`.
+- **Todos os testes devem ser de integração**, sem uso de mocks para banco ou models.
+- **Utilize `mongodb-memory-server`** para isolar o banco de dados em memória durante os testes.
+- **Sempre limpe o banco entre os testes** usando `beforeEach` para garantir independência dos cenários.
+- **Use tokens válidos ou utilitários para geração de JWT** para autenticação em rotas protegidas.
+- **Cubra todos os fluxos**: sucesso, erro, dados inválidos, listas vazias, branches de erro, etc.
+- **Organize os testes em blocos `describe`** por rota ou grupo de endpoints, e `it` por cenário.
+- **Valide status HTTP e corpo da resposta** em todos os testes.
+- **Evite qualquer tipo de mock de models, controllers ou services**.
 
 ---
 
-## Exemplo de Mock para Models
+## 2. Setup Padrão para Integração
 
 ```typescript
-jest.mock('~/models/Model', () => {
-  const mockSave = jest.fn();
-  const mockFind = jest.fn();
-  const mockFindByIdAndUpdate = jest.fn();
-  const mockFindByIdAndDelete = jest.fn();
+import request from 'supertest';
+import mongoose from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import app from '~/app';
 
-  // Suporte a métodos estáticos e instância
-  const Model = jest.fn().mockImplementation(() => ({
-    save: mockSave,
-  }));
+let mongoServer: MongoMemoryServer;
 
-  Model.find = mockFind;
-  Model.findByIdAndUpdate = mockFindByIdAndUpdate;
-  Model.findByIdAndDelete = mockFindByIdAndDelete;
+beforeAll(async () => {
+  mongoServer = await MongoMemoryServer.create();
+  await mongoose.connect(mongoServer.getUri(), {});
+});
 
-  return { Model };
+afterAll(async () => {
+  await mongoose.disconnect();
+  await mongoServer.stop();
+});
+
+beforeEach(async () => {
+  const collections = await mongoose.connection.db.collections();
+  for (let collection of collections) {
+    await collection.deleteMany({});
+  }
 });
 ```
 
-## Estrutura Recomendada de Teste
+---
+
+## 3. Exemplo de Teste de Integração para Rotas
 
 ```typescript
-describe('NomeDaService', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
+describe('Affiliations API', () => {
+  it('deve retornar lista vazia se não houver afiliações', async () => {
+    const res = await request(app)
+      .get('/affiliations')
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([]);
   });
 
-  describe('nomeDaFuncao', () => {
-    it('deve fazer algo em caso de sucesso', async () => {
-      // Arrange
-      // Mock do método necessário
+  it('deve criar uma nova afiliação com sucesso', async () => {
+    const payload = { name: 'Nova', address: 'Rua 1', phone: '123' };
+    const res = await request(app)
+      .post('/affiliations')
+      .set('Authorization', `Bearer ${token}`)
+      .send(payload);
+    expect(res.status).toBe(201);
+    expect(res.body).toMatchObject(payload);
+    expect(res.body).toHaveProperty('_id');
+  });
 
-      // Act
-      // Chamada da função
+  it('deve retornar erro se dados obrigatórios estiverem ausentes', async () => {
+    const res = await request(app)
+      .post('/affiliations')
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
+    expect(res.status).toBe(400);
+    expect(res.body.message).toBe('Mensagem de erro esperada');
+  });
 
-      // Assert
-      // Verificações com expect
-    });
+  it('deve retornar 404 se recurso não existir', async () => {
+    const fakeId = new mongoose.Types.ObjectId();
+    const res = await request(app)
+      .put(`/affiliations/${fakeId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ name: 'Qualquer' });
+    expect(res.status).toBe(404);
+  });
 
-    it('deve tratar erro corretamente', async () => {
-      // Arrange
-      // Mock para lançar erro
-
-      // Act & Assert
-      await expect(nomeDaFuncao(...)).rejects.toThrow('mensagem de erro');
-    });
+  it('deve retornar 400 se o id for inválido', async () => {
+    const res = await request(app)
+      .put('/affiliations/id-invalido')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ name: 'Qualquer' });
+    expect(res.status).toBe(400);
+    expect(res.body.message).toMatch(/Formato de ID inválido/);
   });
 });
 ```
 
-## Boas Práticas
+---
 
-- Sempre cubra todos os fluxos possíveis (sucesso, erro, listas vazias, etc).
+## 4. Boas Práticas
+
 - Use nomes descritivos para os testes.
-- Prefira mocks explícitos a mocks globais.
-- Garanta que todos os métodos mockados sejam verificados com expect.
+- Sempre cubra todos os fluxos possíveis (sucesso, erro, dados inválidos, listas vazias, branches de erro).
+- Nunca utilize mocks para models, controllers ou services.
+- Sempre limpe o banco entre os testes.
+- Utilize tokens válidos ou utilitários para geração de JWT.
+- Valide status HTTP e corpo da resposta.
 
-## Observação
+---
 
-Este padrão deve ser seguido para todos os testes unitários de services, controllers e utils do projeto.
+## 5. Observação
+
+Este padrão deve ser seguido para todos os testes de integração de services, controllers, rotas e utils do projeto SwiftSale BFF.
