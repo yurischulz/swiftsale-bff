@@ -1,13 +1,13 @@
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBL9g8fJx_Aw7IA-HYhlbMUavspU9SBPS0',
-  authDomain: 'swiftsale-7e6bc.firebaseapp.com',
-  projectId: 'swiftsale-7e6bc',
-  storageBucket: 'swiftsale-7e6bc.firebasestorage.app',
-  messagingSenderId: '940528176280',
-  appId: '1:940528176280:web:0579d1422b54d55aded4ed',
-  measurementId: 'G-YTYVNMSB5X',
+  apiKey: process.env.FIREBASE_WEB_API_KEY!,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN!,
+  projectId: process.env.FIREBASE_PROJECT_ID!,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET!,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID!,
+  appId: process.env.FIREBASE_APP_ID!,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID!,
 };
 
 export const firebase = initializeApp(firebaseConfig);
