@@ -1,7 +1,7 @@
-import { Payment } from '../models/Payment';
-import { Sale } from '../models/Sale';
-import { Customer } from '../models/Customer';
-import { Affiliation } from '../models/Affiliation';
+import { Payment } from '~/models/Payment';
+import { Sale } from '~/models/Sale';
+import { Customer } from '~/models/Customer';
+import { Affiliation } from '~/models/Affiliation';
 
 export async function getDashboardSummary() {
   const customers = await Customer.find().populate('affiliation');

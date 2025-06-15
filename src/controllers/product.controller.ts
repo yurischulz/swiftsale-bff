@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { asyncHandler } from '../utils/asyncHandler';
-import * as productService from '../services/product.service';
+import { asyncHandler } from '~/utils/asyncHandler';
+import * as productService from '~/services/product.service';
 
 // Obtém todos os produtos
 export const getAllProducts = asyncHandler(

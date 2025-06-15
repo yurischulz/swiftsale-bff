@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { authenticateToken } from '../middlewares/auth';
+import { authenticateToken } from '~/middlewares/auth';
 import {
   getAllCustomers,
   createCustomer,
   updateCustomer,
   deleteCustomer,
-} from '../controllers/customer.controller';
+} from '~/controllers/customer.controller';
 
 const router = Router();
 

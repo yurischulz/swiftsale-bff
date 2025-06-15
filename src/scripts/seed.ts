@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { connectDatabase } from '../config/database';
-import { Product } from '../models/Product';
-import { Customer } from '../models/Customer';
-import { Affiliation } from '../models/Affiliation';
+import { connectDatabase } from '~/config/database';
+import { Product } from '~/models/Product';
+import { Customer } from '~/models/Customer';
+import { Affiliation } from '~/models/Affiliation';
 
 (async () => {
   await connectDatabase();

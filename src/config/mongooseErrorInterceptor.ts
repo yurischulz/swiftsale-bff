@@ -1,5 +1,5 @@
 import mongoose, { CallbackError, Document } from 'mongoose';
-import { AppError } from '../utils/AppError';
+import { AppError } from '~/utils/AppError';
 
 mongoose.plugin((schema) => {
   schema.post('save', errorHandlerPlugin);

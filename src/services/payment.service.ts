@@ -1,6 +1,6 @@
 import { CreatePaymentRequest } from '~/interfaces/Payment';
-import { Payment } from '../models/Payment';
-import { Customer } from '../models/Customer'; // Certifique-se de importar o modelo correto
+import { Payment } from '~/models/Payment';
+import { Customer } from '~/models/Customer';
 
 export async function createPayment(data: CreatePaymentRequest) {
   const { customer, amount } = data;

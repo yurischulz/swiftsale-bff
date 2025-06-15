@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { authenticateToken } from '../middlewares/auth';
+import { authenticateToken } from '~/middlewares/auth';
 import {
   getAllAffiliations,
   createAffiliation,
   updateAffiliation,
   deleteAffiliation,
-} from '../controllers/affiliation.controller';
+} from '~/controllers/affiliation.controller';
 
 const router = Router();
 

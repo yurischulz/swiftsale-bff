@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { asyncHandler } from '../utils/asyncHandler';
-import * as paymentService from '../services/payment.service';
+import { asyncHandler } from '~/utils/asyncHandler';
+import * as paymentService from '~/services/payment.service';
 
 // Cria um novo pagamento
 export const createPayment = asyncHandler(

@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { authenticateToken } from '../middlewares/auth';
+import { authenticateToken } from '~/middlewares/auth';
 import {
   createPayment,
   getPaymentsByCustomer,
-} from '../controllers/payment.controller';
+} from '~/controllers/payment.controller';
 
 const router = Router();
 
