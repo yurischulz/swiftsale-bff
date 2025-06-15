@@ -28,7 +28,6 @@ describe('Auth Routes', () => {
 
   describe('POST /auth/login', () => {
     it('should login with correct credentials and return a token', async () => {
-      // Ensure user is registered first
       await request(app)
         .post('/auth/register')
         .send({ email: testEmail, password: testPassword });
