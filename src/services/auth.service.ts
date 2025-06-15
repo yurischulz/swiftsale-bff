@@ -8,9 +8,30 @@ export const createFirebaseUser = async (
   password: string,
   role: string
 ) => {
-  const userRecord = await getAuth().createUser({ email, password });
-  await assignUserRole(userRecord.uid, role);
-  return { uid: userRecord.uid, email: userRecord.email, role };
+  const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_WEB_API_KEY}`;
+  try {
+    const response = await axios.post(url, {
+      email,
+      password,
+      returnSecureToken: true,
+    });
+
+    const uid = response.data.localId;
+
+    await assignUserRole(uid, role);
+
+    return { uid, email, role };
+  } catch (error: any) {
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.error &&
+      error.response.data.error.message === 'EMAIL_EXISTS'
+    ) {
+      throw new Error('E-mail já cadastrado no Firebase Authentication.');
+    }
+    throw error;
+  }
 };
 
 export const assignUserRole = async (uid: string, role: string) => {
