@@ -3,10 +3,8 @@ import { asyncHandler } from '~/utils/asyncHandler';
 import * as customerService from '~/services/customer.service';
 
 export const getAllCustomers = asyncHandler(
-  async (req: Request, res: Response) => {
-    console.log('getAllCustomers called');
+  async (_req: Request, res: Response) => {
     const customers = await customerService.getAllCustomers();
-    console.log('Customers encontrados:', customers);
     return res.status(200).send(customers);
   }
 );

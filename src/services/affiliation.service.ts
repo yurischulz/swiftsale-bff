@@ -34,7 +34,6 @@ export async function createAffiliation(data: CreateAffiliationRequest) {
     throw new Error('Dados obrigatórios ausentes para criar afiliação');
   }
   const affiliation = new Affiliation(data);
-  console.log('Creating affiliation:', affiliation);
   return await affiliation.save();
 }
 

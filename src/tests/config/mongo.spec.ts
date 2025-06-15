@@ -10,7 +10,6 @@ beforeAll(async () => {
     binary: { version: '6.0.6' },
   });
   const uri = mongoServer.getUri();
-  console.log('MongoDB URI:', uri);
   await mongoose.connect(uri);
 });
 
@@ -20,6 +19,5 @@ afterAll(async () => {
 });
 
 test('mongo memory server funciona', async () => {
-  console.log('mongoose.connection:', mongoose.connection);
   expect(mongoose.connection.readyState).toBe(1);
 });

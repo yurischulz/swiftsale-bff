@@ -15,19 +15,12 @@ const token = generateTestJWT();
 
 beforeAll(async () => {
   try {
-    console.log('Iniciando MongoMemoryServer...');
     mongoServer = await MongoMemoryServer.create({
       binary: { version: '6.0.6' }, // Use uma versão estável
       instance: { port: 0 }, // Porta aleatória
     });
-    console.log('MongoMemoryServer iniciado');
     const uri = mongoServer.getUri();
-    console.log('Conectando Mongoose...');
-    await mongoose.connect(uri, {
-      // useNewUrlParser: true, // Não é mais necessário no mongoose 6+
-      // useUnifiedTopology: true, // Não é mais necessário no mongoose 6+
-    });
-    console.log('Mongoose conectado');
+    await mongoose.connect(uri, {});
   } catch (err) {
     console.error(
       'Erro ao iniciar MongoMemoryServer ou conectar Mongoose:',
@@ -306,8 +299,6 @@ describe('Affiliations API - Integração (mongodb-memory-server)', () => {
       const res = await request(app)
         .delete('/affiliations/id-invalido')
         .set('Authorization', `Bearer ${token}`);
-
-      console.log('Response:', res.body);
 
       expect(res.status).toBe(400);
     });

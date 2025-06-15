@@ -28,7 +28,7 @@ export const firebaseAuthMiddleware = async (
     req.user = decodedToken;
     next();
   } catch (err) {
-    console.log('Erro ao verificar token Firebase:', err);
+    console.error('Erro ao verificar token Firebase:', err);
     return res.status(401).json({ error: 'Token inválido' });
   }
 };
