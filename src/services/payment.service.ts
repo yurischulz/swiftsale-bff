@@ -16,5 +16,7 @@ export async function createPayment(data: CreatePaymentRequest) {
 }
 
 export async function getPaymentsByCustomer(id: string) {
+  const customerExists = await Customer.exists({ _id: id });
+  if (!customerExists) return null;
   return await Payment.find({ customer: id });
 }

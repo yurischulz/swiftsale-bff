@@ -13,6 +13,9 @@ export const getPaymentsByCustomer = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
     const payments = await paymentService.getPaymentsByCustomer(id);
+    if (!payments) {
+      return res.status(404).json({ message: 'Nenhum pagamento encontrado.' });
+    }
     res.status(200).json(payments);
   }
 );
