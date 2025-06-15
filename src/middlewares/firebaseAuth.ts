@@ -1,5 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import { firebaseAuth } from '../config/firebase';
+import admin from 'firebase-admin';
+import serviceAccount from '../config/firebaseAdminKeys';
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+  });
+}
 
 export const firebaseAuthMiddleware = async (
   req: Request,
@@ -15,14 +22,13 @@ export const firebaseAuthMiddleware = async (
   if (!authHeader?.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Token ausente ou inválido' });
   }
-
   const token = authHeader.split(' ')[1];
-
   try {
-    const decodedToken = await firebaseAuth.verifyIdToken(token);
+    const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken;
     next();
   } catch (err) {
+    console.log('Erro ao verificar token Firebase:', err);
     return res.status(401).json({ error: 'Token inválido' });
   }
 };
