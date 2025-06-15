@@ -16,6 +16,11 @@ export async function getAllAffiliations(): Promise<any[]> {
 }
 
 export async function getAffiliationById(id: string) {
+  // Atualmente o método não está exposto na API, mas é utilizado internamente
+  // para atualizar uma afiliação, então não há necessidade de validação de ID
+  // pois o ID já foi validado no controller.
+  // Se for necessário expor esse método, remover comentário abaixo.
+  // istanbul ignore next
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw new mongoose.Error.CastError('ObjectId', id, 'id');
   }
