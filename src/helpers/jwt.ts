@@ -17,7 +17,7 @@ export function generateTestJWT(
     ...payload,
   };
 
-  return jwt.sign(defaultPayload, process.env.JWT_SECRET || 'test-secret', {
+  return jwt.sign(defaultPayload, process.env.JWT_SECRET!, {
     expiresIn: '1h',
     ...options,
   });
