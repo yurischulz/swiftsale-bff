@@ -29,10 +29,12 @@ app.use(helmet());
 app.use(express.json());
 app.use(morgan(env === 'development' ? 'dev' : 'common'));
 
-connectDatabase().catch((err) => {
-  console.error('❌ Erro ao conectar com o MongoDB:', err);
-  process.exit(1);
-});
+if (process.env.NODE_ENV !== 'test') {
+  connectDatabase().catch((err) => {
+    console.error('❌ Erro ao conectar com o MongoDB:', err);
+    process.exit(1);
+  });
+}
 
 app.use('/auth', authRoutes);
 app.use('/customers', customerRoutes);
