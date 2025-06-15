@@ -20,7 +20,6 @@ export const updateCustomer = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
     const updated = await customerService.updateCustomer(id, req.body);
-    console.log('Updated customer:', updated);
     if (!updated) {
       return res.status(404).json({ message: 'customer não encontrado' });
     }

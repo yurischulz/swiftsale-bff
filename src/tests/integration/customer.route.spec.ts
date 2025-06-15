@@ -100,7 +100,6 @@ describe('Customer Routes', () => {
         .put(`/customers/${fakeId}`)
         .send({ name: 'Qualquer', email: 'q@email.com', phone: '000' });
 
-      console.log('Response body:', res.body);
       expect(res.status).toBe(404);
       expect(res.body).toHaveProperty('message');
     });
