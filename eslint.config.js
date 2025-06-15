@@ -1,7 +1,7 @@
 import prettier from 'eslint-config-prettier';
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
-import prettierPlugin from 'eslint-plugin-prettier'; // Adicione o plugin Prettier
+import prettierPlugin from 'eslint-plugin-prettier';
 
 export default [
   {
@@ -16,11 +16,11 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescriptPlugin,
-      prettier: prettierPlugin, // Registre o plugin Prettier
+      prettier: prettierPlugin,
     },
     rules: {
       ...typescriptPlugin.configs.recommended.rules,
-      'prettier/prettier': 'error', // Ative a regra do Prettier
+      'prettier/prettier': 'error',
       '@typescript-eslint/no-unused-vars': ['warn'],
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-empty-function': 'warn',
@@ -33,10 +33,10 @@ export default [
       sourceType: 'module',
     },
     plugins: {
-      prettier: prettierPlugin, // Registre o plugin Prettier para arquivos JS
+      prettier: prettierPlugin,
     },
     rules: {
-      'prettier/prettier': 'error', // Ative a regra do Prettier
+      'prettier/prettier': 'error',
       'no-unused-vars': 'warn',
       'no-empty-function': 'warn',
     },

@@ -1,11 +1,11 @@
 export interface customer {
-  _id?: string; // Opcional para novos customers
+  _id?: string;
   name: string;
   phone: string;
   address: string;
-  debt?: number; // Dívida do customer
-  credit?: number; // Crédito do customer
-  affiliation?: string; // ID da afiliação
+  debt?: number;
+  credit?: number;
+  affiliation?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -14,7 +14,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: [__dirname + '/../routes/*.ts'], // Caminho para os arquivos de rotas
+  apis: [__dirname + '/../routes/*.ts'],
 };
 
 export const swaggerDocs = swaggerJsDoc(swaggerOptions);

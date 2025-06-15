@@ -7,7 +7,7 @@ import { Affiliation } from '~/models/Affiliation';
 import { Customer } from '~/models/Customer';
 import { generateTestJWT } from '~/helpers/jwt';
 
-jest.setTimeout(60000); // 60 segundos para garantir
+jest.setTimeout(60000);
 
 let mongoServer: MongoMemoryServer;
 
@@ -16,8 +16,8 @@ const token = generateTestJWT();
 beforeAll(async () => {
   try {
     mongoServer = await MongoMemoryServer.create({
-      binary: { version: '6.0.6' }, // Use uma versão estável
-      instance: { port: 0 }, // Porta aleatória
+      binary: { version: '6.0.6' },
+      instance: { port: 0 },
     });
     const uri = mongoServer.getUri();
     await mongoose.connect(uri, {});
@@ -38,7 +38,6 @@ afterAll(async () => {
 });
 
 beforeEach(async () => {
-  // Limpa todas as coleções antes de cada teste
   if (mongoose.connection) {
     const collections = await mongoose.connection.db.collections();
     for (let collection of collections) {
@@ -136,7 +135,6 @@ describe('Affiliations API - Integração (mongodb-memory-server)', () => {
     });
 
     it('deve retornar [] se Affiliation.find() retornar undefined', async () => {
-      // Mock temporário para simular Affiliation.find() retornando undefined
       const originalFind = Affiliation.find;
       Affiliation.find = () => undefined as any;
 
@@ -147,13 +145,12 @@ describe('Affiliations API - Integração (mongodb-memory-server)', () => {
       expect(res.status).toBe(200);
       expect(res.body).toEqual([]);
 
-      // Restaura o método original
       Affiliation.find = originalFind;
     });
 
     it('deve retornar totalDebt 0 se Customer.find() retornar undefined', async () => {
       const [aff] = await Affiliation.create([mockAffiliations[0]]);
-      // Mock temporário para simular Customer.find() retornando undefined
+
       const originalFind = Customer.find;
       Customer.find = () => undefined as any;
 
@@ -169,7 +166,6 @@ describe('Affiliations API - Integração (mongodb-memory-server)', () => {
         totalDebt: 0,
       });
 
-      // Restaura o método original
       Customer.find = originalFind;
     });
 

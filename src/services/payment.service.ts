@@ -5,11 +5,9 @@ import { Customer } from '~/models/Customer';
 export async function createPayment(data: CreatePaymentRequest) {
   const { customer, amount } = data;
 
-  // Cria o pagamento
   const payment = new Payment({ customer, amount });
   const paymentResponse = await payment.save();
 
-  // Atualiza o cliente no banco de dados
   await Customer.findByIdAndUpdate(customer, {
     $inc: { debt: -amount, credit: amount },
   });

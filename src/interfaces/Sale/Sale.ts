@@ -1,8 +1,8 @@
 export interface Sale {
-  _id?: string; // Opcional para novas vendas
-  customer: string; // ID do customer
+  _id?: string;
+  customer: string;
   products: {
-    product: string; // ID do produto
+    product: string;
     quantity: number;
     unitPrice: number;
   }[];

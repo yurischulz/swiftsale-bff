@@ -1,7 +1,7 @@
 export interface Payment {
-  _id?: string; // Opcional para novos pagamentos
-  customer: string; // ID do customer
-  amount: number; // Valor do pagamento
+  _id?: string;
+  customer: string;
+  amount: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
