@@ -30,7 +30,6 @@ export const createFirebaseUser = async (
     ) {
       throw new Error('E-mail já cadastrado no Firebase Authentication.');
     }
-    console.error('Erro ao criar usuário no Firebase:', error);
     // istanbul ignore next
     throw error;
   }
