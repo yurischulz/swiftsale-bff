@@ -8,9 +8,11 @@ const config: Config = {
   collectCoverage: false,
   collectCoverageFrom: [
     'src/**/*.ts',
+    '!src/server.ts',
     '!src/**/*.d.ts',
     '!src/**/index.ts',
     '!src/**/types/**',
+    '!src/scripts/**',
     '!dist/**',
   ],
   coverageDirectory: 'coverage',
