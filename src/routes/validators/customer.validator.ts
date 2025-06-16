@@ -22,8 +22,10 @@ function validate(
 const customerBodySchema = Joi.object({
   name: Joi.string().required(),
   phone: Joi.string().required(),
+  document: Joi.string().required(),
   email: Joi.string(),
   address: Joi.string(),
+  affiliation: Joi.string().length(24).hex(),
 });
 
 const customerUpdateBodySchema = Joi.object({
@@ -33,6 +35,7 @@ const customerUpdateBodySchema = Joi.object({
   email: Joi.string(),
   credit: Joi.number(),
   debt: Joi.number(),
+  affiliation: Joi.string().length(24).hex(),
 }).min(1);
 
 const idParamSchema = Joi.object({

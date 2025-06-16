@@ -10,6 +10,7 @@ const CustomerSchema = new mongoose.Schema(
     notes: { type: String },
     credit: { type: Number, default: 0 },
     debt: { type: Number, default: 0 },
+    createdBy: { type: String, required: true },
   },
   { timestamps: true }
 );
