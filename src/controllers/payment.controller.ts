@@ -4,15 +4,17 @@ import * as paymentService from '~/services/payment.service';
 
 export const createPayment = asyncHandler(
   async (req: Request, res: Response) => {
-    const payment = await paymentService.createPayment(req.body);
+    const payment = await paymentService.createPayment(req.body, req.user.uid);
     res.status(201).json(payment);
   }
 );
 
 export const getPaymentsByCustomer = asyncHandler(
   async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const payments = await paymentService.getPaymentsByCustomer(id);
+    const payments = await paymentService.getPaymentsByCustomer(
+      req.params.id,
+      req.user.uid
+    );
     if (!payments) {
       return res.status(404).json({ message: 'Nenhum pagamento encontrado.' });
     }
