@@ -3,8 +3,8 @@ import { asyncHandler } from '~/utils/asyncHandler';
 import * as dashboardService from '~/services/dashboard.service';
 
 export const getDashboardSummary = asyncHandler(
-  async (_req: Request, res: Response) => {
-    const result = await dashboardService.getDashboardSummary();
+  async (req: Request, res: Response) => {
+    const result = await dashboardService.getDashboardSummary(req.user.uid);
     res.json(result);
   }
 );

@@ -3,8 +3,8 @@ import { Sale } from '~/models/Sale';
 import { Customer } from '~/models/Customer';
 import { Affiliation } from '~/models/Affiliation';
 
-export async function getDashboardSummary() {
-  const customers = await Customer.find().populate('affiliation');
+export async function getDashboardSummary(createdBy: string) {
+  const customers = await Customer.find({ createdBy }).populate('affiliation');
   const topCustomers = [...customers]
     .sort((a, b) => b.debt - a.debt)
     .slice(0, 5);
@@ -17,7 +17,7 @@ export async function getDashboardSummary() {
     }
   });
 
-  const affiliations = await Affiliation.find();
+  const affiliations = await Affiliation.find({ createdBy });
   const topAffiliations = affiliations
     .map((aff) => ({
       ...aff.toObject(),
@@ -26,11 +26,22 @@ export async function getDashboardSummary() {
     .sort((a, b) => b.totalDebt - a.totalDebt)
     .slice(0, 5);
 
+  const totalPaymentsValue = await Payment.aggregate([
+    { $match: { createdBy } },
+    { $group: { _id: null, total: { $sum: '$amount' } } },
+  ]);
+  const totalSalesValue = await Sale.aggregate([
+    { $match: { createdBy } },
+    { $group: { _id: null, total: { $sum: '$total' } } },
+  ]);
+
   return {
     topCustomers,
     topAffiliations,
-    totalCustomers: await Customer.countDocuments(),
-    totalPayments: await Payment.countDocuments(),
-    totalSales: await Sale.countDocuments(),
+    totalCustomers: await Customer.countDocuments({ createdBy }),
+    totalPayments: await Payment.countDocuments({ createdBy }),
+    totalSales: await Sale.countDocuments({ createdBy }),
+    totalPaymentsAmount: totalPaymentsValue[0]?.total || 0,
+    totalSalesAmount: totalSalesValue[0]?.total || 0,
   };
 }
