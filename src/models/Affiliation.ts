@@ -5,6 +5,7 @@ const AffiliationSchema = new mongoose.Schema(
     name: { type: String, required: true },
     address: { type: String, required: true },
     phone: { type: String, required: true },
+    createdBy: { type: String, required: true },
   },
   { timestamps: true }
 );
