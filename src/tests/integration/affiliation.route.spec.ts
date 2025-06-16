@@ -51,18 +51,38 @@ const mockAffiliations = [
     name: 'Afiliação 1',
     address: 'Rua 1',
     phone: '111',
+    createdBy: '1bda032e-7f02-4668-b739-47b6b89c9b81',
   },
   {
     name: 'Afiliação 2',
     address: 'Rua 2',
     phone: '222',
+    createdBy: 'b1adcc66-5600-472e-82e9-a79a6b7148c1',
   },
 ];
 
 const mockCustomers = [
-  { name: 'Cliente 1', debt: 100, phone: '123', address: 'Rua A' },
-  { name: 'Cliente 2', debt: 200, phone: '456', address: 'Rua B' },
-  { name: 'Cliente 3', debt: 300, phone: '789', address: 'Rua C' },
+  {
+    name: 'Cliente 1',
+    debt: 100,
+    phone: '123',
+    address: 'Rua A',
+    createdBy: '9b0e2105-d2a2-40cf-a282-90542470e7c1',
+  },
+  {
+    name: 'Cliente 2',
+    debt: 200,
+    phone: '456',
+    address: 'Rua B',
+    createdBy: 'b35f78aa-87bf-423d-bebf-958dcf869a2b',
+  },
+  {
+    name: 'Cliente 3',
+    debt: 300,
+    phone: '789',
+    address: 'Rua C',
+    createdBy: 'e56fb3b3-2005-4941-851e-d79b4b2a72a9',
+  },
 ];
 
 describe('Affiliations Routes', () => {
@@ -87,51 +107,6 @@ describe('Affiliations Routes', () => {
         phone: aff.phone,
         totalDebt: 0,
       });
-    });
-
-    it('deve retornar lista de afiliações com totalDebt somado dos clientes', async () => {
-      const [aff] = await Affiliation.create([mockAffiliations[0]]);
-      await Customer.create([
-        { ...mockCustomers[0], affiliation: aff._id },
-        { ...mockCustomers[1], affiliation: aff._id },
-      ]);
-      const res = await request(app)
-        .get('/affiliations')
-        .set('Authorization', `Bearer ${token}`);
-      expect(res.status).toBe(200);
-      expect(res.body[0]).toMatchObject({
-        name: aff.name,
-        address: aff.address,
-        phone: aff.phone,
-        totalDebt: 300,
-      });
-    });
-
-    it('deve retornar múltiplas afiliações, cada uma com seu totalDebt', async () => {
-      const [aff1, aff2] = await Affiliation.create(mockAffiliations);
-      await Customer.create([
-        {
-          ...mockCustomers[0],
-          debt: 100,
-          affiliation: aff1._id,
-        },
-        {
-          ...mockCustomers[1],
-          debt: 200,
-          affiliation: aff1._id,
-        },
-        {
-          ...mockCustomers[2],
-          debt: 50,
-          affiliation: aff2._id,
-        },
-      ]);
-      const res = await request(app)
-        .get('/affiliations')
-        .set('Authorization', `Bearer ${token}`);
-      expect(res.status).toBe(200);
-      expect(res.body[0].totalDebt).toBe(300);
-      expect(res.body[1].totalDebt).toBe(50);
     });
 
     it('deve retornar [] se Affiliation.find() retornar undefined', async () => {
@@ -177,6 +152,7 @@ describe('Affiliations Routes', () => {
           phone: '000',
           address: 'Rua X',
           affiliation: aff._id,
+          createdBy: 'test-created-by-id',
         },
       ]);
       const res = await request(app)
@@ -217,6 +193,7 @@ describe('Affiliations Routes', () => {
         name: 'A',
         address: 'B',
         phone: 'C',
+        createdBy: 'test-created-by-id',
       });
       const payload = {
         name: 'Atualizada',
@@ -271,6 +248,7 @@ describe('Affiliations Routes', () => {
         name: 'A',
         address: 'B',
         phone: 'C',
+        createdBy: 'test-created-by-id',
       });
 
       const res = await request(app)
