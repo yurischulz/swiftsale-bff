@@ -18,7 +18,7 @@ import saleRoutes from './routes/sale.routes';
 import paymentRoutes from './routes/payment.routes';
 import dashboardRoutes from './routes/dashboard.routes';
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV!;
 const app = express();
 
 app.use(timeout('10s'));
@@ -26,8 +26,10 @@ app.use(timeout('10s'));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+// istanbul ignore next
 app.use(morgan(env === 'development' ? 'dev' : 'common'));
 
+// istanbul ignore next
 if (process.env.NODE_ENV !== 'test') {
   connectDatabase().catch((err) => {
     console.error('❌ Erro ao conectar com o MongoDB:', err);

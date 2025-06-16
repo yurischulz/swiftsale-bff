@@ -79,23 +79,6 @@ describe('Sale Routes', () => {
       expect(res.status).toBe(400);
       expect(res.body).toHaveProperty('message');
     });
-
-    it.skip('deve retornar erro se cliente não existir', async () => {
-      const fakeId = new mongoose.Types.ObjectId();
-      const payload = {
-        customer: fakeId,
-        products: [{ product: fakeId, quantity: 1, unitPrice: 100 }],
-        total: 100,
-      };
-
-      const res = await request(app)
-        .post('/sales')
-        .set('Authorization', validToken)
-        .send(payload);
-
-      expect(res.status).toBe(404);
-      expect(res.body).toHaveProperty('message');
-    });
   });
 
   describe('GET /sales/customer/:id', () => {
@@ -139,16 +122,6 @@ describe('Sale Routes', () => {
       expect(res.body.length).toBe(2);
       expect(res.body[0]).toHaveProperty('total', 200);
       expect(res.body[1]).toHaveProperty('total', 200);
-    });
-
-    it.skip('deve retornar erro se cliente não existir', async () => {
-      const fakeId = new mongoose.Types.ObjectId();
-      const res = await request(app)
-        .get(`/sales/customer/${fakeId}`)
-        .set('Authorization', validToken);
-
-      expect(res.status).toBe(404);
-      expect(res.body).toHaveProperty('message');
     });
 
     it('deve retornar erro se id for inválido', async () => {

@@ -26,6 +26,7 @@ export const firebaseAuthMiddleware = async (
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken;
+    console.log('Token Firebase verificado com sucesso:', decodedToken);
     next();
   } catch (err) {
     console.error('Erro ao verificar token Firebase:', err);

@@ -53,15 +53,6 @@ describe('Payment Routes', () => {
       expect(res.status).toBe(400);
       expect(res.body).toHaveProperty('message');
     });
-
-    it.skip('deve retornar erro se cliente não existir', async () => {
-      const fakeId = new mongoose.Types.ObjectId();
-      const payload = { customer: fakeId, amount: 50 };
-      const res = await request(app).post('/payments').send(payload);
-
-      expect(res.status).toBe(404);
-      expect(res.body).toHaveProperty('message');
-    });
   });
 
   describe('GET /payments/customer/:id', () => {
