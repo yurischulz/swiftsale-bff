@@ -14,7 +14,12 @@ export const firebaseAuthMiddleware = async (
   next: NextFunction
 ) => {
   if (process.env.NODE_ENV === 'test') {
-    req.user = { user_id: 'mock-user', role: 'admin', email: 'mock@mock.com' };
+    req.user = {
+      user_id: 'mock-user',
+      role: 'admin',
+      email: 'mock@mock.com',
+      uid: 'mock-uid',
+    };
     return next();
   }
 
