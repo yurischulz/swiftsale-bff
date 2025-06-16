@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import admin from 'firebase-admin';
 import serviceAccount from '../config/firebaseAdminKeys';
+import { createdBy } from '~/tests/__mocks__/firebase';
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -15,10 +16,10 @@ export const firebaseAuthMiddleware = async (
 ) => {
   if (process.env.NODE_ENV === 'test') {
     req.user = {
-      user_id: 'mock-user',
+      user_id: createdBy,
       role: 'admin',
       email: 'mock@mock.com',
-      uid: 'mock-uid',
+      uid: createdBy,
     };
     return next();
   }
