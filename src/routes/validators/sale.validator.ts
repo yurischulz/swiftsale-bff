@@ -21,7 +21,7 @@ function validate(
 
 const saleBodySchema = Joi.object({
   customer: Joi.string().length(24).hex().required(),
-  affiliation: Joi.string().length(24).hex().required(),
+  affiliation: Joi.string().length(24).hex().optional(),
   products: Joi.array()
     .items(
       Joi.object({

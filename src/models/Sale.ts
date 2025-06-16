@@ -12,10 +12,12 @@ const saleSchema = new mongoose.Schema(
         product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
         quantity: { type: Number, default: 1 },
         unitPrice: { type: Number, required: true },
+        createdBy: { type: String, required: true },
       },
     ],
     total: { type: Number, required: true },
     date: { type: Date, default: Date.now },
+    createdBy: { type: String, required: true },
   },
   { timestamps: true }
 );
