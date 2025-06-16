@@ -6,6 +6,7 @@ import app from '~/app';
 import { Affiliation } from '~/models/Affiliation';
 import { Customer } from '~/models/Customer';
 import { generateTestJWT } from '~/helpers/jwt';
+import { createdBy } from '../__mocks__/firebase';
 
 jest.setTimeout(60000);
 
@@ -51,37 +52,13 @@ const mockAffiliations = [
     name: 'Afiliação 1',
     address: 'Rua 1',
     phone: '111',
-    createdBy: '1bda032e-7f02-4668-b739-47b6b89c9b81',
+    createdBy,
   },
   {
     name: 'Afiliação 2',
     address: 'Rua 2',
     phone: '222',
-    createdBy: 'b1adcc66-5600-472e-82e9-a79a6b7148c1',
-  },
-];
-
-const mockCustomers = [
-  {
-    name: 'Cliente 1',
-    debt: 100,
-    phone: '123',
-    address: 'Rua A',
-    createdBy: '9b0e2105-d2a2-40cf-a282-90542470e7c1',
-  },
-  {
-    name: 'Cliente 2',
-    debt: 200,
-    phone: '456',
-    address: 'Rua B',
-    createdBy: 'b35f78aa-87bf-423d-bebf-958dcf869a2b',
-  },
-  {
-    name: 'Cliente 3',
-    debt: 300,
-    phone: '789',
-    address: 'Rua C',
-    createdBy: 'e56fb3b3-2005-4941-851e-d79b4b2a72a9',
+    createdBy,
   },
 ];
 
@@ -152,7 +129,7 @@ describe('Affiliations Routes', () => {
           phone: '000',
           address: 'Rua X',
           affiliation: aff._id,
-          createdBy: 'test-created-by-id',
+          createdBy,
         },
       ]);
       const res = await request(app)
@@ -193,7 +170,7 @@ describe('Affiliations Routes', () => {
         name: 'A',
         address: 'B',
         phone: 'C',
-        createdBy: 'test-created-by-id',
+        createdBy,
       });
       const payload = {
         name: 'Atualizada',
@@ -248,7 +225,7 @@ describe('Affiliations Routes', () => {
         name: 'A',
         address: 'B',
         phone: 'C',
-        createdBy: 'test-created-by-id',
+        createdBy,
       });
 
       const res = await request(app)

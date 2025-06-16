@@ -4,6 +4,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import app from '~/app';
 import { Customer } from '~/models/Customer';
 import { Affiliation } from '~/models/Affiliation';
+import { createdBy } from '../__mocks__/firebase';
 
 let mongoServer: MongoMemoryServer;
 let validToken: string;
@@ -40,7 +41,9 @@ describe('Dashboard Routes', () => {
         topAffiliations: [],
         totalCustomers: 0,
         totalPayments: 0,
+        totalPaymentsAmount: 0,
         totalSales: 0,
+        totalSalesAmount: 0,
       });
     });
 
@@ -51,12 +54,14 @@ describe('Dashboard Routes', () => {
           address: 'Endereço 1',
           phone: '333',
           totalDebt: 300,
+          createdBy,
         },
         {
           name: 'Afiliado 2',
           address: 'Endereço 2',
           phone: '444',
           totalDebt: 400,
+          createdBy,
         },
       ]);
 
@@ -68,6 +73,7 @@ describe('Dashboard Routes', () => {
           address: 'Endereço Cliente 1',
           credit: 100,
           debt: 50,
+          createdBy,
         },
         {
           name: 'Cliente 2',
@@ -77,6 +83,7 @@ describe('Dashboard Routes', () => {
           credit: 200,
           debt: 150,
           affiliation: affiliation[0]._id,
+          createdBy,
         },
       ]);
 

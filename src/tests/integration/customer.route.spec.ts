@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import app from '~/app';
 import { Customer } from '~/models/Customer';
+import { createdBy } from '../__mocks__/firebase';
 
 let mongoServer: MongoMemoryServer;
 
@@ -37,15 +38,20 @@ describe('Customer Routes', () => {
         email: 'c1@email.com',
         phone: '111',
         address: 'Rua 1',
+        document: '123456789',
+        createdBy,
       });
       await Customer.create({
         name: 'Cliente 2',
         email: 'c2@email.com',
         phone: '222',
         address: 'Rua 2',
+        document: '987654321',
+        createdBy,
       });
 
       const res = await request(app).get('/customers');
+
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
       expect(res.body[0]).toHaveProperty('name');
@@ -60,8 +66,10 @@ describe('Customer Routes', () => {
         email: 'novo@email.com',
         phone: '123',
         address: 'Rua Teste',
+        document: '123456789',
       };
       const res = await request(app).post('/customers').send(payload);
+      console.log('Response:', res);
       expect(res.status).toBe(201);
       expect(res.body).toMatchObject({
         name: payload.name,
@@ -86,6 +94,7 @@ describe('Customer Routes', () => {
         email: 'atualizar@email.com',
         phone: '999',
         address: 'Rua Antiga',
+        createdBy,
       });
       const res = await request(app).put(`/customers/${customer._id}`).send({
         address: 'Rua Atualizada',
@@ -118,6 +127,7 @@ describe('Customer Routes', () => {
         email: 'atualizar2@email.com',
         phone: '999',
         address: 'Rua Antiga',
+        createdBy,
       });
       const res = await request(app).put(`/customers/${customer._id}`).send({});
       expect(res.status).toBe(400);
@@ -132,6 +142,7 @@ describe('Customer Routes', () => {
         email: 'remover@email.com',
         phone: '888',
         address: 'Rua Remover',
+        createdBy,
       });
       const res = await request(app).delete(`/customers/${customer._id}`);
       expect(res.status).toBe(204);
