@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import app from '~/app';
 import { Product } from '~/models/Product';
+import { createdBy } from '../__mocks__/firebase';
 
 let mongoServer: MongoMemoryServer;
 
@@ -33,8 +34,8 @@ describe('Product Routes', () => {
 
     it('deve retornar todos os produtos cadastrados', async () => {
       await Product.create([
-        { name: 'Produto 1', unitPrice: 100 },
-        { name: 'Produto 2', unitPrice: 200 },
+        { name: 'Produto 1', unitPrice: 100, createdBy },
+        { name: 'Produto 2', unitPrice: 200, createdBy },
       ]);
 
       const res = await request(app).get('/products');
@@ -68,6 +69,7 @@ describe('Product Routes', () => {
         name: 'Produto Atualizar',
         unitPrice: 100,
         stock: 10,
+        createdBy,
       });
       const res = await request(app)
         .put(`/products/${product._id}`)
@@ -98,16 +100,13 @@ describe('Product Routes', () => {
 
   describe('DELETE /products/:id', () => {
     it('deve remover um produto existente', async () => {
-      const product = await Product.create({
-        name: 'Produto Remover',
-        unitPrice: 100,
-        stock: 10,
-      });
-      const res = await request(app).delete(`/products/${product._id}`);
+      const payload = { name: 'Novo Produto', unitPrice: 150 };
+      const productRes = await request(app).post('/products').send(payload);
+      const res = await request(app).delete(`/products/${productRes.body._id}`);
 
       expect(res.status).toBe(204);
 
-      const check = await Product.findById(product._id);
+      const check = await Product.findById(productRes.body._id);
       expect(check).toBeNull();
     });
 

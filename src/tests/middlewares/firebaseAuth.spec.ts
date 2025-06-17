@@ -36,7 +36,8 @@ describe('firebaseAuthMiddleware', () => {
     await firebaseAuthMiddleware(req as Request, res as Response, next);
 
     expect(req.user).toEqual({
-      user_id: 'mock-user',
+      uid: 'aFT85PCVPccX0Z6Zi0zTzezChvs2',
+      user_id: 'aFT85PCVPccX0Z6Zi0zTzezChvs2',
       role: 'admin',
       email: 'mock@mock.com',
     });
