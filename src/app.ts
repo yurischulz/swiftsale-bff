@@ -39,6 +39,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use('/auth', authRoutes);
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(firebaseAuthMiddleware);
 
 app.use('/customers', customerRoutes);
@@ -49,7 +50,5 @@ app.use('/payments', paymentRoutes);
 app.use('/dashboard', dashboardRoutes);
 
 app.use(errorHandler);
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 export default app;
