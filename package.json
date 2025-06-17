@@ -12,7 +12,8 @@
     "lint:fix": "eslint --fix",
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc",
-    "seed": "ts-node src/seed.ts"
+    "seed": "ts-node src/seed.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@types/axios": "^0.14.4",
@@ -53,6 +54,7 @@
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
+    "husky": "^9.1.7",
     "jest": "^29.5.0",
     "mongodb-memory-server": "^8.14.0",
     "prettier": "^3.5.3",
