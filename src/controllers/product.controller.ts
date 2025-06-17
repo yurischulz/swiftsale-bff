@@ -18,9 +18,8 @@ export const createProduct = asyncHandler(
 
 export const updateProduct = asyncHandler(
   async (req: Request, res: Response) => {
-    const { id } = req.params;
     const updatedProduct = await productService.updateProduct(
-      id,
+      req.params.id,
       req.body,
       req.user.uid
     );
@@ -34,7 +33,7 @@ export const updateProduct = asyncHandler(
 export const deleteProduct = asyncHandler(
   async (req: Request, res: Response) => {
     const deletedProduct = await productService.deleteProduct(
-      req.user.id,
+      req.params.id,
       req.user.uid
     );
     if (!deletedProduct) {
