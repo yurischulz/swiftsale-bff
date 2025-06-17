@@ -88,6 +88,7 @@ describe('Sale Routes', () => {
     it('deve usar crédito do cliente para pagar a venda completamente', async () => {
       const customer = await Customer.create({
         name: 'Cliente Teste',
+        document: '12345678901',
         email: 'cliente@email.com',
         phone: '123456789',
         address: 'Rua Teste, 123',
@@ -122,6 +123,7 @@ describe('Sale Routes', () => {
     it('deve usar crédito do cliente parcialmente e adicionar o restante ao débito', async () => {
       const customer = await Customer.create({
         name: 'Cliente Teste',
+        document: '12345678901',
         email: 'cliente@email.com',
         phone: '123456789',
         address: 'Rua Teste, 123',
@@ -156,6 +158,7 @@ describe('Sale Routes', () => {
     it('deve adicionar o total da venda ao débito do cliente quando não há crédito', async () => {
       const customer = await Customer.create({
         name: 'Cliente Teste',
+        document: '12345678901',
         email: 'cliente@email.com',
         phone: '123456789',
         address: 'Rua Teste, 123',

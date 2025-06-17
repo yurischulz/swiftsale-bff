@@ -91,6 +91,7 @@ describe('Customer Routes', () => {
     it('deve atualizar um cliente existente', async () => {
       const customer = await Customer.create({
         name: 'Cliente Atualizar',
+        document: '123456789',
         email: 'atualizar@email.com',
         phone: '999',
         address: 'Rua Antiga',
@@ -124,6 +125,7 @@ describe('Customer Routes', () => {
     it('deve retornar erro se payload de atualização for vazio', async () => {
       const customer = await Customer.create({
         name: 'Cliente Atualizar',
+        document: '123456789',
         email: 'atualizar2@email.com',
         phone: '999',
         address: 'Rua Antiga',
@@ -139,6 +141,7 @@ describe('Customer Routes', () => {
     it('deve remover um cliente existente', async () => {
       const customer = await Customer.create({
         name: 'Remover',
+        document: '987654321',
         email: 'remover@email.com',
         phone: '888',
         address: 'Rua Remover',

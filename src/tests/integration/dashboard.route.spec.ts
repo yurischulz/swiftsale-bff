@@ -68,6 +68,7 @@ describe('Dashboard Routes', () => {
       await Customer.create([
         {
           name: 'Cliente 1',
+          document: '123456789',
           email: 'c1@email.com',
           phone: '111',
           address: 'Endereço Cliente 1',
@@ -77,6 +78,7 @@ describe('Dashboard Routes', () => {
         },
         {
           name: 'Cliente 2',
+          document: '987654321',
           email: 'c2@email.com',
           phone: '222',
           address: 'Endereço Cliente 2',

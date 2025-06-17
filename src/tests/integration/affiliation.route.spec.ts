@@ -130,6 +130,7 @@ describe('Affiliations Routes', () => {
           address: 'Rua X',
           affiliation: aff._id,
           createdBy,
+          document: '12345678900', // Adiciona o campo obrigatório document
         },
       ]);
       const res = await request(app)
