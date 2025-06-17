@@ -45,6 +45,8 @@ router.use(firebaseAuthMiddleware);
  *                   totalDebt:
  *                     type: number
  *                     nullable: true
+ *                   createdBy:
+ *                     type: string
  *                   createdAt:
  *                     type: string
  *                     format: date-time
@@ -96,6 +98,8 @@ router.get('/', getAllAffiliations);
  *                 address:
  *                   type: string
  *                 phone:
+ *                   type: string
+ *                 createdBy:
  *                   type: string
  *                 createdAt:
  *                   type: string
@@ -153,6 +157,8 @@ router.post('/', validateAffiliationBody, createAffiliation);
  *                 address:
  *                   type: string
  *                 phone:
+ *                   type: string
+ *                 createdBy:
  *                   type: string
  *                 createdAt:
  *                   type: string

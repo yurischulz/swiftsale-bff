@@ -8,7 +8,6 @@ const paymentSchema = new mongoose.Schema(
       required: true,
     },
     amount: { type: Number, required: true },
-    date: { type: Date, default: Date.now },
     createdBy: { type: String, required: true },
   },
   { timestamps: true }

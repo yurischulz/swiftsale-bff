@@ -40,6 +40,8 @@ router.use(firebaseAuthMiddleware);
  *                     type: string
  *                   unitPrice:
  *                     type: number
+ *                   createdBy:
+ *                     type: string
  *                   createdAt:
  *                     type: string
  *                     format: date-time
@@ -87,6 +89,8 @@ router.get('/', getAllProducts);
  *                   type: string
  *                 unitPrice:
  *                   type: number
+ *                 createdBy:
+ *                   type: string
  *                 createdAt:
  *                   type: string
  *                   format: date-time
@@ -138,6 +142,8 @@ router.post('/', validateProductBody, createProduct);
  *                   type: string
  *                 unitPrice:
  *                   type: number
+ *                 createdBy:
+ *                   type: string
  *                 createdAt:
  *                   type: string
  *                   format: date-time

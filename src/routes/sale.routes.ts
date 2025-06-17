@@ -27,6 +27,8 @@ router.use(firebaseAuthMiddleware);
  *             properties:
  *               customer:
  *                 type: string
+ *               affiliation:
+ *                 type: string
  *               products:
  *                 type: array
  *                 items:
@@ -61,19 +63,20 @@ router.use(firebaseAuthMiddleware);
  *                   items:
  *                     type: object
  *                     properties:
+ *                       _id:
+ *                         type: string
  *                       product:
  *                         type: string
  *                       quantity:
  *                         type: number
  *                       unitPrice:
  *                         type: number
- *                       _id:
+ *                       createdBy:
  *                         type: string
  *                 total:
  *                   type: number
- *                 date:
+ *                 createdBy:
  *                   type: string
- *                   format: date-time
  *                 createdAt:
  *                   type: string
  *                   format: date-time
@@ -120,18 +123,34 @@ router.post('/', validateSaleBody, createSale);
  *                       type: object
  *                       properties:
  *                         product:
- *                           type: string
+ *                           type: object
+ *                           properties:
+ *                             _id:
+ *                               type: string
+ *                             name:
+ *                               type: string
+ *                             unitPrice:
+ *                               type: number
+ *                             createdBy:
+ *                               type: string
+ *                             createdAt:
+ *                               type: string
+ *                               format: date-time
+ *                             updatedAt:
+ *                               type: string
+ *                               format: date-time
  *                         quantity:
  *                           type: number
  *                         unitPrice:
  *                           type: number
+ *                         createdBy:
+ *                           type: string
  *                         _id:
  *                           type: string
  *                   total:
  *                     type: number
- *                   date:
+ *                   createdBy:
  *                     type: string
- *                     format: date-time
  *                   createdAt:
  *                     type: string
  *                     format: date-time

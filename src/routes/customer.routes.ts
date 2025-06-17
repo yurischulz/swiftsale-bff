@@ -40,14 +40,20 @@ router.use(firebaseAuthMiddleware);
  *                     type: string
  *                   name:
  *                     type: string
+ *                   document:
+ *                     type: string
  *                   address:
  *                     type: string
  *                   phone:
+ *                     type: string
+ *                   affiliation:
  *                     type: string
  *                   credit:
  *                     type: number
  *                   debt:
  *                     type: number
+ *                   createdBy:
+ *                     type: string
  *                   createdAt:
  *                     type: string
  *                     format: date-time
@@ -76,13 +82,17 @@ router.get('/', getAllCustomers);
  *             properties:
  *               name:
  *                 type: string
- *               address:
+ *               document:
  *                 type: string
  *               phone:
  *                 type: string
+ *               address:
+ *                 type: string
+ *               email:
+ *                 type: string
  *             required:
  *               - name
- *               - address
+ *               - document
  *               - phone
  *     responses:
  *       201:
@@ -96,9 +106,21 @@ router.get('/', getAllCustomers);
  *                   type: string
  *                 name:
  *                   type: string
- *                 address:
+ *                 document:
  *                   type: string
  *                 phone:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 address:
+ *                   type: string
+ *                 affiliation:
+ *                   type: string
+ *                 credit:
+ *                   type: number
+ *                 debit:
+ *                   type: number
+ *                 createdBy:
  *                   type: string
  *                 createdAt:
  *                   type: string
@@ -135,9 +157,15 @@ router.post('/', validateCustomerBody, createCustomer);
  *             properties:
  *               name:
  *                 type: string
- *               address:
+ *               document:
  *                 type: string
  *               phone:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               affiliation:
  *                 type: string
  *               credit:
  *                 type: number
@@ -155,14 +183,20 @@ router.post('/', validateCustomerBody, createCustomer);
  *                   type: string
  *                 name:
  *                   type: string
- *                 address:
- *                   type: string
  *                 phone:
  *                   type: string
- *                   credit:
- *                     type: number
- *                   debt:
- *                     type: number
+ *                 email:
+ *                   type: string
+ *                 address:
+ *                   type: string
+ *                 affiliation:
+ *                   type: string
+ *                 credit:
+ *                   type: number
+ *                 debt:
+ *                   type: number
+ *                 createdBy:
+ *                   type: string
  *                 createdAt:
  *                   type: string
  *                   format: date-time

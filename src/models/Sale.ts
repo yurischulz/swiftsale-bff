@@ -16,7 +16,6 @@ const saleSchema = new mongoose.Schema(
       },
     ],
     total: { type: Number, required: true },
-    date: { type: Date, default: Date.now },
     createdBy: { type: String, required: true },
   },
   { timestamps: true }

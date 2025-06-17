@@ -45,10 +45,12 @@ router.use(firebaseAuthMiddleware);
  *               properties:
  *                 _id:
  *                   type: string
- *                 customerId:
+ *                 customer:
  *                   type: string
- *                 value:
+ *                 amount:
  *                   type: number
+ *                 createdBy:
+ *                   type: string
  *                 createdAt:
  *                   type: string
  *                   format: date-time
@@ -91,9 +93,8 @@ router.post('/', validatePaymentBody, createPayment);
  *                     type: string
  *                   amount:
  *                     type: number
- *                   date:
- *                     type: string
- *                     format: date-time
+ *                   createdBy:
+ *                    type: string
  *                   createdAt:
  *                     type: string
  *                     format: date-time
