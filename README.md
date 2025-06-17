@@ -78,5 +78,6 @@ Este projeto está licenciado sob a MIT License. Veja o arquivo LICENSE para mai
 
 # @TODO
 
-- Testes com coverage 100%
-- Revisar análise da Wiki
+- Adicionar PUT e DELETE nas rotas:
+- - Payments
+- - Sales
