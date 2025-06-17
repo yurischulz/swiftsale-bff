@@ -5,6 +5,7 @@ import app from '~/app';
 import { Customer } from '~/models/Customer';
 import { Product } from '~/models/Product';
 import { Sale } from '~/models/Sale';
+import { createdBy } from '../__mocks__/firebase';
 
 let mongoServer: MongoMemoryServer;
 let validToken: string;
@@ -34,19 +35,23 @@ describe('Sale Routes', () => {
       const customer = await Customer.create({
         name: 'Cliente Venda',
         email: 'venda@email.com',
+        document: '12345678901',
         phone: '123',
         debt: 0,
         credit: 0,
         address: 'Rua Teste, 123',
+        createdBy,
       });
 
       const product1 = await Product.create({
         name: 'Produto 1',
         unitPrice: 100,
+        createdBy,
       });
       const product2 = await Product.create({
         name: 'Produto 2',
         unitPrice: 200,
+        createdBy,
       });
 
       const payload = {
@@ -79,6 +84,108 @@ describe('Sale Routes', () => {
       expect(res.status).toBe(400);
       expect(res.body).toHaveProperty('message');
     });
+
+    it('deve usar crédito do cliente para pagar a venda completamente', async () => {
+      const customer = await Customer.create({
+        name: 'Cliente Teste',
+        email: 'cliente@email.com',
+        phone: '123456789',
+        address: 'Rua Teste, 123',
+        credit: 200,
+        debt: 0,
+        createdBy,
+      });
+
+      const product = await Product.create({
+        name: 'Produto Teste',
+        unitPrice: 100,
+        createdBy,
+      });
+
+      const payload = {
+        customer: customer._id,
+        products: [{ product: product._id, quantity: 2, unitPrice: 100 }],
+        total: 200,
+      };
+
+      const res = await request(app)
+        .post('/sales')
+        .set('Authorization', `Bearer valid-token`)
+        .send(payload);
+
+      expect(res.status).toBe(201);
+      const updatedCustomer = await Customer.findById(customer._id);
+      expect(updatedCustomer?.credit).toBe(0);
+      expect(updatedCustomer?.debt).toBe(0);
+    });
+
+    it('deve usar crédito do cliente parcialmente e adicionar o restante ao débito', async () => {
+      const customer = await Customer.create({
+        name: 'Cliente Teste',
+        email: 'cliente@email.com',
+        phone: '123456789',
+        address: 'Rua Teste, 123',
+        credit: 100,
+        debt: 0,
+        createdBy,
+      });
+
+      const product = await Product.create({
+        name: 'Produto Teste',
+        unitPrice: 100,
+        createdBy,
+      });
+
+      const payload = {
+        customer: customer._id,
+        products: [{ product: product._id, quantity: 3, unitPrice: 100 }],
+        total: 300,
+      };
+
+      const res = await request(app)
+        .post('/sales')
+        .set('Authorization', `Bearer valid-token`)
+        .send(payload);
+
+      expect(res.status).toBe(201);
+      const updatedCustomer = await Customer.findById(customer._id);
+      expect(updatedCustomer?.credit).toBe(0);
+      expect(updatedCustomer?.debt).toBe(200);
+    });
+
+    it('deve adicionar o total da venda ao débito do cliente quando não há crédito', async () => {
+      const customer = await Customer.create({
+        name: 'Cliente Teste',
+        email: 'cliente@email.com',
+        phone: '123456789',
+        address: 'Rua Teste, 123',
+        credit: 0,
+        debt: 0,
+        createdBy,
+      });
+
+      const product = await Product.create({
+        name: 'Produto Teste',
+        unitPrice: 100,
+        createdBy,
+      });
+
+      const payload = {
+        customer: customer._id,
+        products: [{ product: product._id, quantity: 2, unitPrice: 100 }],
+        total: 200,
+      };
+
+      const res = await request(app)
+        .post('/sales')
+        .set('Authorization', `Bearer valid-token`)
+        .send(payload);
+
+      expect(res.status).toBe(201);
+      const updatedCustomer = await Customer.findById(customer._id);
+      expect(updatedCustomer?.credit).toBe(0);
+      expect(updatedCustomer?.debt).toBe(200);
+    });
   });
 
   describe('GET /sales/customer/:id', () => {
@@ -86,31 +193,41 @@ describe('Sale Routes', () => {
       const customer = await Customer.create({
         name: 'Cliente Venda',
         email: 'venda@email.com',
+        document: '12345678901',
         phone: '123',
         debt: 0,
         credit: 0,
         address: 'Rua Teste, 123',
+        createdBy,
       });
 
       const product1 = await Product.create({
         name: 'Produto 1',
         unitPrice: 100,
+        createdBy,
       });
       const product2 = await Product.create({
         name: 'Produto 2',
         unitPrice: 200,
+        createdBy,
       });
 
       await Sale.create([
         {
           customer: customer._id,
-          products: [{ product: product1._id, quantity: 2, unitPrice: 100 }],
+          products: [
+            { product: product1._id, quantity: 2, unitPrice: 100, createdBy },
+          ],
           total: 200,
+          createdBy,
         },
         {
           customer: customer._id,
-          products: [{ product: product2._id, quantity: 1, unitPrice: 200 }],
+          products: [
+            { product: product2._id, quantity: 1, unitPrice: 200, createdBy },
+          ],
           total: 200,
+          createdBy,
         },
       ]);
 
